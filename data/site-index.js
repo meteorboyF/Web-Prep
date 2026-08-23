@@ -40,7 +40,7 @@ WP.site = {
     {
       heading: 'Solve',
       items: [
-        { label: 'All 12 prototypes', href: 'exams/index.html', ready: false },
+        { label: 'All 12 prototypes', href: 'exams/index.html', ready: true },
         { label: 'Exam mode', href: 'exam-mode.html', ready: false }
       ]
     }
