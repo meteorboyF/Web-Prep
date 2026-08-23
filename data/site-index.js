@@ -27,7 +27,7 @@ WP.site = {
         { label: 'Part 2 · CSS fundamentals', href: 'lessons/part-2.html', ready: true },
         { label: 'Part 3 · Layout mastery', href: 'lessons/part-3.html', ready: true },
         { label: 'Part 4 · Advanced CSS', href: 'lessons/part-4.html', ready: true },
-        { label: 'Part 5 · Professional practice', href: 'lessons/part-5.html', ready: false }
+        { label: 'Part 5 · Professional practice', href: 'lessons/part-5.html', ready: true }
       ]
     },
     {
