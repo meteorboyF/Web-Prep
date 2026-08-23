@@ -269,7 +269,15 @@ uncommenting one rule), and **dark mode** (what this site's own toggle does).
 The reset section gives the full version *and* the four-line one you will actually type
 under a clock.
 
-**Lesson totals across all five parts: 105 sections, 86 playgrounds, 4 interactive tools.**
+**Lesson totals across all five parts: 125 sections, 96 playgrounds, 4 interactive tools.**
+
+| Part | Sections | Playgrounds | Tools |
+|---|---|---|---|
+| 1 · HTML5 foundations | 24 | 21 | — |
+| 2 · CSS fundamentals | 31 | 23 | specificity calculator |
+| 3 · Layout mastery | 26 | 19 | flexbox, grid, grid-areas |
+| 4 · Advanced CSS | 25 | 28 | — |
+| 5 · Professional practice | 19 | 5 | — |
 
 **Verified**: 19 sections, no scrollspy mismatch, 5 playgrounds mounted and rendering, all
 five parts now live in the navigation, no console errors, no overflow — locally on a fresh
