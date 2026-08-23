@@ -70,11 +70,15 @@
           cm ? 'CodeMirror 5' : 'textarea fallback (CDN unavailable)');
       } else if (kind === 'pg-sandbox') {
         var frames = document.querySelectorAll('.pg__preview iframe');
+        /* '' is the default; 'allow-forms' is the one narrowly granted
+           capability, for lessons that need native validation to fire.
+           Anything else is a mistake worth flagging loudly. */
+        var allowed = ['', 'allow-forms'];
         var sandboxed = Array.prototype.every.call(frames, function (f) {
-          return f.getAttribute('sandbox') === '';
+          return allowed.indexOf(f.getAttribute('sandbox')) !== -1;
         });
         set(row, frames.length > 0 && sandboxed,
-          sandboxed ? 'sandbox="" on all ' + frames.length : 'not fully sandboxed');
+          sandboxed ? 'locked down on all ' + frames.length : 'not fully sandboxed');
       } else if (kind === 'pg-render') {
         var all = document.querySelectorAll('.pg__preview iframe');
         var withDoc = Array.prototype.filter.call(all, function (f) {

@@ -897,6 +897,752 @@ body { font-family: system-ui, sans-serif; display: flex;
                 'early. The walkthroughs on this site flag the icon step in every prototype ' +
                 'for exactly this reason.' }}
       ]
+    },
+
+    /* --------------------------------------------------------------- 15 */
+    {
+      id: 'tables',
+      title: 'Tables',
+      body: [
+        'Tables are for tabular data and nothing else — never for page layout. But when the ' +
+        'data really is a table, the full structure matters, because it is what makes the ' +
+        'table navigable by someone who cannot see it.',
+
+        { table: {
+          head: ['Part', 'Purpose'],
+          rows: [
+            ['<code>&lt;caption&gt;</code>',
+             'The table title. Must be the <em>first</em> child. Announced before the data.'],
+            ['<code>&lt;thead&gt;</code> <code>&lt;tbody&gt;</code> <code>&lt;tfoot&gt;</code>',
+             'Row groups. <code>thead</code> repeats on every printed page.'],
+            ['<code>&lt;th scope="col|row"&gt;</code>',
+             'A header cell. <code>scope</code> is what tells a screen reader which cells a ' +
+             'header governs. Without it a large table is meaningless read aloud.'],
+            ['<code>colspan</code> / <code>rowspan</code>', 'Merge cells across or down.'],
+            ['<code>&lt;colgroup&gt;</code> <code>&lt;col&gt;</code>',
+             'Style whole columns at once — mainly widths and background.']
+          ]
+        }},
+
+        'Two CSS rules you will always want: <code>border-collapse: collapse</code> to remove ' +
+        'the double borders, and a wrapper with <code>overflow-x: auto</code> so a wide table ' +
+        'scrolls on a phone instead of breaking the page. Every table on this site does both.'
+      ],
+      playground: {
+        title: 'A table with the full structure',
+        height: 340,
+        tryThis: 'Delete <code>border-collapse: collapse</code> and the double borders come ' +
+                 'back. Then remove the <code>scope</code> attributes — nothing changes ' +
+                 'visually, which is precisely the problem with leaving them out.',
+        html: `
+<table>
+  <caption>Semester results</caption>
+  <thead>
+    <tr>
+      <th scope="col">Course</th>
+      <th scope="col">Code</th>
+      <th scope="col">Credit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><th scope="row">Web Programming</th><td>CSE 4165</td><td>3.0</td></tr>
+    <tr><th scope="row">Data Structures</th><td>CSE 2216</td><td>3.0</td></tr>
+  </tbody>
+  <tfoot>
+    <tr><td colspan="2">Total</td><td>6.0</td></tr>
+  </tfoot>
+</table>
+`,
+        css: `
+body { font-family: system-ui, sans-serif; }
+table { border-collapse: collapse; width: 100%; }
+caption {
+  text-align: left;
+  font-weight: 600;
+  padding-bottom: 8px;
+}
+th, td {
+  border: 1px solid #dfe3e8;
+  padding: 8px 12px;
+  text-align: left;
+}
+thead th { background: #eceff3; }
+tfoot td { font-weight: 600; background: #f6f7f9; }
+`
+      },
+      tip: 'Prototype <strong>252 Q2</strong> is the only one of the twelve with a real ' +
+           'table — <em>Course · Code · Credit</em> with a header row. Writing a proper ' +
+           '<code>&lt;thead&gt;</code> with <code>scope="col"</code> costs you nothing and ' +
+           'is the difference between a table and three divs pretending to be one.'
+    },
+
+    /* --------------------------------------------------------------- 16 */
+    {
+      id: 'form-rules',
+      title: 'Forms: the three rules of a field',
+      body: [
+        'Six of the twelve past prototypes contain a form. Forms are also where HTML stops ' +
+        'being decorative — almost every attribute in the next two sections removes ' +
+        'JavaScript you would otherwise have to write.',
+
+        { list: [
+          '<strong>Every input needs a <code>name</code></strong>, or its value is never submitted.',
+          '<strong>Every input needs a <code>&lt;label for="id"&gt;</code></strong> matching ' +
+          'its <code>id</code>. That is what a screen reader announces, and it makes the ' +
+          'label itself clickable — which quietly doubles the size of a checkbox target.',
+          '<strong>A placeholder is not a label.</strong> It disappears the moment typing ' +
+          'starts, has poor contrast by default, and vanishes for anyone who needs to ' +
+          're-check what they were filling in.'
+        ]},
+
+        'The playground shows the difference you can feel rather than read: click the word ' +
+        '"Email" and the cursor jumps into the field. Click "Student ID" and nothing happens.'
+      ],
+      playground: {
+        title: 'Labels',
+        height: 320,
+        tryThis: 'Click each label text in the preview. Only the first two do anything. Now ' +
+                 'give the third field an <code>id</code> and point its label at it, and ' +
+                 'watch it start working.',
+        html: `
+<form>
+  <p>
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email">
+  </p>
+
+  <p>
+    <label>Full name
+      <input type="text" name="fullname">
+    </label>
+  </p>
+
+  <p>
+    <label>Student ID</label>
+    <input type="text" name="sid" placeholder="011233001">
+  </p>
+
+  <p>
+    <label><input type="checkbox" name="agree"> I agree to the terms</label>
+  </p>
+</form>
+`,
+        css: `
+body { font-family: system-ui, sans-serif; }
+label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+input[type="text"], input[type="email"] {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #7c8794;
+  border-radius: 6px;
+  font: inherit;
+}
+label:has(input[type="checkbox"]) { font-weight: 400; }
+input[type="checkbox"] { accent-color: #0f766e; }
+`
+      },
+      trap: 'Wrapping the input <em>inside</em> the label works too, and needs no ' +
+            '<code>id</code> at all — that is the second field above. In the exam it is the ' +
+            'faster of the two and just as correct.'
+    },
+
+    /* --------------------------------------------------------------- 17 */
+    {
+      id: 'input-types',
+      title: 'Input types',
+      body: [
+        'Picking the right <code>type</code> gets you validation, the right mobile keyboard ' +
+        'and a native picker, all for free. This is much better seen than read, so the whole ' +
+        'set is rendered below.',
+
+        { table: {
+          head: ['type', 'What it gives you'],
+          rows: [
+            ['<code>text</code>', 'Plain single line.'],
+            ['<code>email</code>', 'Format validation and an email keyboard on mobile.'],
+            ['<code>password</code>', 'Masked characters.'],
+            ['<code>number</code>', 'Numeric with <code>min</code>, <code>max</code>, <code>step</code>, and spinners.'],
+            ['<code>tel</code>', 'Numeric keypad on mobile. No validation, so pair it with <code>pattern</code>.'],
+            ['<code>url</code> / <code>search</code>', 'URL validation; a clear button in some browsers.'],
+            ['<code>date</code> <code>time</code> <code>month</code>', 'Native pickers.'],
+            ['<code>checkbox</code>', 'Independent on/off. Submits only when checked.'],
+            ['<code>radio</code>', 'One of a group. The group is defined by a shared <code>name</code>.'],
+            ['<code>file</code>', 'File picker. Add <code>accept="image/*"</code> and <code>multiple</code>.'],
+            ['<code>range</code>', 'Slider. It has no visible number — show it yourself.'],
+            ['<code>color</code>', 'Colour picker returning a hex value.'],
+            ['<code>hidden</code>', 'Not shown, still submitted. For tokens and ids.']
+          ]
+        }}
+      ],
+      playground: {
+        title: 'Every input type',
+        height: 380,
+        tryThis: 'Try the two radio groups. The first pair share a <code>name</code> and are ' +
+                 'mutually exclusive; the second pair do not, so both can be on at once. ' +
+                 'That single difference is the most common radio button bug there is.',
+        html: `
+<p><input type="text" placeholder="text"></p>
+<p><input type="email" placeholder="email"></p>
+<p><input type="number" min="0" max="10" step="1" value="3"></p>
+<p><input type="date"></p>
+<p><input type="range" min="0" max="100" value="60"></p>
+<p><input type="color" value="#0f766e"></p>
+<p><input type="file" accept="image/*"></p>
+
+<fieldset>
+  <legend>Shared name: exclusive</legend>
+  <label><input type="radio" name="plan" value="a"> Monthly</label>
+  <label><input type="radio" name="plan" value="b"> Yearly</label>
+</fieldset>
+
+<fieldset>
+  <legend>Different names: not exclusive</legend>
+  <label><input type="radio" name="x"> Monthly</label>
+  <label><input type="radio" name="y"> Yearly</label>
+</fieldset>
+`,
+        css: `
+body { font-family: system-ui, sans-serif; font-size: 14px; }
+input[type="text"], input[type="email"] {
+  width: 220px; padding: 6px 8px;
+  border: 1px solid #7c8794; border-radius: 6px; font: inherit;
+}
+input { accent-color: #0f766e; }
+fieldset {
+  border: 1px solid #dfe3e8;
+  border-radius: 8px;
+  margin: 12px 0 0;
+  padding: 8px 12px 12px;
+}
+legend { font-weight: 600; padding-inline: 4px; }
+fieldset label { display: block; font-weight: 400; }
+`
+      },
+      trap: 'Radio buttons with the same <code>name</code> are mutually exclusive. Different ' +
+            'names means they are unrelated — which is why "only the first one works" is ' +
+            'almost always "they all have different names".'
+    },
+
+    /* --------------------------------------------------------------- 18 */
+    {
+      id: 'validation',
+      title: 'Validation attributes',
+      body: [
+        { table: {
+          head: ['Attribute', 'Effect'],
+          rows: [
+            ['<code>required</code>', 'Must not be empty.'],
+            ['<code>minlength</code> / <code>maxlength</code>', 'Character limits for text-like inputs.'],
+            ['<code>min</code> / <code>max</code> / <code>step</code>',
+             'Range limits for numbers and dates. <code>step="0.01"</code> for money.'],
+            ['<code>pattern="[0-9]{11}"</code>',
+             'A regular expression the value must match. Always add a <code>title</code> ' +
+             'describing the rule — browsers show it in the error bubble.'],
+            ['<code>novalidate</code>', 'On the <code>&lt;form&gt;</code>: switch off native validation.'],
+            ['<code>autocomplete</code>',
+             'Tokens such as <code>email</code>, <code>tel</code>, <code>new-password</code>. ' +
+             'Correct tokens let password managers fill forms accurately — an accessibility ' +
+             'requirement, not a convenience.'],
+            ['<code>inputmode="numeric"</code>', 'Chooses the mobile keyboard without changing the type.'],
+            ['<code>readonly</code> vs <code>disabled</code>',
+             '<code>readonly</code> is submitted and focusable; <code>disabled</code> is neither.']
+          ]
+        }},
+
+        'The form below can actually be submitted, so the native error bubbles are real. ' +
+        'Every preview on this site normally blocks forms outright; this one is granted that ' +
+        'single capability because the behaviour <em>is</em> the lesson.'
+      ],
+      playground: {
+        title: 'Native validation',
+        allowForms: true,
+        height: 360,
+        tryThis: 'Press Register with everything empty and read what the browser says. Then ' +
+                 'type five characters into the ID field and try again — the ' +
+                 '<code>title</code> is what makes that message useful rather than cryptic. ' +
+                 'None of this needed a line of JavaScript.',
+        html: `
+<form>
+  <p>
+    <label for="e">UIU email</label>
+    <input type="email" id="e" name="email" required
+           autocomplete="email" placeholder="name@students.uiu.ac.bd">
+  </p>
+  <p>
+    <label for="sid">Student ID</label>
+    <input type="text" id="sid" name="sid" required
+           pattern="[0-9]{9}" inputmode="numeric"
+           title="Nine digits, no spaces">
+  </p>
+  <p>
+    <label for="pw">Password</label>
+    <input type="password" id="pw" name="password"
+           required minlength="8" autocomplete="new-password">
+  </p>
+  <button type="submit">Register</button>
+</form>
+`,
+        css: `
+body { font-family: system-ui, sans-serif; }
+label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+input {
+  width: 100%; padding: 8px 10px; font: inherit;
+  border: 1px solid #7c8794; border-radius: 6px;
+}
+/* Only complain after the user has actually interacted */
+input:user-invalid { border-color: #c0392b; }
+button {
+  margin-top: 8px; padding: 8px 18px;
+  border: 0; border-radius: 6px;
+  background: #0f766e; color: #fff; font: inherit; cursor: pointer;
+}
+`
+      },
+      tip: 'Use <code>:user-invalid</code> rather than <code>:invalid</code>. Plain ' +
+           '<code>:invalid</code> matches an empty required field before the user has typed ' +
+           'a single character, so the form greets you covered in red.'
+    },
+
+    /* --------------------------------------------------------------- 19 */
+    {
+      id: 'other-controls',
+      title: 'Textarea, select and the rest',
+      body: [
+        { list: [
+          '<code>&lt;textarea&gt;</code> takes its value from the text <em>between</em> the ' +
+          'tags, not from a <code>value</code> attribute. Any whitespace you leave in there ' +
+          'becomes content — which is why an "empty" textarea sometimes starts with a blank line.',
+          '<code>&lt;select&gt;</code> groups options with <code>&lt;optgroup&gt;</code>. ' +
+          'It is one of the few controls that is genuinely hard to restyle, so in the exam ' +
+          'leave it close to native and spend the time elsewhere.',
+          '<code>&lt;datalist&gt;</code> gives a text input suggestions without restricting ' +
+          'it to them.',
+          '<code>&lt;fieldset&gt;</code> plus <code>&lt;legend&gt;</code> is the correct way ' +
+          'to label a set of radio buttons.',
+          '<code>&lt;progress&gt;</code> and <code>&lt;meter&gt;</code> exist, but every ' +
+          'progress bar in the past papers is a styled div — easier to colour, and that is ' +
+          'what the marks are for.'
+        ]}
+      ],
+      playground: {
+        title: 'Other controls',
+        height: 340,
+        tryThis: 'Press each button. Only one of them reloads the preview — the one without ' +
+                 '<code>type="button"</code>, because inside a form a button defaults to ' +
+                 '<code>type="submit"</code>. This is a genuinely maddening bug to track down.',
+        html: `
+<form>
+  <p>
+    <label for="dept">Department</label>
+    <select id="dept" name="dept">
+      <optgroup label="Engineering">
+        <option value="cse" selected>CSE</option>
+        <option value="eee">EEE</option>
+      </optgroup>
+      <optgroup label="Business">
+        <option value="bba">BBA</option>
+      </optgroup>
+    </select>
+  </p>
+
+  <p>
+    <label for="city">City</label>
+    <input list="cities" id="city" name="city">
+    <datalist id="cities">
+      <option value="Dhaka"></option>
+      <option value="Chattogram"></option>
+    </datalist>
+  </p>
+
+  <p>
+    <label for="note">Condition / note</label>
+    <textarea id="note" name="note" rows="3" maxlength="300"></textarea>
+  </p>
+
+  <button type="button">Safe: type="button"</button>
+  <button>Dangerous: defaults to submit</button>
+</form>
+`,
+        css: `
+body { font-family: system-ui, sans-serif; font-size: 14px; }
+label { display: block; font-weight: 600; margin-bottom: 4px; }
+select, input, textarea {
+  width: 100%; padding: 8px 10px; font: inherit;
+  border: 1px solid #7c8794; border-radius: 6px;
+}
+textarea { resize: vertical; }
+button {
+  padding: 8px 14px; margin-right: 6px;
+  border: 1px solid #7c8794; border-radius: 6px;
+  background: #fff; font: inherit; cursor: pointer;
+}
+`
+      },
+      trap: 'A <code>&lt;button&gt;</code> inside a form defaults to ' +
+            '<code>type="submit"</code>. Forgetting <code>type="button"</code> on a ' +
+            'decorative button reloads the page and looks, for all the world, like your ' +
+            'JavaScript is broken.'
+    },
+
+    /* --------------------------------------------------------------- 20 */
+    {
+      id: 'semantic-structure',
+      title: 'Semantic structure',
+      body: [
+        'A <code>&lt;div&gt;</code> says nothing. Semantic elements behave identically in ' +
+        'every visual respect but tell browsers, search engines and screen readers what a ' +
+        'region <em>is</em>. They create landmarks that assistive technology can jump between.',
+
+        { table: {
+          head: ['Element', 'Use it for', 'Landmark'],
+          rows: [
+            ['<code>&lt;header&gt;</code>', 'Introductory content for the page or a section.', 'banner'],
+            ['<code>&lt;nav&gt;</code>', 'A block of major navigation links.', 'navigation'],
+            ['<code>&lt;main&gt;</code>', 'The unique content of this page. Exactly one, never nested in the others.', 'main'],
+            ['<code>&lt;article&gt;</code>', 'A self-contained item that makes sense alone: a post, a card, a job listing.', 'article'],
+            ['<code>&lt;section&gt;</code>', 'A thematic grouping, normally with a heading.', 'region'],
+            ['<code>&lt;aside&gt;</code>', 'Tangential content: sidebar, related links, filters.', 'complementary'],
+            ['<code>&lt;footer&gt;</code>', 'Closing content for the page or section.', 'contentinfo'],
+            ['<code>&lt;details&gt;</code> / <code>&lt;summary&gt;</code>', 'A native accordion. No JavaScript needed.', 'group']
+          ]
+        }},
+
+        { h: 'Choosing between section, article and div' },
+
+        { list: [
+          'Would this content make sense on its own, syndicated as an RSS item? Use ' +
+          '<code>&lt;article&gt;</code>. Every job card in <em>UIU CareerHub</em> is an article.',
+          'Is it a thematic chunk of the page that deserves a heading? Use ' +
+          '<code>&lt;section&gt;</code>.',
+          'Am I only wrapping things to hang CSS on? Use <code>&lt;div&gt;</code>. That is a ' +
+          'perfectly good answer and always has been.'
+        ]}
+      ],
+      playground: {
+        title: 'Landmarks',
+        height: 340,
+        tryThis: 'The outline rule at the top is the single most useful debugging line in ' +
+                 'CSS. Change every semantic tag to <code>&lt;div&gt;</code> — the page ' +
+                 'looks <em>exactly</em> the same, and everything a screen reader could use ' +
+                 'to navigate it is gone.',
+        html: `
+<header>
+  <strong>UIU CareerHub</strong>
+  <nav>
+    <a href="#">Jobs</a> <a href="#">Companies</a>
+  </nav>
+</header>
+
+<main>
+  <h1>Available positions</h1>
+  <article>
+    <h2>Junior Software Engineer</h2>
+    <p>Kaz Software · Dhaka</p>
+  </article>
+</main>
+
+<aside>Filters</aside>
+<footer>&copy; 2026 UIU</footer>
+`,
+        css: `
+/* Reveal every box. Use this the moment a layout misbehaves. */
+* { outline: 1px solid rgb(180 84 27 / .45); }
+
+body { font-family: system-ui, sans-serif; font-size: 14px; }
+header { display: flex; gap: 16px; align-items: center;
+         padding: 10px; background: #eceff3; }
+header nav { margin-left: auto; display: flex; gap: 12px; }
+main { padding: 10px; }
+article { border: 1px solid #dfe3e8; border-radius: 8px; padding: 10px; }
+aside, footer { padding: 10px; color: #5b6672; }
+`
+      }
+    },
+
+    /* --------------------------------------------------------------- 21 */
+    {
+      id: 'exam-skeleton',
+      title: 'The skeleton you type first in the exam',
+      body: [
+        'This is the highest-value thing on this page. Roughly three minutes of typing that ' +
+        'you should be able to produce without thinking, before you look at the prototype ' +
+        'properly at all.',
+
+        'It is the document structure from section 2, plus the four reset rules that prevent ' +
+        'the box-model and default-margin surprises which otherwise eat twenty minutes. Parts ' +
+        '2 and 5 explain why each line is there; for now, memorise it.',
+
+        { playground: {
+          doc: true,
+          title: 'The exam starter',
+          height: 340,
+          tryThis: 'Comment out the reset block and watch the header gain a gap it never ' +
+                   'asked for, from the default margin on <code>h1</code>. Every one of ' +
+                   'those four rules is preventing a specific bug.',
+          html: `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prototype</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <h1 class="logo">Brand</h1>
+    <nav class="nav">
+      <a href="#">Home</a>
+      <a href="#">About</a>
+    </nav>
+  </header>
+
+  <main class="main">
+    <p>Then build section by section, top to bottom.</p>
+  </main>
+</body>
+</html>
+`,
+          css: `
+/* The reset. Type this before anything else. */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: system-ui, Arial, sans-serif; }
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+
+/* Then the layout. */
+.header {
+  display: flex;
+  align-items: center;
+  padding: 16px 24px;
+  background: #0f766e;
+  color: #fff;
+}
+.logo { font-size: 20px; margin-right: auto; }
+.nav { display: flex; gap: 20px; }
+.main { padding: 24px; }
+`
+        }},
+
+        { callout: { kind: 'tip', title: 'Why this exact order',
+          text: 'Reset, then body font, then the outermost container, then each section top ' +
+                'to bottom. It matches the order the marker reads the page, it means a ' +
+                'half-finished answer still looks deliberate rather than broken, and it is ' +
+                'the order every walkthrough on this site follows.' }}
+      ]
+    },
+
+    /* --------------------------------------------------------------- 22 */
+    {
+      id: 'global-attributes',
+      title: 'Global attributes and data hooks',
+      body: [
+        { table: {
+          head: ['Attribute', 'What it does'],
+          rows: [
+            ['<code>id</code>',
+             'Unique on the page. A link anchor, a label target, a JS handle. Never reuse one.'],
+            ['<code>class</code>',
+             'The reusable hook. Space separated for several. Case sensitive, no spaces inside a name.'],
+            ['<code>data-*</code>',
+             'Your own attributes: <code>data-state="open"</code>. Readable in JS via ' +
+             '<code>element.dataset</code>, and targetable in CSS with ' +
+             '<code>[data-state="open"]</code>.'],
+            ['<code>style</code>',
+             'Inline CSS. Beats every selector, so use it sparingly — though it is genuinely ' +
+             'useful for a per-item custom property, as in the card examples on this site.'],
+            ['<code>hidden</code>', 'Hides the element entirely. Beaten by any CSS <code>display</code> rule.'],
+            ['<code>tabindex</code>',
+             '<code>0</code> puts an element into the natural tab order, <code>-1</code> ' +
+             'makes it focusable only by script. Never use positive values; they wreck the order.'],
+            ['<code>inert</code>',
+             'Removes a whole subtree from interaction and from the accessibility tree. Ideal ' +
+             'for the page behind a modal.']
+          ]
+        }},
+
+        'Styling state with a data attribute rather than a class is worth the habit: it is ' +
+        'self-documenting, a value can only be one thing at a time, and it reads the same in ' +
+        'the markup, the CSS and the JavaScript.'
+      ],
+      playground: {
+        title: 'Styling state with data attributes',
+        height: 300,
+        tryThis: 'Change <code>data-state</code> on the second row from <code>closed</code> ' +
+                 'to <code>open</code>. One attribute, no class juggling, and the CSS reads ' +
+                 'like the thing it describes.',
+        html: `
+<div class="row" data-state="open">
+  <span>Job Type</span> <b>&#9650;</b>
+</div>
+<div class="row" data-state="closed">
+  <span>Department</span> <b>&#9660;</b>
+</div>
+<div class="row" data-state="closed">
+  <span>Experience</span> <b>&#9660;</b>
+</div>
+`,
+        css: `
+body { font-family: system-ui, sans-serif; font-size: 14px; }
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border: 1px solid #dfe3e8;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+.row[data-state="open"] {
+  border-color: #205bcb;
+  background: #e2ebfa;
+  color: #205bcb;
+  font-weight: 600;
+}
+`
+      }
+    },
+
+    /* --------------------------------------------------------------- 23 */
+    {
+      id: 'aria-and-access',
+      title: 'ARIA in five rules, and the checklist',
+      body: [
+        { list: [
+          '<strong>No ARIA is better than bad ARIA.</strong> A wrong role is worse than none at all.',
+          '<strong>Use a native element first.</strong> <code>&lt;button&gt;</code> beats ' +
+          '<code>&lt;div role="button" tabindex="0"&gt;</code> plus keyboard handlers, every time.',
+          '<strong><code>aria-label</code></strong> gives an accessible name to something ' +
+          'with no visible text — an icon-only button.',
+          '<strong><code>aria-labelledby</code> / <code>aria-describedby</code></strong> ' +
+          'point at the <code>id</code> of visible text that names or explains the element.',
+          '<strong><code>aria-hidden="true"</code></strong> hides decoration from screen ' +
+          'readers. Never put it on anything focusable.'
+        ]},
+
+        { h: 'The checklist' },
+
+        { list: [
+          'Every image has an <code>alt</code>; decorative ones have <code>alt=""</code>.',
+          'Every input has a real <code>&lt;label&gt;</code>.',
+          'Headings run in order from a single <code>&lt;h1&gt;</code>.',
+          'The page works with the keyboard alone, and the focus ring is visible.',
+          'Colour is never the only way information is conveyed.',
+          'Text contrast is at least 4.5:1 for body text.',
+          'There is a skip link to <code>&lt;main&gt;</code> before the navigation.',
+          'The <code>&lt;html&gt;</code> element has a <code>lang</code>.'
+        ]},
+
+        'Around 80% of accessibility comes free from writing the HTML correctly, which is ' +
+        'everything this part has covered. The rest is that list.'
+      ],
+      playground: {
+        title: 'Names, hidden text and the skip link',
+        height: 320,
+        tryThis: 'Press <kbd>Tab</kbd> in the preview. The skip link appears from nowhere as ' +
+                 'the first stop — that is the <code>.skip-link</code> trick, and it is how ' +
+                 'a keyboard user avoids tabbing through your whole navigation on every page.',
+        html: `
+<a class="skip-link" href="#main">Skip to content</a>
+
+<button class="icon-btn">&#215;</button>
+<button class="icon-btn" aria-label="Close dialog">&#215;</button>
+
+<p>The first button is announced as "times". The second has a name.</p>
+
+<p>
+  <span class="sr-only">Rating:</span>
+  <span aria-hidden="true">&#9733;&#9733;&#9733;&#9734;&#9734;</span>
+  <span class="sr-only">3 out of 5</span>
+</p>
+
+<main id="main"><p>Main content starts here.</p></main>
+`,
+        css: `
+body { font-family: system-ui, sans-serif; font-size: 14px; }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute; left: 8px; top: -40px;
+  background: #17202a; color: #fff;
+  padding: 8px 14px; border-radius: 0 0 6px 6px;
+  transition: top .15s;
+}
+.skip-link:focus { top: 0; }
+
+.icon-btn {
+  width: 32px; height: 32px; font-size: 18px;
+  border: 1px solid #7c8794; border-radius: 6px;
+  background: #fff; cursor: pointer;
+}
+:focus-visible { outline: 3px solid #0f766e; outline-offset: 2px; }
+`
+      }
+    },
+
+    /* --------------------------------------------------------------- 24 */
+    {
+      id: 'traps',
+      title: 'Traps that cost hours',
+      body: [
+        'Every one of these has a symptom that looks nothing like its cause. Read them once ' +
+        'now, and again the night before the exam.',
+
+        { table: {
+          head: ['Symptom', 'Cause and fix'],
+          rows: [
+            ['Layout behaves strangely, box sizes wrong',
+             'Missing <code>&lt;!DOCTYPE html&gt;</code>, so the browser is in quirks mode.'],
+            ['Media queries ignored on a phone', 'Missing viewport meta tag.'],
+            ['Accented or Bengali text becomes garbage',
+             'Missing or late <code>&lt;meta charset="UTF-8"&gt;</code>.'],
+            ['A stray gap between inline-block boxes',
+             'The whitespace between the tags in your source is a real space character. ' +
+             'Remove the newline, or use flexbox.'],
+            ['Button reloads the page unexpectedly',
+             'A <code>&lt;button&gt;</code> inside a form without <code>type="button"</code>.'],
+            ['Form submits nothing', 'Inputs are missing the <code>name</code> attribute.'],
+            ['Only the first radio in a group works', 'Different <code>name</code> values.'],
+            ['CSS file not loading',
+             'Wrong relative path, or a capitalisation mismatch. Linux servers are case ' +
+             'sensitive; Windows is not, so it works locally and breaks live.'],
+            ['Page jumps while loading',
+             'Images without <code>width</code> and <code>height</code> attributes.'],
+            ['Nested <code>&lt;p&gt;</code> tags disappear',
+             'A <code>&lt;p&gt;</code> cannot contain block elements; the parser auto-closes it.']
+          ]
+        }},
+
+        { h: 'Habits worth building' },
+
+        { list: [
+          'Write the HTML for a component <em>fully</em> before writing a line of its CSS. ' +
+          'Structure first prevents div soup, and it is step two of every walkthrough here.',
+          'Name classes for what the thing is, not what it looks like: <code>.alert-danger</code>, ' +
+          'never <code>.red-text</code>. Themes change; roles do not.',
+          'Use Emmet in VS Code. <code>!</code> then Tab gives the whole skeleton; ' +
+          '<code>ul>li*5</code> then Tab gives a five-item list; <code>.card>h2+p</code> ' +
+          'builds nested elements instantly. In a 90-minute exam this is worth real marks.',
+          '<code>* { outline: 1px solid red }</code> reveals every box the moment a layout ' +
+          'misbehaves.',
+          'Keep one folder pattern: <code>index.html</code>, <code>css/</code>, ' +
+          '<code>img/</code>. Consistency beats cleverness.'
+        ]},
+
+        { callout: { kind: 'tip', title: 'What to carry forward from Part 1',
+          text: 'HTML is a tree of meaning. Choose the element that describes the content, ' +
+                'give every interactive thing a name a human can read, and let CSS handle ' +
+                'appearance. If only three things survive: correct heading order, real ' +
+                'labels on form fields, and honest alt text.' }}
+      ]
     }
 
   ]

@@ -154,9 +154,16 @@
     var bar = WP.el('div', { class: 'pg__bar' }, [tablist, actions]);
 
     var editorsHost = WP.el('div', { class: 'pg__editors' });
+
+    /* sandbox="" is the default and blocks everything, including forms —
+       which means a submit button does nothing and native validation never
+       appears. allowForms grants exactly one capability back, and only where
+       a lesson needs it. The frame still cannot run scripts, open popups or
+       navigate anything but itself, so the worst a submit can do is replace
+       the preview's own contents. */
     var frame = WP.el('iframe', {
       title: (config.title || 'Live preview') + ' — result',
-      sandbox: '',
+      sandbox: config.allowForms ? 'allow-forms' : '',
       loading: 'lazy'
     });
     var previewHost = WP.el('div', { class: 'pg__preview' }, [frame]);

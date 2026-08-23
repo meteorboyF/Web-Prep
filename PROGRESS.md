@@ -91,15 +91,43 @@ Three bugs found and fixed:
    declares. It no longer touches it — a unique, descriptive title per page is a Part 5
    requirement, and this site should meet the ones it teaches.
 
+### Phase 3b — Part 1 complete
+Ten more sections, taking Part 1 to **24 sections and 21 playgrounds**: tables, the three
+rules of a form field, input types, validation attributes, textarea/select/datalist,
+semantic structure, the exam starter skeleton, global attributes and data hooks, ARIA and
+the accessibility checklist, and the traps table.
+
+Two of these are the highest-value sections on the page:
+
+- **The exam starter skeleton** (`#exam-skeleton`) — the roughly three minutes of typing to
+  produce without thinking before looking at the prototype properly. Runs in `doc: true`
+  mode, so the reset can be commented out to see what each line was preventing.
+- **Traps that cost hours** — the full table, every symptom of which looks nothing like its
+  cause.
+
+Added a narrowly scoped **`allowForms: true`** playground option. `sandbox=""` blocks form
+submission outright, so a submit button does nothing and native validation never appears —
+which makes the whole validation section undemonstrable. One playground now sets
+`sandbox="allow-forms"`. Verified through the browser's own `DOMTokenList` that this grants
+form submission **and nothing else**: scripts, top-navigation and same-origin all stay off,
+so the worst a submit can do is replace the preview's own contents. `selfcheck.js` now
+treats any sandbox value outside `{'', 'allow-forms'}` as a failure.
+
+**Verified**: 24 sections all park at 72px with no scrollspy mismatch; 21 playgrounds mount
+with none left unmounted; exactly one widened sandbox, which survives re-render; doc-mode
+keeps the document verbatim including its `<link rel="stylesheet">`; CDN-failure variant
+falls back to textareas with all 21 still rendering; no console errors; no page overflow.
+
 ## Next
 
-**Phase 3b** — the rest of Part 1: tables, forms in full (four playgrounds on their own),
-semantic structure, global attributes and ARIA, and the traps table. Roughly 8 more
-sections.
+**Phase 4** — Part 2, CSS fundamentals: selectors in full, combinators, attribute
+selectors, pseudo-classes and pseudo-elements, the cascade, inheritance, the box model and
+margin collapsing, units, colour, typography, backgrounds, gradients and shadows — plus the
+interactive **specificity calculator**.
 
 ## Remaining
 
-Phases 4–11 per `PLAN.md` §5. Expected splits: 5a/5b, 9a–9d.
+Phases 5–11 per `PLAN.md` §5. Expected splits: 5a/5b, 9a–9d.
 
 ## Decisions taken
 
