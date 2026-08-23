@@ -174,16 +174,43 @@ mounted with nothing left unmounted; no `[unrecognised block]` fallbacks; the sp
 tool still mounts; CSS unicode escapes (`\2713`, `\2197`) survive the data file intact; no
 console errors; no page overflow — locally on a fresh port and then live.
 
+### Phase 5a — Part 3 flow, positioning and flexbox, with the flexbox playground
+Split as planned. **12 sections, 11 playgrounds**, plus the flexbox visual playground:
+normal flow and display values, the inline-block whitespace gap, floats, positioning, the
+containing block rule, sticky, z-index and stacking contexts, the two axes, container
+properties, item properties, the five patterns, and the gotchas.
+
+`assets/js/tools/flexbox.js` — a button per value of every container property, a live
+stage, and the CSS it would take to produce what you are looking at. Click an item to cycle
+its `flex` through `1`, `2` and `none`. `align-content` is disabled and labelled while
+`flex-wrap` is `nowrap`, and omitted from the generated CSS, rather than sitting there
+silently doing nothing.
+
+Controls are real radio inputs with styled labels rather than buttons with ARIA. Radios
+come with arrow-key navigation, grouping and screen reader announcement already correct;
+re-implementing that with `role="radio"` is how you end up with a widget that looks fine
+and is unusable by keyboard.
+
+Sections lead with the failure mode wherever there is one — the whitespace gap, the missing
+`position: relative` that sends a badge to the corner of the page, the parent stacking
+context that defeats `z-index: 9999`, and `min-width: auto`, which is the reason a flex row
+overflows far more often than it has any business being.
+
+**Verified**: 12 sections park at 72px with no scrollspy mismatch; the tool's five radio
+groups, gap slider, item counter (guarded at 1 and 8), per-item flex cycling, generated CSS
+and full Reset all behave; nothing escapes a 320px column; no console errors — locally on a
+fresh port and then live.
+
 ## Next
 
-**Phase 5** — Part 3, layout: normal flow, positioning and stacking contexts, complete
-flexbox, complete grid, responsive design, container queries and every way to centre, plus
-the **flexbox and grid visual playgrounds**. Expected to split into 5a (flow, positioning,
-flexbox + flexbox playground) and 5b (grid, responsive, centring + grid playground).
+**Phase 5b** — the rest of Part 3: defining a grid, placing items, implicit tracks,
+alignment, subgrid, flexbox-or-grid, responsive design, media queries, `clamp()`, container
+queries, `aspect-ratio`, multi-column, every way to centre, and the traps — plus the **grid
+visual playground**.
 
 ## Remaining
 
-Phases 6–11 per `PLAN.md` §5. Expected splits: 5a/5b, 9a–9d.
+Phases 6–11 per `PLAN.md` §5. Expected split: 9a–9d.
 
 ## Decisions taken
 
