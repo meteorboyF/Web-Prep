@@ -283,16 +283,44 @@ under a clock.
 five parts now live in the navigation, no console errors, no overflow — locally on a fresh
 port and then live.
 
+### Phase 7b — the cheatsheet and the print stylesheet
+**319 rows across 27 groups**, from the reference PDF plus everything the five notes cover
+that it lacks — including a final **exam tactics** group that exists in neither source.
+
+- Instant client-side filter, matching *rendered text* rather than markup, so "flex" does
+  not hit a stray class name inside an example. <kbd>Esc</kbd> clears; <kbd>/</kbd> focuses
+  the box from anywhere on the page.
+- **16 rows carry a "try it" button** that mounts a playground inline, on demand. Mounting
+  all of them up front would be several hundred iframes on a page most people scroll past.
+- `assets/css/print.css` strips the navigation, sidebar, search, controls and every
+  playground; sets black on white; turns each row into a two-column grid that will not break
+  across a page; repeats table headers across pages; and prints external link URLs after
+  their text.
+
+**The no-absolute-paths guard was wrong and is now fixed.** It fired on the cheatsheet row
+that quotes `href="/style.css"` *precisely in order to teach why that breaks* under a
+subfolder deployment. The guard is now two checks — markup and stylesheets for real
+attributes, `assets/js/` for real assignments — and deliberately skips `data/`, where paths
+are lesson content inside sandboxed previews and are never fetched by the site. `CLAUDE.md`
+records the reasoning so it does not get "fixed" back.
+
+**Verified**: 319 rows and 27 groups render; the filter returns sensible counts for flex,
+shadow, sticky, exam and `<img`, hides empty groups, and reports no-match; zero playgrounds
+mount until a "try it" is pressed, and they unmount on close; single column below 46rem
+with nothing escaping a 320px container. The print stylesheet was verified by flipping the
+link's `media` to `all` and reading computed styles — chrome hidden, black on white, rows
+re-gridded — then restoring it.
+
 ## Next
 
-**Phase 7b** — the **searchable cheatsheet**: one page built from the reference PDF plus
-everything the five documents cover that it lacks, grouped by topic, with a client-side
-filter and a "try it" link per row that opens the snippet in a playground. Plus the print
-stylesheet, which the cheatsheet is the first real user of.
+**Phase 8** — the walkthrough component, demonstrated on **253 Q1 (ProConnect)**: target
+image, click-to-copy palette strip, structure analysis before any code, ordered build steps
+with a cumulative preview and a line diff highlighting what changed, "edit from here", and
+the final solution. This also needs the prototype images cropped out of the exam PDFs.
 
 ## Remaining
 
-Phases 8–11 per `PLAN.md` §5. Expected split: 9a–9d.
+Phases 9–11 per `PLAN.md` §5. Expected split: 9a–9d.
 
 ## Decisions taken
 
