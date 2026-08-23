@@ -1,0 +1,137 @@
+/* print.css — linked with media="print" on the cheatsheet and the checklist.
+
+   The goal is a reference you can put beside a keyboard: no navigation, no
+   controls, no colour, nothing that only makes sense on a screen. Part 5 §8
+   describes this; this file is that section, applied. */
+
+@page {
+  margin: 1.6cm;
+}
+
+/* ---- Strip the application chrome ---------------------------------- */
+
+.site-header,
+.sidebar,
+.site-footer,
+.skip-link,
+.nav-toggle,
+.theme-toggle,
+.cs__searchbox,
+.cs__index,
+.cs__try,
+.cs__trybtn,
+.pg,
+.spec,
+.fx,
+.prog,
+.lsn__foot,
+.lsn__anchor,
+.lsn__nav,
+.selfcheck,
+[data-no-print] {
+  display: none !important;
+}
+
+/* ---- Page ----------------------------------------------------------- */
+
+html, body {
+  background: #fff !important;
+  color: #000 !important;
+  font-size: 10pt;
+}
+
+.app, .shell, .content, .wrap {
+  display: block !important;
+  max-width: none !important;
+  width: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+a { color: #000 !important; text-decoration: none; }
+
+/* Printed pages lose every link. Put the URLs back — but only for real
+   external ones, because "(#flexbox)" beside every in-page anchor is noise. */
+a[href^="http"]::after {
+  content: " (" attr(href) ")";
+  font-size: 8pt;
+  color: #444;
+  word-break: break-all;
+}
+
+/* ---- Typography ------------------------------------------------------ */
+
+h1 { font-size: 18pt; margin-bottom: .3cm; }
+h2 { font-size: 13pt; margin-top: .5cm; }
+h3 { font-size: 11pt; }
+h1, h2, h3 { break-after: avoid; page-break-after: avoid; }
+
+p, li { orphans: 3; widows: 3; }
+
+.lede, .eyebrow { color: #333 !important; }
+
+code, pre {
+  font-size: 8.5pt;
+  background: #f4f4f4 !important;
+  border: 1px solid #ddd !important;
+  color: #000 !important;
+}
+pre { padding: .2cm; white-space: pre-wrap; word-wrap: break-word; }
+
+/* ---- Cheatsheet rows -------------------------------------------------- */
+
+.cs__group { padding-top: .4cm; border: 0 !important; }
+.cs__group h2 { border-bottom: 1.5pt solid #000; padding-bottom: .1cm; }
+
+.cs__rows { border: 0 !important; border-radius: 0 !important; }
+
+.cs__row {
+  display: grid !important;
+  grid-template-columns: 40% 1fr !important;
+  gap: .2cm !important;
+  padding: .12cm 0 !important;
+  background: none !important;
+  border-top: .5pt solid #ccc !important;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.cs__row:first-child { border-top: 0 !important; }
+.cs__meaning { color: #000 !important; font-size: 9pt; }
+.cs__syntax code {
+  background: none !important;
+  border: 0 !important;
+  padding: 0 !important;
+  font-weight: 600;
+}
+
+/* ---- Tables and callouts ---------------------------------------------- */
+
+.table-wrap {
+  overflow: visible !important;
+  border: 0 !important;
+  break-inside: auto;
+}
+table { border-collapse: collapse; width: 100%; }
+th, td {
+  border: .5pt solid #999 !important;
+  padding: .1cm .15cm !important;
+  font-size: 9pt;
+}
+thead { display: table-header-group; }   /* repeat headers across pages */
+tr { break-inside: avoid; page-break-inside: avoid; }
+
+.callout {
+  border: .5pt solid #999 !important;
+  border-left: 2pt solid #000 !important;
+  background: none !important;
+  color: #000 !important;
+  padding: .15cm !important;
+  break-inside: avoid;
+}
+.callout > strong { color: #000 !important; }
+
+.badge {
+  border: .5pt solid #666 !important;
+  background: none !important;
+  color: #000 !important;
+}

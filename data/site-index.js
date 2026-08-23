@@ -33,7 +33,7 @@ WP.site = {
     {
       heading: 'Reference',
       items: [
-        { label: 'Cheatsheet', href: 'cheatsheet.html', ready: false },
+        { label: 'Cheatsheet', href: 'cheatsheet.html', ready: true },
         { label: 'Exam checklist', href: 'checklist.html', ready: false }
       ]
     },

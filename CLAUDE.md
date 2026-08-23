@@ -18,8 +18,19 @@ and six exam PDFs.
    the filesystem and on GitHub Pages, unchanged.
 2. **No absolute paths.** Never a leading `/` in `href`, `src`, or any URL. Pages deploys to a
    project subfolder; `/assets/css/base.css` works locally and 404s live. Use `./` and `../`.
-   Before every push: `grep -rnE '(href|src)="/' --include='*.html' --include='*.js' .`
-   must return nothing.
+
+   Two checks before every push — both must return nothing:
+
+   ```bash
+   grep -rnE '(href|src)="/' --include='*.html' --include='*.css' .
+   grep -rnE "(href|src)\s*[:=]\s*['\"]/" assets/js/
+   ```
+
+   `data/` is deliberately **not** checked. Paths there are lesson content — playground
+   seeds that run inside a sandboxed `srcdoc`, and cheatsheet rows that quote
+   `href="/style.css"` precisely to teach why it breaks. The site never fetches them, so
+   they cannot affect the deployment. Only markup, stylesheets, and JS that builds real
+   DOM or URLs matter.
 3. **No ES modules.** They fail from `file://`. Data and code files are classic scripts that
    register onto the `WP` global.
 4. **Exam answers stay exam-realistic.** One HTML file plus one CSS file or a `<style>` block.
