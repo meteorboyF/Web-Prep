@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Part 4 · Advanced CSS — Web-Prep</title>
+<meta name="description" content="Custom properties, motion, filters, modern selectors and a recipe library. Part 4 of the CSE 4165 revision series.">
+<meta name="theme-color" content="#0f766e">
+<link rel="icon" href="../assets/img/mark.svg" type="image/svg+xml">
+
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/layout.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+<link rel="stylesheet" href="../assets/css/playground.css">
+<link rel="stylesheet" href="../assets/css/lesson.css">
+<link rel="stylesheet" href="../assets/css/tools.css">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css"
+      integrity="sha384-zaeBlB/vwYsDRSlFajnDd7OydJ0cWk+c2OWybl3eSUf6hW2EbhlCsQPqKr3gkznT"
+      crossorigin="anonymous" referrerpolicy="no-referrer">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"
+        integrity="sha384-ZYmwuq4n2gOcNxMSiJ6jyTj+BbIrilr7p6dlq6q5nmSWKmsH9UU4K1qqjycMkfmR"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"
+        integrity="sha384-xPpkMo5nDgD98fIcuRVYhxkZV6/9Y4L8s3p0J5c4MxgJkyKJ8BJr+xfRkq7kn6Tw"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"
+        integrity="sha384-fpeIC2FZuPmw7mIsTvgB5BNc8QVxQC/nWg2W+CgPYOAiBiYVuHe2E8HiTWHBMIJQ"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"
+        integrity="sha384-g0o+WW9mdIxA7LaaCKTkRm0M5TVT+Bb4s9eocxPsI2G0Xm0POG9iD6G6qP1IIsfS"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"
+        integrity="sha384-xYIbc5F55vPi7pb/lUnFj3wu24HlpAMZdtBHkNrb2YhPzJV3pX7+eqXT2PXSNMrw"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>try{var t=localStorage.getItem('webprep:theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body data-base="../">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="app">
+
+  <header class="site-header">
+    <button class="btn btn--ghost btn--icon nav-toggle" data-nav-toggle
+            aria-expanded="false" aria-label="Toggle navigation">☰</button>
+    <a class="brand" href="../index.html">
+      <img src="../assets/img/mark.svg" alt="" width="24" height="24">
+      Web<span>-Prep</span>
+    </a>
+    <div class="header-actions">
+      <button class="btn btn--ghost btn--icon theme-toggle" data-theme-toggle
+              aria-label="Switch theme">
+        <span class="icon-light" aria-hidden="true">◐</span>
+        <span class="icon-dark" aria-hidden="true">◑</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="shell">
+
+    <nav class="sidebar" aria-label="Primary" data-open="false">
+      <div data-nav></div>
+    </nav>
+
+    <main class="content" id="main">
+      <div class="wrap" data-lesson="part-4">
+        <noscript>
+          <h1>Part 4 · Advanced CSS</h1>
+          <p>This lesson is rendered from a data file, so it needs JavaScript. The source is
+             readable directly at <code>data/lessons/part-4.js</code>.</p>
+        </noscript>
+      </div>
+    </main>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Built for CSE 4165. No analytics, no tracking, no build step.</span>
+      <span class="spacer"></span>
+      <a href="https://github.com/meteorboyF/Web-Prep" target="_blank" rel="noopener noreferrer">Repository</a>
+    </div>
+  </footer>
+
+</div>
+
+<script src="../assets/js/core.js"></script>
+<script src="../data/site-index.js"></script>
+<script src="../assets/js/nav.js"></script>
+<script src="../assets/js/progress.js"></script>
+<script src="../assets/js/playground.js"></script>
+<script src="../assets/js/lesson.js"></script>
+<script src="../data/lessons/part-4.js"></script>
+<script>
+  WP.ready(function () {
+    WP.renderNav();
+    WP.initNavToggle();
+    WP.initTheme();
+    WP.renderLesson('part-4');
+  });
+</script>
+
+</body>
+</html>
