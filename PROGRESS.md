@@ -376,15 +376,39 @@ Two errors of my own, found that way and fixed in 253 Q2: the text said *six* pr
 where there are five, and the second bar's label used `:nth-of-type(2)`, which counts `<p>`
 elements and therefore landed on a percentage. It is now a sibling selector.
 
+### Phase 9b — walkthroughs for 251 Q1, 251 Q2, Slot 1 Q2
+**7 of 12 walkthroughs written.**
+
+- **251 Q1, Information Desk** — eleven annotated codes, the longest palette in the set,
+  five of which are just card titles. That is the clue that the five cards are one component
+  with a `--c`. The design rests on `box-shadow: 10px 10px 0 #000`, where the fourth value
+  **must** be zero: add blur and the flat graphic style collapses.
+- **251 Q2, Sign in** — only three annotated colours, so the marks are in the layout. The
+  step that matters is capping the form column at 430px and centring it inside its half;
+  every measurement after that depends on it, and getting it wrong looks subtly off rather
+  than broken. Also the OR divider from two pseudo-elements, and the Show button positioned
+  inside the password field.
+- **Slot 1 Q2, CareerHub** — the sidebar-and-main shell that four of the twelve prototypes
+  use. `align-content: start` on the sidebar is what stops the four filter panels stretching
+  to fill the column height — which looks like a padding bug and is not.
+
+**Verified** by rendering each finished answer and reading computed styles at the 1180px
+design width: five equal 203px pricing cards with a zero-blur shadow and five distinct title
+colours; a 590/590 split with the form capped at exactly 430px and the OR pseudo-elements
+generated; a 270px sidebar whose panels keep their natural heights (82/194/194/122), and job
+card stripes in blue, green, blue.
+
+Fixed one count error of my own: the CareerHub walkthrough said five tags where there are six.
+
 ## Next
 
-**Phase 9b** — 251 Q1 (Information Desk pricing, the hard offset shadow), 251 Q2 (the
-split sign-in page with the OR divider), slot1 Q2 (CareerHub job board).
+**Phase 9c** — slot2-q1 (Cloud storage dashboard, ten annotated colours and the
+`margin-top: auto` sidebar), 243-q1 (Housing Society hero), 243-q2 (United Kitchen). The
+last two have **no annotated palette** and will need pixel sampling.
 
 ## Remaining
 
-`9c` slot2-q1, 243-q1, 243-q2 · `9d` 252-q1, 252-q2 (the gradient-heavy pair, last).
-Then phases 10–11 per `PLAN.md` §5.
+`9d` 252-q1, 252-q2 (the gradient-heavy pair, last). Then phases 10–11 per `PLAN.md` §5.
 
 ## Decisions taken
 
