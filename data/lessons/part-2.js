@@ -681,6 +681,983 @@ body { font-family: system-ui, sans-serif; }
       trap: '<code>line-height</code> should be unitless. <code>line-height: 1.5</code> ' +
             'multiplies each element’s own font-size, but <code>line-height: 24px</code> ' +
             'is inherited as a fixed 24px, which crushes any child with larger text.'
+    },
+
+    /* --------------------------------------------------------------- 12 */
+    {
+      id: 'box-model',
+      title: 'The box model',
+      body: [
+        'Every element is a rectangle made of four rings: content, padding, border, margin. ' +
+        'Padding and border sit <em>inside</em> the visible box and share its background. ' +
+        'Margin is outside and always transparent.',
+
+        'The question that matters is what <code>width</code> means. With the default ' +
+        '<code>content-box</code>, width describes the content only, and padding and border ' +
+        'are added on top. An element set to <code>width: 200px</code> with 20px of padding ' +
+        'and a 2px border occupies <strong>244px</strong>. With <code>border-box</code> it ' +
+        'occupies exactly 200px and the padding eats inward.',
+
+        { code:
+`/* Put this at the top of every project. Every one. */
+*, *::before, *::after {
+  box-sizing: border-box;
+}` },
+
+        'There is no downside and every modern codebase does it. The reason it is not the ' +
+        'default is history, not merit.'
+      ],
+      playground: {
+        title: 'content-box against border-box',
+        height: 300,
+        tryThis: 'Both boxes ask for 200px and sit above a 200px ruler. Change the first to ' +
+                 '<code>border-box</code> and they line up. Then set a percentage width on ' +
+                 'both and watch how much easier the arithmetic becomes.',
+        html: `
+<div class="box content">content-box &mdash; really 248px</div>
+<div class="box border">border-box &mdash; really 200px</div>
+<p class="ruler">200px</p>
+`,
+        css: `
+body { font-family: system-ui, sans-serif; font-size: 13px; }
+.box {
+  width: 200px;
+  padding: 20px;
+  border: 4px solid #0f766e;
+  background: #e3f2f0;
+  margin-bottom: 10px;
+}
+.content { box-sizing: content-box; }
+.border  { box-sizing: border-box; }
+
+.ruler {
+  width: 200px; margin: 0;
+  border-top: 2px dashed #b4541b;
+  color: #b4541b;
+}
+`
+      },
+      trap: 'An element is wider than you set it? It is <code>content-box</code>. This is the ' +
+            'first thing to check and it is right most of the time.'
+    },
+
+    /* --------------------------------------------------------------- 13 */
+    {
+      id: 'margin',
+      title: 'Margin and the shorthand',
+      body: [
+        { table: {
+          head: ['Written as', 'Means'],
+          rows: [
+            ['<code>margin: 10px</code>', 'All four sides.'],
+            ['<code>margin: 10px 20px</code>', 'Top and bottom, then left and right.'],
+            ['<code>margin: 10px 20px 30px</code>', 'Top, then left and right, then bottom.'],
+            ['<code>margin: 10px 20px 30px 40px</code>', 'Clockwise from the top: top, right, bottom, left.'],
+            ['<code>margin: 0 auto</code>',
+             'Centres a block element that has a width. <code>auto</code> splits the leftover ' +
+             'space equally.'],
+            ['Negative margin', 'Pulls elements toward each other and can overlap them. Legal, occasionally useful, a smell if you need it often.'],
+            ['<code>margin-inline</code> / <code>margin-block</code>',
+             'Logical equivalents: inline is left and right in English, block is top and bottom.']
+          ]
+        }},
+
+        'Clockwise from the top is the pattern for <code>margin</code>, ' +
+        '<code>padding</code>, <code>border-width</code> and <code>border-radius</code> ' +
+        'alike. Learn it once.'
+      ],
+      playground: {
+        title: 'Shorthand and auto',
+        height: 300,
+        tryThis: 'Delete <code>width: 240px</code> from the centred box. It stops centring — ' +
+                 '<code>margin: 0 auto</code> needs a width to have any leftover space to ' +
+                 'split.',
+        html: `
+<div class="b one">margin: 10px 20px</div>
+<div class="b two">margin: 10px 20px 30px 40px</div>
+<div class="b centre">margin: 0 auto, width 240px</div>
+`,
+        css: `
+body { font-family: system-ui, sans-serif; font-size: 13px;
+       background: #eceff3; }
+.b { background: #0f766e; color: #fff; padding: 10px; }
+
+.one    { margin: 10px 20px; }
+.two    { margin: 10px 20px 30px 40px; }
+.centre { width: 240px; margin: 0 auto; }
+`
+      }
+    },
+
+    /* --------------------------------------------------------------- 14 */
+    {
+      id: 'margin-collapsing',
+      title: 'Margin collapsing',
+      body: [
+        'Adjacent vertical margins between block elements <strong>merge into one</strong>, ' +
+        'taking the larger of the two rather than the sum. A 30px bottom margin next to a ' +
+        '20px top margin gives 30px of space, not 50.',
+
+        'It also happens between a parent and its first or last child, which is why a child’s ' +
+        'margin can appear to push the <em>parent</em> down — the single most confusing gap ' +
+        'in CSS.',
+
+        { list: [
+          'Collapsing only affects <strong>vertical</strong> margins in normal flow.',
+          'It <strong>never</strong> happens inside flexbox or grid.',
+          'Stop it by adding padding or a border to the parent, or ' +
+          '<code>display: flow-root</code>, or <code>overflow: hidden</code>.',
+          'The modern answer: use <code>gap</code> in flex or grid and stop fighting margins ' +
+          'entirely.'
+        ]}
+      ],
+      playground: {
+        title: 'The mystery gap',
+        height: 360,
+        tryThis: 'The top card has a gap above it that nothing in the card asked for — the ' +
+                 'h3 inside is pushing its own parent down. Add <code>display: flow-root</code> ' +
+                 'to <code>.card</code> and it snaps into place. The second pair shows 30 and ' +
+                 '20 giving 30, not 50.',
+        html: `
+<div class="card">
+  <h3>Where did this gap come from?</h3>
+</div>
+
+<div class="pair">
+  <p class="a">30px bottom margin</p>
+  <p class="b">20px top margin</p>
+</div>
+<p class="note">The space between them is 30px, not 50px.</p>
+`,
+        css: `
+body { font-family: system-ui, sans-serif; font-size: 13px; background: #eceff3; }
+
+.card { background: #fff; border-radius: 8px; }
+.card h3 { margin: 24px; }        /* this margin escapes the card */
+
+.pair { background: #fff; border: 1px solid #dfe3e8; }
+.a { margin: 0 0 30px; background: #e3f2f0; padding: 6px; }
+.b { margin: 20px 0 0; background: #e2ebfa; padding: 6px; }
+.note { color: #5b6672; }
+`
+      },
+      trap: 'Unexplained vertical space is margin collapsing, a default margin on ' +
+            '<code>&lt;p&gt;</code> or <code>&lt;h1&gt;</code> that you never cleared, or ' +
+            'inline-block whitespace. In that order of likelihood.'
+    },
+
+    /* --------------------------------------------------------------- 15 */
+    {
+      id: 'padding-border-outline',
+      title: 'Padding, border and outline',
+      body: [
+        { table: {
+          head: ['Property', 'Notes'],
+          rows: [
+            ['<code>padding</code>',
+             'Same shorthand pattern as margin. Cannot be negative. Increases the clickable ' +
+             'area, which is why buttons should use padding rather than a fixed height.'],
+            ['<code>border: 1px solid #ccc</code>',
+             'Width, style, colour. <strong>Without a style the border does not appear at ' +
+             'all</strong> — a genuinely common five-minute bug.'],
+            ['Border styles', '<code>solid</code>, <code>dashed</code>, <code>dotted</code>, <code>double</code>, <code>none</code>.'],
+            ['<code>border-radius: 8px</code>',
+             '<code>50%</code> makes a circle from a square. Two values per corner give an ' +
+             'ellipse: <code>50% / 20%</code>.'],
+            ['<code>border-radius: 10px 0 0 10px</code>', 'Clockwise from top-left.'],
+            ['<code>outline</code>',
+             'Drawn <em>outside</em> the border, takes no space in layout, and does not move ' +
+             'siblings. This is exactly why it is the right tool for focus rings.'],
+            ['<code>outline-offset: 3px</code>', 'Pushes the outline away from the element.']
+          ]
+        }},
+
+        'One border trick worth knowing for the exam: a coloured stripe down the left of a ' +
+        'card is <code>border-left: 4px solid</code>, not a positioned div. Prototypes ' +
+        '<em>UIU CareerHub</em> and <em>United Kitchen</em> both use it.'
+      ],
+      playground: {
+        title: 'Borders, radius and outline',
+        height: 340,
+        tryThis: 'Delete the word <code>solid</code> from the first card. The border vanishes ' +
+                 'entirely — width and colour mean nothing without a style. Then compare how ' +
+                 'the outline and the border affect the spacing around the last box.',
+        html: `
+<div class="card stripe">border-left stripe</div>
+<div class="card round">border-radius: 10px 0 0 10px</div>
+<div class="card ring">outline, offset 3px</div>
+<div class="avatar">JS</div>
+`,
+        css: `
+body { font-family: system-ui, sans-serif; font-size: 13px; }
+.card {
+  background: #fff;
+  border: 1px solid #dfe3e8;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.stripe { border-left: 4px solid #205bcb; }
+.round  { border-radius: 10px 0 0 10px; }
+.ring   { outline: 3px solid #0f766e; outline-offset: 3px; }
+
+/* 50% turns a square into a circle */
+.avatar {
+  width: 48px; aspect-ratio: 1;
+  border-radius: 50%;
+  background: #536ffe; color: #fff;
+  display: grid; place-items: center;
+  font-weight: 700;
+}
+`
+      }
+    },
+
+    /* --------------------------------------------------------------- 16 */
+    {
+      id: 'units',
+      title: 'Units',
+      body: [
+        { table: {
+          head: ['Unit', 'Relative to', 'Use for'],
+          rows: [
+            ['<code>px</code>', 'Nothing.', 'Borders, small fixed details, shadows.'],
+            ['<code>%</code>',
+             'The parent — though padding and margin percentages resolve against the parent ' +
+             '<em>width</em>, even vertically.', 'Fluid widths.'],
+            ['<code>em</code>', 'The font-size of the element itself.', 'Padding that should scale with the component’s own text.'],
+            ['<code>rem</code>', 'The root font-size, 16px by default.', 'Font sizes, spacing, breakpoints. Your default unit.'],
+            ['<code>ch</code>', 'The width of the "0" character.', '<code>max-width: 65ch</code> is the classic readable measure.'],
+            ['<code>vw</code> / <code>vh</code>', '1% of the viewport.', 'Hero sections, full-screen panels.'],
+            ['<code>dvh</code> / <code>svh</code> / <code>lvh</code>', 'Dynamic, small and large viewport height.',
+             'Mobile, where <code>100vh</code> is famously wrong because of the browser toolbars.'],
+            ['<code>vmin</code> / <code>vmax</code>', 'The smaller or larger viewport dimension.', 'Elements that must fit in either orientation.'],
+            ['<code>fr</code>', 'A fraction of the free space in a grid.', 'Grid tracks only.']
+          ]
+        }},
+
+        '<code>em</code> compounds and <code>rem</code> does not. Nested elements each ' +
+        'multiplying by <code>1.2em</code> reach absurd sizes within four levels. Use ' +
+        '<code>rem</code> for type, and <code>em</code> only where scaling with the local ' +
+        'text is the actual point — button padding, for instance.'
+      ],
+      playground: {
+        title: 'em compounds, rem does not',
+        height: 320,
+        tryThis: 'Both lists nest four levels deep. One uses <code>em</code> and runs away; ' +
+                 'the other uses <code>rem</code> and stays put. Change the ' +
+                 '<code>font-size</code> on <code>html</code> and watch every rem value move ' +
+                 'together — that is what makes rem the accessible choice.',
+        html: `
+<ul class="em"><li>1.2em
+  <ul><li>1.2em<ul><li>1.2em<ul><li>1.2em</li></ul></li></ul></li></ul>
+</li></ul>
+
+<ul class="rem"><li>1.05rem
+  <ul><li>1.05rem<ul><li>1.05rem<ul><li>1.05rem</li></ul></li></ul></li></ul>
+</li></ul>
+`,
+        css: `
+html { font-size: 16px; }
+body { font-family: system-ui, sans-serif; }
+
+.em  li { font-size: 1.2em; color: #b4541b; }
+.rem li { font-size: 1.05rem; color: #0f766e; }
+`
+      },
+      trap: '<code>100vh</code> is too tall on a phone because the browser bar is counted. ' +
+            'Use <code>100dvh</code>.'
+    },
+
+    /* --------------------------------------------------------------- 17 */
+    {
+      id: 'value-types',
+      title: 'Other value types',
+      body: [
+        { table: {
+          head: ['Type', 'Examples'],
+          rows: [
+            ['Angle', '<code>deg</code>, <code>rad</code>, <code>turn</code>. <code>0.25turn</code> = <code>90deg</code>.'],
+            ['Time', '<code>s</code>, <code>ms</code>. Both valid; <code>0.3s</code> = <code>300ms</code>.'],
+            ['Resolution', '<code>dpi</code>, <code>dppx</code>, used in media queries for retina screens.'],
+            ['Unitless', '<code>line-height: 1.5</code>, <code>opacity: .5</code>, <code>z-index: 10</code>, <code>flex-grow: 1</code>.'],
+            ['Zero', '<code>0</code> needs no unit. <code>0px</code> and <code>0</code> are identical.']
+          ]
+        }},
+
+        'The one that bites is <code>line-height</code>. Unitless multiplies each element’s ' +
+        'own font-size; a unit is inherited as a fixed value and crushes any child with ' +
+        'larger text. Always unitless.'
+      ]
+    },
+
+    /* --------------------------------------------------------------- 18 */
+    {
+      id: 'colour',
+      title: 'Colour',
+      body: [
+        { table: {
+          head: ['Notation', 'Example', 'Notes'],
+          rows: [
+            ['Keyword', '<code>red</code>, <code>tomato</code>', '148 names. Fine for prototypes.'],
+            ['Hex', '<code>#0096FF</code>', 'Two hex digits each for red, green, blue.'],
+            ['Hex short', '<code>#09F</code>', 'Expands to <code>#0099FF</code>. Only when both digits of each pair match.'],
+            ['Hex with alpha', '<code>#0096FF80</code>', 'Eight digits; the last pair is opacity. <code>80</code> is roughly 50%.'],
+            ['<code>rgb()</code>', '<code>rgb(0 150 255 / 50%)</code>', 'Modern syntax uses spaces and a slash for alpha.'],
+            ['<code>hsl()</code>', '<code>hsl(210 100% 50%)</code>',
+             'Hue 0–360, saturation, lightness. The best notation for building a palette by ' +
+             'hand: hold the hue, change the lightness.'],
+            ['<code>oklch()</code>', '<code>oklch(70% 0.15 240)</code>',
+             'Perceptually uniform: two colours with the same lightness number actually look ' +
+             'equally bright.'],
+            ['<code>currentColor</code>', '<code>border: 1px solid currentColor</code>',
+             'The element’s own colour. Set it once and let borders and SVG fills follow.'],
+            ['<code>color-mix()</code>', '<code>color-mix(in oklch, blue 30%, white)</code>',
+             'Blend two colours in CSS, no preprocessor. Ideal for hover shades.']
+          ]
+        }},
+
+        { callout: { kind: 'tip', title: 'This is the exam section',
+          text: 'Eight of the twelve past papers print hex codes on the prototype with red ' +
+                'arrows. <strong>Those are marks.</strong> The first thing to do after ' +
+                'reading the paper is copy every annotated code into a ' +
+                '<code>:root</code> block as a custom property. Then no colour is ever ' +
+                'looked up twice, and changing one is a one-line edit rather than a hunt ' +
+                'through the file.' }}
+      ],
+      playground: {
+        title: 'A palette in :root',
+        height: 340,
+        tryThis: 'This is the annotated palette from <em>Slot 2, Q1</em>, transcribed exactly ' +
+                 'as you would in the first two minutes of the exam. Change one value and ' +
+                 'every swatch using it follows. That is the whole argument for doing this ' +
+                 'first.',
+        html: `
+<div class="sw" style="--c: var(--sidebar)">#0d3e86 sidebar</div>
+<div class="sw" style="--c: var(--pictures)">#6b63ff Pictures</div>
+<div class="sw" style="--c: var(--documents)">#0db0d7 Documents</div>
+<div class="sw" style="--c: var(--videos)">#ea6aa8 Videos</div>
+<div class="sw" style="--c: var(--audio)">#2c74db Audio</div>
+`,
+        css: `
+:root {
+  --sidebar:   #0d3e86;
+  --pictures:  #6b63ff;
+  --documents: #0db0d7;
+  --videos:    #ea6aa8;
+  --audio:     #2c74db;
+}
+
+body { font-family: system-ui, sans-serif; font-size: 13px; }
+.sw {
+  background: var(--c);
+  color: #fff;
+  padding: 14px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  font-family: ui-monospace, monospace;
+}
+`
+      }
+    },
+
+    /* --------------------------------------------------------------- 19 */
+    {
+      id: 'opacity-vs-alpha',
+      title: 'Opacity against alpha',
+      body: [
+        '<code>opacity: .5</code> fades the element <em>and every child</em>, including its ' +
+        'text. <code>background: rgb(0 0 0 / .5)</code> fades only that background layer, ' +
+        'leaving the text fully opaque.',
+
+        'Choosing the wrong one is why overlay text so often looks washed out — and it is a ' +
+        'real risk in the exam, because several prototypes have a translucent pill sitting on ' +
+        'a coloured card.'
+      ],
+      playground: {
+        title: 'Which one fades the text',
+        height: 300,
+        tryThis: 'Both cards want a translucent white pill. One uses <code>opacity</code> and ' +
+                 'the label goes grey and hard to read; the other uses an alpha background ' +
+                 'and the text stays crisp. This exact pill appears on the CORE-TECH stat ' +
+                 'cards.',
+        html: `
+<div class="card">
+  <p class="label">Total Users</p>
+  <p class="value">12,450</p>
+  <p class="pill bad">opacity: .25</p>
+</div>
+
+<div class="card">
+  <p class="label">Total Users</p>
+  <p class="value">12,450</p>
+  <p class="pill good">rgb(255 255 255 / .25)</p>
+</div>
+`,
+        css: `
+body { font-family: system-ui, sans-serif; font-size: 13px;
+       display: flex; gap: 12px; }
+.card { background: #1975d1; color: #fff; padding: 14px;
+        border-radius: 8px; flex: 1; }
+.label { margin: 0; font-size: 11px; font-weight: 700; }
+.value { margin: 4px 0 12px; font-size: 26px; font-weight: 800; }
+
+.pill { margin: 0; padding: 6px; border-radius: 4px;
+        text-align: center; font-size: 11px; font-weight: 700; }
+
+.bad  { background: #fff; opacity: .25; }
+.good { background: rgb(255 255 255 / .25); }
+`
+      }
+    },
+
+    /* --------------------------------------------------------------- 20 */
+    {
+      id: 'palette-method',
+      title: 'A workable palette method',
+      body: [
+        { list: [
+          'Pick one brand hue. Generate light and dark variants by changing <em>only the ' +
+          'lightness</em> in <code>hsl()</code> or <code>oklch()</code>.',
+          'You need far fewer greys than you think: a background, a surface, a border, a ' +
+          'muted text and a body text. Five.',
+          'Check contrast: 4.5:1 for body text, 3:1 for large text and for interface borders.',
+          'Store every colour as a custom property from day one, so dark mode is a one-line ' +
+          'switch rather than a rewrite.'
+        ], ordered: true },
+
+        'This site follows exactly that: five greys, one brand hue, and dark mode implemented ' +
+        'by redefining nine variables and not one component rule.'
+      ],
+      playground: {
+        title: 'One hue, many lightnesses',
+        height: 300,
+        tryThis: 'Change the <code>--h</code> value once at the top. The whole scale moves ' +
+                 'together and stays coherent, because only the lightness differs between ' +
+                 'the steps. Try 210 for blue, 25 for orange, 150 for green.',
+        html: `
+<div class="s" style="--l: 96%">96%</div>
+<div class="s" style="--l: 88%">88%</div>
+<div class="s" style="--l: 70%">70%</div>
+<div class="s" style="--l: 50%">50%</div>
+<div class="s" style="--l: 34%">34%</div>
+<div class="s" style="--l: 20%">20%</div>
+`,
+        css: `
+:root { --h: 175; --sat: 55%; }
+
+body { font-family: system-ui, sans-serif; font-size: 13px; }
+.s {
+  background: hsl(var(--h) var(--sat) var(--l));
+  color: hsl(var(--h) 60% 12%);
+  padding: 12px;
+  font-family: ui-monospace, monospace;
+}
+.s:nth-child(n+5) { color: hsl(var(--h) 40% 96%); }
+`
+      }
+    },
+
+    /* --------------------------------------------------------------- 21 */
+    {
+      id: 'typography',
+      title: 'Typography',
+      body: [
+        { table: {
+          head: ['Property', 'Notes'],
+          rows: [
+            ['<code>font-family</code>',
+             'A stack. The browser walks left to right until it finds an installed font. ' +
+             '<strong>Always end with a generic family</strong>: <code>serif</code>, ' +
+             '<code>sans-serif</code>, <code>monospace</code>, <code>system-ui</code>.'],
+            ['<code>font-size</code>', '<code>rem</code> for scalability.'],
+            ['<code>font-weight</code>',
+             '100 to 900 in hundreds. 400 normal, 500 medium, 600 semibold, 700 bold. The ' +
+             'weight must exist in the font file or the browser fakes it badly.'],
+            ['<code>line-height</code>', 'Unitless. 1.4–1.7 for body text, 1.1–1.25 for large headings.'],
+            ['<code>letter-spacing</code>',
+             'Slight positive tracking helps uppercase text; negative tightens large headings.'],
+            ['<code>text-align</code>',
+             'Justified text without hyphenation makes ugly rivers; add <code>hyphens: auto</code>.'],
+            ['<code>text-transform</code>',
+             '<code>uppercase</code> changes appearance only, so the underlying text stays ' +
+             'readable to screen readers. Use it for the small caps labels in the prototypes.'],
+            ['<code>white-space: nowrap</code>', 'Stop wrapping. Useful on chips and buttons.'],
+            ['<code>overflow-wrap: anywhere</code>', 'Break long unbroken strings such as URLs.'],
+            ['<code>text-wrap: balance</code>', 'Evens out the lines of a heading so you never get one orphan word.']
+          ]
+        }}
+      ],
+      playground: {
+        title: 'Type that reads like the prototypes',
+        height: 340,
+        tryThis: 'The eyebrow label is <code>uppercase</code> with positive ' +
+                 '<code>letter-spacing</code> — that combination is what makes small labels ' +
+                 'look designed rather than shouted. Set the spacing to 0 and the difference ' +
+                 'is immediate.',
+        html: `
+<p class="eyebrow">System Configuration</p>
+<h2 class="title">Launch Your Project, Faster.</h2>
+<p class="body">The ultimate tool for modern teams. Join over 10,000
+satisfied users who have streamlined their workflow.</p>
+`,
+        css: `
+body { font-family: system-ui, sans-serif; }
+
+.eyebrow {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: #0f766e;
+}
+.title {
+  margin: 0 0 10px;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+  max-width: 14ch;
+}
+.body {
+  margin: 0;
+  line-height: 1.6;
+  color: #5b6672;
+  max-width: 45ch;
+}
+`
+      }
+    },
+
+    /* --------------------------------------------------------------- 22 */
+    {
+      id: 'font-shorthand',
+      title: 'The font shorthand',
+      body: [
+        { code:
+`font: italic 700 1.25rem/1.4 Roboto, sans-serif;
+/*    style  weight size/line-height family        */` },
+
+        'Size and family are mandatory. Everything you leave out is <strong>reset to its ' +
+        'initial value</strong>, not left alone — so a <code>font</code> shorthand written ' +
+        'after a <code>font-weight</code> silently wipes it.'
+      ],
+      trap: 'The shorthand resets every font property you do not list. If a weight or style ' +
+            'mysteriously stops applying, look for a <code>font:</code> shorthand further ' +
+            'down the file.'
+    },
+
+    /* --------------------------------------------------------------- 23 */
+    {
+      id: 'truncation',
+      title: 'Truncation and clamping',
+      body: [
+        'Card text in a prototype is almost always cut off with an ellipsis. Two recipes ' +
+        'cover every case.'
+      ],
+      playground: {
+        title: 'Ellipsis and line clamp',
+        height: 320,
+        tryThis: 'Both need <code>overflow: hidden</code> to work. Remove it from either and ' +
+                 'the text spills out. The three-line clamp is what the project cards in the ' +
+                 '<em>Admin Dashboard</em> prototype are doing.',
+        html: `
+<p class="truncate">One line only, with an ellipsis when it runs out
+of room to breathe.</p>
+
+<p class="clamp">Three lines, then an ellipsis. Diam elitr kasd sed at
+elitr sed ipsum justo dolor sed clita amet diam. Tempor erat elitr
+rebum at clita, diam dolor diam ipsum sit, aliqu diam amet diam et
+eos erat ipsum et lorem et sit.</p>
+`,
+        css: `
+body { font-family: system-ui, sans-serif; font-size: 14px; }
+p { width: 260px; border: 1px dashed #dfe3e8; padding: 8px; }
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+`
+      }
+    },
+
+    /* --------------------------------------------------------------- 24 */
+    {
+      id: 'web-fonts',
+      title: 'Web fonts',
+      body: [
+        { code:
+`<!-- Google Fonts, pasted into <head> -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">` },
+
+        { code:
+`/* Or self-hosted: faster and private */
+@font-face {
+  font-family: "Inter";
+  src: url("fonts/inter.woff2") format("woff2");
+  font-weight: 100 900;      /* a variable font range */
+  font-display: swap;        /* show fallback text immediately */
+}` },
+
+        { list: [
+          'Use <code>woff2</code> only. Every browser you care about supports it and it is ' +
+          'the smallest.',
+          '<code>font-display: swap</code> avoids invisible text while the font loads.',
+          'Load only the weights you use. Each extra weight is a separate download.',
+          'For Bengali text, put a Bengali font in the stack: ' +
+          '<code>font-family: "Noto Sans Bengali", "Hind Siliguri", sans-serif;</code>'
+        ]},
+
+        { callout: { kind: 'tip', title: 'In the exam, do not',
+          text: 'No prototype is marked on its typeface. A Google Fonts link is a network ' +
+                'request that may not resolve in an exam environment, and if it fails your ' +
+                'whole page reflows. Write <code>font-family: system-ui, Arial, ' +
+                'sans-serif</code> in the reset and spend the minutes on layout instead. ' +
+                'Every walkthrough on this site does this.' }}
+      ]
+    },
+
+    /* --------------------------------------------------------------- 25 */
+    {
+      id: 'backgrounds',
+      title: 'Backgrounds',
+      body: [
+        { table: {
+          head: ['Property', 'Values'],
+          rows: [
+            ['<code>background-color</code>', 'Any colour value.'],
+            ['<code>background-image</code>', '<code>url()</code>, a gradient, or several comma-separated layers.'],
+            ['<code>background-repeat</code>', '<code>no-repeat</code>, <code>repeat-x</code>, <code>space</code>, <code>round</code>.'],
+            ['<code>background-position</code>', '<code>center</code>, <code>top left</code>, <code>50% 20%</code>.'],
+            ['<code>background-size</code>',
+             '<code>cover</code> fills and crops; <code>contain</code> fits and letterboxes.'],
+            ['<code>background-clip: text</code>', 'Clips the background to the glyphs — gradient text.']
+          ]
+        }},
+
+        { code:
+`/* Shorthand: position/size after a slash */
+background: #222 url("hero.jpg") center/cover no-repeat;
+
+/* Multiple layers: the FIRST listed sits on TOP */
+background:
+  linear-gradient(rgb(0 0 0 / .6), rgb(0 0 0 / .6)),
+  url("hero.jpg") center/cover;` },
+
+        'That second pattern — a flat translucent gradient over a photo — is how you get ' +
+        'readable white text on any image, and it is the correct answer to a hero section ' +
+        'with text over a photograph.'
+      ],
+      trap: 'A gradient is an <em>image</em>. Putting one in <code>background-color</code> ' +
+            'does nothing at all, silently. It belongs in <code>background-image</code>, or ' +
+            'in the <code>background</code> shorthand.'
+    },
+
+    /* --------------------------------------------------------------- 26 */
+    {
+      id: 'gradients',
+      title: 'Gradients',
+      body: [
+        'Worth more attention than the other decorative properties, because ' +
+        '<strong>prototype 252 is effectively a gradient exam</strong> — nearly every ' +
+        'coloured surface on both of its questions is a two- or three-stop gradient rather ' +
+        'than a flat fill.',
+
+        { table: {
+          head: ['Function', 'Example'],
+          rows: [
+            ['<code>linear-gradient</code>', '<code>linear-gradient(to right, #ff6a00, #ee0979)</code>'],
+            ['with an angle', '<code>linear-gradient(135deg, #00c6ff 0%, #0072ff 100%)</code>'],
+            ['<code>radial-gradient</code>', '<code>radial-gradient(circle at 30% 30%, #fff, #999)</code>'],
+            ['<code>conic-gradient</code>', '<code>conic-gradient(from 0deg, red, yellow, green, red)</code>'],
+            ['repeating', '<code>repeating-linear-gradient(45deg, #eee 0 10px, #ddd 10px 20px)</code>']
+          ]
+        }},
+
+        'Angles run clockwise from "to top". <code>0deg</code> points up, ' +
+        '<code>90deg</code> points right, <code>135deg</code> points down-right — which is ' +
+        'the one that reads as a natural highlight and is what most of the prototype cards use.'
+      ],
+      playground: {
+        title: 'Gradients, including the 252 sidebar',
+        height: 360,
+        tryThis: 'The last panel is the three-stop sidebar from <em>252 Q2</em>: teal at the ' +
+                 'top, blue in the middle, pale at the bottom. It is one declaration, not ' +
+                 'three stacked divs. Move the middle stop percentage and watch the blend ' +
+                 'point slide.',
+        html: `
+<div class="g linear">linear 135deg</div>
+<div class="g radial">radial</div>
+<div class="g conic">conic</div>
+<div class="g stripes">repeating</div>
+<div class="g sidebar">three stops</div>
+`,
+        css: `
+body { font-family: system-ui, sans-serif; font-size: 12px;
+       display: flex; gap: 8px; }
+.g {
+  flex: 1; height: 220px; border-radius: 8px;
+  padding: 8px; color: #fff; font-weight: 600;
+}
+
+.linear  { background: linear-gradient(135deg, #00c6ff, #0072ff); }
+.radial  { background: radial-gradient(circle at 30% 30%, #ea6aa8, #6b63ff); }
+.conic   { background: conic-gradient(from 0deg, #f97316, #fdebc0, #f97316); }
+.stripes { background: repeating-linear-gradient(45deg,
+             #0f766e 0 10px, #14867d 10px 20px); }
+
+/* Prototype 252 Q2, sidebar */
+.sidebar { background: linear-gradient(180deg,
+             #5ed4c8 0%, #8fb6e8 55%, #b9c9e8 100%); }
+`
+      }
+    },
+
+    /* --------------------------------------------------------------- 27 */
+    {
+      id: 'shadows',
+      title: 'Shadows',
+      body: [
+        { table: {
+          head: ['Syntax', 'Meaning'],
+          rows: [
+            ['<code>box-shadow: 0 2px 4px rgb(0 0 0 / .1)</code>', 'x-offset, y-offset, blur, colour.'],
+            ['<code>box-shadow: 0 2px 4px 2px #0002</code>', 'The fourth length is <em>spread</em>, which grows the shadow before blurring.'],
+            ['<code>box-shadow: inset 0 1px 2px #0003</code>', '<code>inset</code> draws the shadow inside the box.'],
+            ['Comma separated', 'Layer a tight dark shadow over a wide soft one for realistic depth.'],
+            ['<code>text-shadow: 0 1px 2px #0006</code>', 'Same idea, no spread value.']
+          ]
+        }},
+
+        'The realistic-depth recipe: stack two or three shadows with increasing blur and ' +
+        'decreasing opacity, and keep the x offset at 0. A single hard black shadow always ' +
+        'looks like 2004 — <em>except</em> when it is deliberate, which brings us to the ' +
+        'third card below.'
+      ],
+      playground: {
+        title: 'Soft depth, and the hard offset shadow',
+        height: 320,
+        tryThis: 'The third card is the deliberate hard shadow from <em>251 Q1</em>: no blur, ' +
+                 'solid black, offset down and right. Set its blur to <code>10px</code> and ' +
+                 'the whole style collapses — that one is meant to look flat and graphic.',
+        html: `
+<div class="c one">single flat shadow</div>
+<div class="c two">stacked, soft</div>
+<div class="c three">hard offset, no blur</div>
+`,
+        css: `
+body { font-family: system-ui, sans-serif; font-size: 13px;
+       display: flex; gap: 20px; padding: 20px; background: #f6f7f9; }
+.c { flex: 1; background: #fff; padding: 20px; border-radius: 8px; }
+
+.one   { box-shadow: 3px 4px 5px rgb(0 0 0 / .4); }
+
+.two   { box-shadow: 0 1px 2px rgb(16 25 35 / .07),
+                     0 12px 28px rgb(16 25 35 / .10); }
+
+/* Prototype 251 Q1 pricing cards */
+.three { border-radius: 0;
+         box-shadow: 10px 10px 0 #000; }
+`
+      }
+    },
+
+    /* --------------------------------------------------------------- 28 */
+    {
+      id: 'overflow',
+      title: 'Overflow and visibility',
+      body: [
+        { table: {
+          head: ['Property', 'Effect'],
+          rows: [
+            ['<code>overflow: hidden</code>',
+             'Clips anything outside the box. Also creates a new block formatting context, ' +
+             'which is why it accidentally fixes float and margin-collapse bugs.'],
+            ['<code>overflow: auto</code>', 'Scrollbars only when needed. The right default for a scrollable panel.'],
+            ['<code>overflow: clip</code>', 'Clips like hidden but does not become scrollable.'],
+            ['<code>display: none</code>', 'Removed from layout entirely. Not read by screen readers. Cannot be transitioned.'],
+            ['<code>visibility: hidden</code>', 'Invisible but still occupies its space. Can be transitioned.'],
+            ['<code>opacity: 0</code>',
+             'Invisible, occupies space, and is <strong>still clickable and focusable</strong>. ' +
+             'Add <code>pointer-events: none</code> if that matters.']
+          ]
+        }},
+
+        'Setting <code>overflow-x: visible</code> with <code>overflow-y: hidden</code> does ' +
+        'not do what you expect — the visible axis silently becomes <code>auto</code>.'
+      ],
+      tip: '<code>overflow: hidden</code> on a card is also what makes a child’s background ' +
+           'respect the parent’s <code>border-radius</code>. Without it, a coloured header ' +
+           'inside a rounded card pokes square corners out — a small detail that appears in ' +
+           'half the prototypes.'
+    },
+
+    /* --------------------------------------------------------------- 29 */
+    {
+      id: 'list-styling',
+      title: 'List styling',
+      body: [
+        'Removing bullets takes <em>two</em> declarations, and forgetting the second is why a ' +
+        'navigation bar so often sits mysteriously indented.'
+      ],
+      playground: {
+        title: 'Bullets and indents',
+        height: 320,
+        tryThis: 'Delete <code>padding: 0</code> from <code>.nav</code>. The bullets are ' +
+                 'already gone, but the list still sits 40px in — that indent is padding the ' +
+                 'browser added for the bullets, and <code>list-style: none</code> does not ' +
+                 'remove it.',
+        html: `
+<ul class="nav">
+  <li><a href="#">Home</a></li>
+  <li><a href="#">Jobs</a></li>
+  <li><a href="#">Companies</a></li>
+</ul>
+
+<ul class="ticks">
+  <li>Real-time collaboration</li>
+  <li>Advanced reporting tools</li>
+</ul>
+`,
+        css: `
+body { font-family: system-ui, sans-serif; font-size: 14px; }
+
+.nav {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  display: flex;
+  gap: 20px;
+}
+.nav a { color: #205bcb; text-decoration: none; }
+
+/* A custom marker, without ::before */
+.ticks { list-style: none; padding: 0; }
+.ticks li { padding-left: 22px; position: relative; margin-bottom: 6px; }
+.ticks li::before {
+  content: "\\2713";
+  position: absolute; left: 0;
+  color: #50ad50; font-weight: 700;
+}
+`
+      }
+    },
+
+    /* --------------------------------------------------------------- 30 */
+    {
+      id: 'table-styling',
+      title: 'Table styling essentials',
+      body: [
+        'Five declarations cover almost every table you will be asked to draw.',
+
+        { code:
+`table { border-collapse: collapse; width: 100%; }
+th, td { padding: .6rem .8rem; text-align: left;
+         border-bottom: 1px solid #e3e3e3; }
+tbody tr:nth-child(even) { background: #fafafa; }
+thead th { position: sticky; top: 0; background: #fff; }
+table { table-layout: fixed; }   /* equal columns, faster rendering */` },
+
+        'Prototype <em>252 Q2</em> needs the first three of those, plus a gradient on the ' +
+        'rows. Note that a gradient on a <code>&lt;tr&gt;</code> is unreliable — put it on ' +
+        'the cells, or on the table with <code>background-attachment</code> tricks. The ' +
+        'walkthrough for that paper takes the simple route.'
+      ],
+      playground: {
+        title: 'A styled table',
+        height: 320,
+        tryThis: 'Remove <code>border-collapse: collapse</code> and every border doubles. ' +
+                 'Then switch the zebra rule from <code>even</code> to <code>odd</code>.',
+        html: `
+<table>
+  <thead>
+    <tr><th>Course</th><th>Code</th><th>Credit</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Web Programming</td><td>CSE201</td><td>3.0</td></tr>
+    <tr><td>Data Structures</td><td>CSE202</td><td>3.0</td></tr>
+    <tr><td>Algorithms</td><td>CSE203</td><td>3.0</td></tr>
+  </tbody>
+</table>
+`,
+        css: `
+body { font-family: system-ui, sans-serif; font-size: 13px; }
+table { border-collapse: collapse; width: 100%; }
+th, td { padding: 10px 12px; text-align: left;
+         border-bottom: 1px solid #e3e3e3; }
+thead th {
+  background: linear-gradient(90deg, #e08a4f, #d97742);
+  color: #fff;
+}
+tbody tr:nth-child(even) { background: #fafafa; }
+`
+      }
+    },
+
+    /* --------------------------------------------------------------- 31 */
+    {
+      id: 'css-traps',
+      title: 'Traps and tricks',
+      body: [
+        { table: {
+          head: ['Symptom', 'Cause'],
+          rows: [
+            ['Element is wider than I set', '<code>box-sizing</code> is <code>content-box</code>. Set <code>border-box</code> globally.'],
+            ['Space appears where I set none',
+             'Vertical margins are collapsing, or a default margin on <code>&lt;p&gt;</code>, ' +
+             '<code>&lt;h1&gt;</code> or <code>&lt;body&gt;</code> is still there.'],
+            ['My style is ignored',
+             'Something more specific wins. Check the Styles panel — overridden rules are ' +
+             'shown struck through.'],
+            ['Style ignored even though it is last',
+             'A typo in the selector, a missing semicolon on the line above, or an invalid ' +
+             'value dropped silently.'],
+            ['line-height crushes nested text', 'A unit was used. Make it unitless.'],
+            ['100vh is too tall on mobile', 'The browser bar is counted. Use <code>100dvh</code>.'],
+            ['Text goes washed out over an image', '<code>opacity</code> used instead of an alpha background.'],
+            ['Percentage height does nothing',
+             'Percentage heights need a parent with a definite height. Use flex or grid instead.'],
+            ['Gradient does not appear', 'It was put in <code>background-color</code>. Gradients are images.'],
+            ['Square corners poke out of a rounded card', 'The card needs <code>overflow: hidden</code>.']
+          ]
+        }},
+
+        { h: 'Tricks worth memorising' },
+
+        { list: [
+          '<code>* { outline: 1px solid red }</code> instantly reveals every box when a ' +
+          'layout misbehaves.',
+          '<code>max-width: 65ch</code> gives a comfortable reading length with no arithmetic.',
+          '<code>color: currentColor</code> on borders and SVG makes theming a single ' +
+          'property change.',
+          '<code>:where()</code> for defaults means your later rules always win without ' +
+          '<code>!important</code>.',
+          '<code>aspect-ratio: 16 / 9</code> replaces the old padding-top percentage hack ' +
+          'completely.',
+          '<code>accent-color: teal</code> recolours native checkboxes, radios and range ' +
+          'sliders in one line — worth remembering, because four prototypes have checkboxes.',
+          '<code>inset: 0</code> is shorthand for all four offsets at zero.'
+        ]},
+
+        { callout: { kind: 'tip', title: 'What to carry forward from Part 2',
+          text: 'The cascade is deterministic, not mysterious: origin, then layer, then ' +
+                'specificity, then source order. Keep selectors flat and specificity low, set ' +
+                '<code>box-sizing: border-box</code> once, use <code>rem</code> for type and ' +
+                '<code>ch</code> for measure, and store every colour as a custom property. ' +
+                'Parts 3 and 4 assume all of these habits.' }}
+      ]
     }
 
   ]
