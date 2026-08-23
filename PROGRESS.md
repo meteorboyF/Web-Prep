@@ -201,16 +201,41 @@ groups, gap slider, item counter (guarded at 1 and 8), per-item flex cycling, ge
 and full Reset all behave; nothing escapes a 320px column; no console errors — locally on a
 fresh port and then live.
 
+### Phase 5b — Part 3 complete
+Fourteen more sections, taking Part 3 to **26 sections, 19 playgrounds and three tools**:
+grid tracks, placement and named areas, implicit tracks, alignment, subgrid, the
+flexbox-or-grid decision, the responsive non-negotiables, media queries, `clamp()`,
+container queries, `aspect-ratio`, multi-column, every way to centre, and the traps.
+
+Two new tools in `assets/js/tools/grid.js`:
+
+- **`WP.tools.grid`** — track sizing, gaps and alignment. A free text field for
+  `grid-template-columns` plus presets, and items you can click to make them span columns.
+- **`WP.tools.gridAreas`** — type the layout as words and watch it become the layout. It
+  also catches the **ragged-row case** and says so plainly: rows of differing length make
+  the browser drop the whole declaration, silently, which is otherwise a baffling five
+  minutes.
+
+The flexbox-or-grid section applies the decision table to three real prototypes rather than
+leaving it abstract. The media query section advises **against** mobile-first under exam
+conditions: the prototypes are desktop screenshots, so write the desktop layout and add one
+stacking query at the end if time allows.
+
+**Verified**: 26 sections park at 72px with no scrollspy mismatch; all three tools mount;
+track presets, free-typed `repeat(auto-fit, …)`, alignment, span cycling, the areas editor's
+valid / ragged / empty-cell paths all behave; nothing escapes a 320px column; no console
+errors — locally on a fresh port and then live.
+
 ## Next
 
-**Phase 5b** — the rest of Part 3: defining a grid, placing items, implicit tracks,
-alignment, subgrid, flexbox-or-grid, responsive design, media queries, `clamp()`, container
-queries, `aspect-ratio`, multi-column, every way to centre, and the traps — plus the **grid
-visual playground**.
+**Phase 6** — Part 4, Advanced CSS: custom properties and component theming, `@property`,
+CSS functions, transitions, transforms, keyframes and staggering, animation performance,
+reduced motion, filters, blend modes, `clip-path`, nesting, `:has()`, `@layer`,
+`@supports`, scroll behaviour, and the eleven-recipe library.
 
 ## Remaining
 
-Phases 6–11 per `PLAN.md` §5. Expected split: 9a–9d.
+Phases 7–11 per `PLAN.md` §5. Expected split: 9a–9d.
 
 ## Decisions taken
 
