@@ -65,6 +65,12 @@
       return host;
     }
 
+    if (block.tool) {
+      var slot = el('div', { 'data-tool-slot': block.tool });
+      mounts.push({ host: slot, tool: block.tool });
+      return slot;
+    }
+
     return el('p', { text: '[unrecognised block]' });
   }
 
@@ -210,9 +216,17 @@
       host.appendChild(foot);
     }
 
-    /* Mount every playground now that the tree is in the document. */
+    /* Mount playgrounds and tools now that the tree is in the document. */
     mounts.forEach(function (m) {
-      WP.playground.mount(m.host, m.config);
+      if (m.tool) {
+        var fn = WP.tools && WP.tools[m.tool];
+        if (fn) fn(m.host);
+        else m.host.replaceWith(renderCallout({ kind: 'trap', title: 'Missing tool',
+          text: 'No tool is registered under <code>' + m.tool + '</code>. Its script is ' +
+                'probably not linked from this page.' }));
+      } else {
+        WP.playground.mount(m.host, m.config);
+      }
     });
 
     buildProgress(pageId, prog, ticks, data);

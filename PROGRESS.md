@@ -118,12 +118,41 @@ with none left unmounted; exactly one widened sandbox, which survives re-render;
 keeps the document verbatim including its `<link rel="stylesheet">`; CDN-failure variant
 falls back to textareas with all 21 still rendering; no console errors; no page overflow.
 
+### Phase 4a — Part 2 selectors and the cascade, plus the specificity calculator
+Split as flagged: Part 2 is 31 sections in `CONTENT-MAP.md`, so 4a takes the coherent first
+half — how a rule finds its element and who wins when two disagree.
+
+- `data/lessons/part-2.js` — 11 sections, 9 playgrounds: CSS delivery, rule anatomy, basic
+  selectors, combinators, attribute selectors, pseudo-classes, nth-child formulas,
+  pseudo-elements, the cascade, specificity, inheritance.
+- `assets/js/tools/specificity.js` — the **specificity calculator**. Two selectors side by
+  side, each scored (A,B,C) with a chip per token showing what earned each point, and a
+  verdict saying which wins. Handles the parts people get wrong: `:where()` scores zero,
+  `:is()`/`:not()`/`:has()` take their most specific argument rather than the sum,
+  `:nth-child(n of S)` adds its `of` argument, single-colon legacy pseudo-elements count as
+  column C, and a comma-separated list is scored per selector rather than combined.
+- `assets/css/tools.css` — widget styling, with the three specificity columns kept visually
+  distinct in both themes.
+- `lesson.js` gains a `{ tool: 'name' }` body block, resolved from a `WP.tools` registry.
+
+The calculator was unit-tested against 20 selectors before being wired up. One "failure"
+turned out to be a wrong expectation on my part rather than a bug: in `a[href$=".pdf"]::after`
+the pseudo-*element* is column C, not B, so `(0,1,2)` is right.
+
+**Verified**: 11 sections all park at 72px with no scrollspy mismatch; the tool mounts,
+presets load, verdicts are correct for eleven-classes-versus-one-id, exact ties,
+`:where`, `:is`, pseudo-element columns and `!important`; comma lists render one scored row
+each; collapses to a single column below 52rem; still works with the CDN blocked.
+
+Also worth recording: two apparent failures during testing were **browser cache**, not code —
+the page was running a `lesson.js` from before the tool branch existed. Serving from a fresh
+port confirmed it. Worth remembering before debugging anything that "should" work.
+
 ## Next
 
-**Phase 4** — Part 2, CSS fundamentals: selectors in full, combinators, attribute
-selectors, pseudo-classes and pseudo-elements, the cascade, inheritance, the box model and
-margin collapsing, units, colour, typography, backgrounds, gradients and shadows — plus the
-interactive **specificity calculator**.
+**Phase 4b** — the rest of Part 2: the box model and margin collapsing, units, colour and
+opacity, typography, truncation, backgrounds, gradients, shadows, overflow, list and table
+styling, and the traps table. Around 20 sections.
 
 ## Remaining
 
