@@ -252,12 +252,35 @@ locally on a fresh port and then live. The final section parks at 107px rather t
 because the page is already at maximum scroll; the at-bottom case in the scrollspy handles
 it and it still reports correctly.
 
+### Phase 7a — Part 5 complete. All five lesson parts are now done.
+**19 sections, 5 playgrounds**: project structure, stylesheet order, BEM, the modern reset,
+DevTools, debugging techniques, the bug lookup table, the accessibility rules and snippets,
+testing, performance metrics and priorities, dark mode, form styling, print styles,
+metadata, browser support and deployment, the pre-launch checklist, and how to keep
+learning.
+
+Deliberately fewer playgrounds than the other parts. Fourteen of these sections are
+genuinely reference material — a table of DevTools panels or a pre-launch checklist is not
+something a live editor can demonstrate, and inventing a demo would be padding. Where a demo
+earns its place it is anchored to the exam: **form styling** (six of twelve prototypes have
+a form), the **debugging** section (which ships a deliberately broken layout you fix by
+uncommenting one rule), and **dark mode** (what this site's own toggle does).
+
+The reset section gives the full version *and* the four-line one you will actually type
+under a clock.
+
+**Lesson totals across all five parts: 105 sections, 86 playgrounds, 4 interactive tools.**
+
+**Verified**: 19 sections, no scrollspy mismatch, 5 playgrounds mounted and rendering, all
+five parts now live in the navigation, no console errors, no overflow — locally on a fresh
+port and then live.
+
 ## Next
 
-**Phase 7** — Part 5, Professional practice: architecture, BEM, the modern reset,
-debugging, accessibility, performance, dark mode, form styling, print styles, metadata,
-deployment and the pre-launch checklist — plus the **searchable cheatsheet** built from the
-reference PDF and a print stylesheet.
+**Phase 7b** — the **searchable cheatsheet**: one page built from the reference PDF plus
+everything the five documents cover that it lacks, grouped by topic, with a client-side
+filter and a "try it" link per row that opens the snippet in a playground. Plus the print
+stylesheet, which the cheatsheet is the first real user of.
 
 ## Remaining
 
