@@ -350,15 +350,41 @@ new lines); pin, compare, edit-from-here, prev/next, palette copy and the final-
 buttons all behave; the 141-line stylesheet and 70-line HTML match the last step exactly;
 12 of 12 images serve; no console errors; no overflow — locally and live.
 
+### Phase 9a — walkthroughs for 253 Q2, Slot 1 Q1, Slot 2 Q2
+**4 of 12 walkthroughs written.** Each of the three is 8–9 steps on a 40–44 minute budget.
+
+- **253 Q2, Admin dashboard** — a nested grid where the middle stats column holds two
+  stacked cards, and one progress-bar component reused five times with its width and colour
+  as inline custom properties.
+- **Slot 1 Q1, CORE-TECH** — four coloured stat cards from one rule block and one `--c` per
+  card; the active nav link underlined with `border-bottom` rather than `text-decoration`,
+  because that is what gives the gap; a form with a native `<select>` and four checkbox boxes.
+- **Slot 2 Q2, Book Share Hub** — the orange band is a *section with a background and
+  padding*, not a border, with white cards floating inside it while the black bars run full
+  width either side. That single realisation is most of the paper.
+
+The walkthrough page now **loads only the data file the URL asks for**, via `WP.loadScript`.
+Loading all twelve to show one would be a few hundred kilobytes. The id is whitelisted
+against `/^[a-z0-9-]+$/` before it becomes a script path.
+
+**Verified**: every palette checked by rendering the finished answer and reading computed
+styles — all nineteen annotated colours land on the right elements, and the grids are
+exactly equal at the 1180px design width (four 255px stat cards, a 527/527 split, four
+113px permission boxes). An unknown `?p=` degrades to a notice with a link, not an error.
+
+Two errors of my own, found that way and fixed in 253 Q2: the text said *six* progress bars
+where there are five, and the second bar's label used `:nth-of-type(2)`, which counts `<p>`
+elements and therefore landed on a percentage. It is now a sibling selector.
+
 ## Next
 
-**Phase 9** — the remaining eleven walkthroughs, in batches, pushing after each:
-`9a` 253-q2, slot1-q1, slot2-q2 · `9b` 251-q1, 251-q2, slot1-q2 ·
-`9c` slot2-q1, 243-q1, 243-q2 · `9d` 252-q1, 252-q2 (the gradient-heavy pair, last).
+**Phase 9b** — 251 Q1 (Information Desk pricing, the hard offset shadow), 251 Q2 (the
+split sign-in page with the OR divider), slot1 Q2 (CareerHub job board).
 
 ## Remaining
 
-Phases 10–11 per `PLAN.md` §5.
+`9c` slot2-q1, 243-q1, 243-q2 · `9d` 252-q1, 252-q2 (the gradient-heavy pair, last).
+Then phases 10–11 per `PLAN.md` §5.
 
 ## Decisions taken
 
