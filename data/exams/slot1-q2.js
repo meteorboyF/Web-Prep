@@ -380,6 +380,12 @@
         title: 'The reset',
         minutes: 3,
         why: 'Four lines plus <code>input { font: inherit }</code> for the eight checkboxes.',
+        detail: [
+          'Four lines plus <code>input { font: inherit }</code> for the eight checkboxes.',
+          '<code>a { color: inherit }</code> because the five nav links are dark, and the coloured ones get their colour from a class.',
+          '<code>box-sizing: border-box</code> so the padded panels inside a fixed 270px track actually fit.'
+        ],
+        check: 'A blank white page.',
         html: HTML_SKELETON,
         css: css(['reset'])
       },
@@ -390,6 +396,13 @@
              'card carries its stripe colour as <code>--edge</code> and each tag its background ' +
              'as <code>--t</code>, which is what makes steps 7 and 8 short. Every checkbox is a ' +
              'label wrapping its input, so no ids are needed.',
+        detail: [
+          'The longest markup in the set, but it is only two shapes repeated four and three times.',
+          'Each job card carries <code>style="--edge: …"</code> for its left stripe, and each tag carries <code>style="--t: …"</code>. That is why steps 7 and 8 are short.',
+          'Every checkbox is a <code>&lt;label&gt;</code> wrapping its input, so there are no ids anywhere.',
+          'The last filter panel has a heading and the Apply Filters button instead of a checkbox list — same component, different contents.'
+        ],
+        check: 'Outlines should show a header, then two columns, with four boxes in the left one and three cards in the right.',
         html: HTML_FULL,
         css: css(['reset', 'outline'])
       },
@@ -398,6 +411,12 @@
         minutes: 3,
         why: 'Six codes. Three are tag backgrounds, which is the clue that the tag should be ' +
              'one rule with a variable rather than three rules.',
+        detail: [
+          'Six codes. Three of them are tag backgrounds, which is the clue that the tag should be one rule with a variable rather than three rules.',
+          '<code>--brand</code> is used four ways: the logo word, the Post a Job button, three Apply buttons and Apply Filters.',
+          '<code>--rule</code> is only used once, for the thin line under the header — but it is annotated, so it is a mark.'
+        ],
+        check: 'The page background should turn very pale blue-grey.',
         html: HTML_FULL,
         css: css(['reset', 'outline', 'palette'])
       },
@@ -407,6 +426,12 @@
         why: 'Flex with <code>margin-right: auto</code> on the logo. The two-tone brand is a ' +
              '<code>&lt;span&gt;</code> around one word. The rule underneath is a ' +
              '<code>border-bottom</code> in the annotated blue.',
+        detail: [
+          'Flex with <code>margin-right: auto</code> on the logo.',
+          'The two-tone brand is a <code>&lt;span&gt;</code> around one word — the same trick as three other prototypes in this set.',
+          'The rule underneath is a <code>border-bottom</code> on the header in the annotated blue, not a separate element.'
+        ],
+        check: 'Logo left, five links, a filled button right, and a thin blue line under the whole bar.',
         html: HTML_FULL,
         css: css(['reset', 'outline', 'palette', 'head'])
       },
@@ -419,6 +444,13 @@
         trap: 'Without <code>align-content: start</code> the four filter panels share the full ' +
               'height of the main column and each one grows tall and empty. It looks like a ' +
               'padding bug and it is not.',
+        detail: [
+          'One grid declaration lays out the page: <code>270px 1fr</code>.',
+          '<code>align-content: start</code> on the sidebar is the important one. Without it the four panels share the full height of the main column and each grows tall and empty — which looks like a padding bug and is not.',
+          'The sidebar is itself a grid with a gap, so panel spacing is declared once.',
+          'Outlines come off here.'
+        ],
+        check: 'The four filter panels should sit at the top of the sidebar at their natural heights, not stretched down the column.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'head', 'page'])
       },
@@ -428,6 +460,13 @@
         why: 'One <code>.fbox</code> rule for all four. The heading is a flex row with a ' +
              '<code>border-bottom</code> and the chevron on <code>margin-left: auto</code> — ' +
              'the same two tricks as almost every other heading in this set.',
+        detail: [
+          'One <code>.fbox</code> rule for all four panels.',
+          'The heading is a flex row with a <code>border-bottom</code> and the chevron pushed right by <code>margin-left: auto</code> — the same two tricks as almost every heading in this set.',
+          'The chevron is a character. This is a static screenshot: there is no accordion to build and nothing to toggle.',
+          '<code>accent-color</code> gives the blue ticks in one line.'
+        ],
+        check: 'Four panels, each with a heading, a rule beneath it and a chevron on the right.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'head', 'page', 'opts'])
       },
@@ -438,6 +477,13 @@
              'salary block takes what it needs and is right-aligned. The stripe is ' +
              '<code>border-left</code> with the colour coming from the card’s own ' +
              '<code>--edge</code>.',
+        detail: [
+          'The card is a two-column grid of <code>1fr auto</code>: the details take the space, the salary block takes only what it needs.',
+          '<code>text-align: right</code> on the side column right-aligns the salary, the deadline and the Apply button together.',
+          'The stripe is <code>border-left: 5px solid var(--edge)</code> on the card itself. Not a positioned div, not a pseudo-element — a border.',
+          'Two cards are blue and one is green, which is why the colour comes from the markup rather than the rule.'
+        ],
+        check: 'Three cards with the middle one striped green. The three Apply buttons should share a right edge.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'head', 'page', 'opts', 'jobs'])
       },
@@ -446,6 +492,13 @@
         minutes: 3,
         why: 'Seven lines for all six pills. A flex row with a gap, and a background from ' +
              '<code>--t</code>. Adding a sixth tag needs no CSS.',
+        detail: [
+          'Seven lines for all six pills.',
+          'A flex row with a gap for the tag group, and a background from <code>var(--t)</code> on the tag itself.',
+          '<code>border-radius: 999px</code> for the capsule shape — any radius above half the height works, so nothing needs measuring.',
+          'Adding a seventh tag would need no CSS at all.'
+        ],
+        check: 'Six tags across three cards, in three different background colours.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'head', 'page', 'opts', 'jobs', 'tags'])
       },
@@ -456,6 +509,12 @@
              '<strong>Compare</strong>: check the sidebar panels sit at the top rather than ' +
              'stretching, the middle card’s stripe is green, and the Apply buttons line up on ' +
              'the right edge.',
+        detail: [
+          'A hover shadow on the cards and a bold label on checked filters via <code>:has()</code>.',
+          'Press Compare: the sidebar panels sit at the top, the middle card\'s stripe is green, and the Apply buttons line up on the right edge.',
+          'If the panels are stretched, <code>align-content: start</code> is missing.'
+        ],
+        check: 'The sidebar-and-main shell is the shape four of the twelve papers use. Make sure this one is solid.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'head', 'page', 'opts', 'jobs', 'tags', 'details'])
       }

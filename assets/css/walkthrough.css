@@ -326,3 +326,73 @@
 
 .ex__card--pending { opacity: .72; }
 .ex__card--pending .ex__thumb { filter: grayscale(.5); }
+
+/* ---- Syntax colouring in the step panes ------------------------------
+   Two states, and the contrast between them is the point:
+
+   unchanged lines  every token forced to one muted grey, so the code you
+                    already wrote recedes
+   new lines        full token colours, a tinted background and a green
+                    edge, so this step's work is the only thing with colour
+
+   That is why the token colours are declared on .wt__line--new only. */
+
+.wt__line { color: var(--code-dim); }
+.wt__line .tok { color: inherit; }
+
+.wt__line--new .tok--tag      { color: #b02a5b; }
+.wt__line--new .tok--attr     { color: #8a5a00; }
+.wt__line--new .tok--string   { color: #1f6d4a; }
+.wt__line--new .tok--entity   { color: #7a3fb5; }
+.wt__line--new .tok--comment  { color: #7b8794; font-style: italic; }
+.wt__line--new .tok--selector { color: #b02a5b; }
+.wt__line--new .tok--prop     { color: #2c5aa0; }
+.wt__line--new .tok--value    { color: #1f6d4a; }
+.wt__line--new .tok--number   { color: #b4541b; }
+.wt__line--new .tok--atrule   { color: #7a3fb5; }
+.wt__line--new .tok--punct    { color: #8a8f96; }
+.wt__line--new .tok--text     { color: var(--code-text); }
+
+:root { --code-dim: #9aa4b0; }
+:root[data-theme="dark"] { --code-dim: #5f6b78; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --code-dim: #5f6b78; }
+}
+
+:root[data-theme="dark"] .wt__line--new .tok--tag,
+:root[data-theme="dark"] .wt__line--new .tok--selector { color: #ff9ec0; }
+:root[data-theme="dark"] .wt__line--new .tok--attr     { color: #e8c07d; }
+:root[data-theme="dark"] .wt__line--new .tok--string,
+:root[data-theme="dark"] .wt__line--new .tok--value    { color: #8fe0b4; }
+:root[data-theme="dark"] .wt__line--new .tok--prop     { color: #9ec5ff; }
+:root[data-theme="dark"] .wt__line--new .tok--number   { color: #f0a06a; }
+:root[data-theme="dark"] .wt__line--new .tok--entity,
+:root[data-theme="dark"] .wt__line--new .tok--atrule   { color: #d3a6ff; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .wt__line--new .tok--tag,
+  :root:not([data-theme="light"]) .wt__line--new .tok--selector { color: #ff9ec0; }
+  :root:not([data-theme="light"]) .wt__line--new .tok--attr     { color: #e8c07d; }
+  :root:not([data-theme="light"]) .wt__line--new .tok--string,
+  :root:not([data-theme="light"]) .wt__line--new .tok--value    { color: #8fe0b4; }
+  :root:not([data-theme="light"]) .wt__line--new .tok--prop     { color: #9ec5ff; }
+  :root:not([data-theme="light"]) .wt__line--new .tok--number   { color: #f0a06a; }
+  :root:not([data-theme="light"]) .wt__line--new .tok--entity,
+  :root:not([data-theme="light"]) .wt__line--new .tok--atrule   { color: #d3a6ff; }
+}
+
+/* ---- Step detail and check ------------------------------------------- */
+
+.wt__detail {
+  margin: 0 0 var(--s-3);
+  padding-left: 1.15rem;
+  display: grid;
+  gap: var(--s-2);
+  font-size: var(--t-sm);
+  max-width: 74ch;
+}
+.wt__detail li { color: var(--muted); }
+.wt__detail li strong { color: var(--text); }
+.wt__detail code { font-size: var(--t-xs); }
+
+.wt__check { margin-bottom: var(--s-3); }

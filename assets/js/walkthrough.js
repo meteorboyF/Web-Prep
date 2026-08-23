@@ -329,9 +329,22 @@
       panel.appendChild(el('h3', { class: 'wt__step-title', html: step.title }));
       panel.appendChild(el('p', { class: 'wt__why', html: step.why }));
 
+      /* The line-by-line detail. This is what turns a walkthrough into an
+         exercise rather than a code dump. */
+      if (step.detail && step.detail.length) {
+        var det = el('ul', { class: 'wt__detail' });
+        step.detail.forEach(function (d) { det.appendChild(el('li', { html: d })); });
+        panel.appendChild(det);
+      }
+
       if (step.trap) {
         panel.appendChild(el('aside', { class: 'callout callout--trap',
           html: '<strong>Watch out</strong>' + step.trap }));
+      }
+
+      if (step.check) {
+        panel.appendChild(el('aside', { class: 'callout callout--tip wt__check',
+          html: '<strong>Before you move on</strong>' + step.check }));
       }
 
       /* Code and preview */
@@ -345,13 +358,27 @@
         var changed = lineDiff(prevStep[kind], step[kind]);
         var added = changed.filter(function (l) { return l.added; }).length;
 
+        /* The diff and the highlighter both split the same string on
+           newlines, so line k of one is line k of the other. */
+        var painted = WP.highlight ? WP.highlight.lines(step[kind], kind) : null;
+
         var pre = el('pre', { class: 'wt__pre', 'data-active': i === 0 ? 'true' : 'false' });
-        changed.forEach(function (line) {
-          pre.appendChild(el('span', {
-            class: 'wt__line' + (line.added ? ' wt__line--new' : ''),
-            text: line.text === '' ? ' ' : line.text
-          }));
+
+        changed.forEach(function (line, k) {
+          var row = el('span', {
+            class: 'wt__line' + (line.added ? ' wt__line--new' : '')
+          });
+          var tokens = painted && painted[k];
+          if (tokens && tokens.length) {
+            tokens.forEach(function (t) {
+              row.appendChild(el('span', { class: 'tok tok--' + t.type, text: t.text }));
+            });
+          } else {
+            row.appendChild(document.createTextNode(line.text === '' ? ' ' : line.text));
+          }
+          pre.appendChild(row);
         });
+
         codeHost.appendChild(pre);
         panes[kind] = pre;
 

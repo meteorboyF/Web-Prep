@@ -379,6 +379,12 @@
         why: 'Note the fifth line: <code>input, select, textarea, button { font: inherit }</code>. ' +
              'This prototype is mostly form controls, so without it half the page will be in ' +
              'the browser’s default face.',
+        detail: [
+          'The fifth line is the one that matters on this page: <code>input, select, textarea, button { font: inherit; color: inherit }</code>. This prototype is mostly form controls.',
+          'Without it, the select and the textarea render in the browser default face and the panel looks like it came from a different website.',
+          '<code>box-sizing: border-box</code> so the full-width inputs inside padded panels actually fit.'
+        ],
+        check: 'A blank white page.',
         html: HTML_SKELETON,
         css: css(['reset'])
       },
@@ -389,6 +395,13 @@
              '<code>--c</code>, which is the decision that makes step 6 four lines instead of ' +
              'forty. Each checkbox is a label wrapping its input, so no <code>id</code> is ' +
              'needed anywhere.',
+        detail: [
+          'Three regions inside one panel: the navy bar, the four-card row, and the two-panel split.',
+          'Each stat card carries <code>style="--c: var(--blue)"</code>. That single decision is why step 6 is four lines instead of forty.',
+          'Each checkbox is a <code>&lt;label&gt;</code> wrapping its <code>&lt;input&gt;</code>, so no ids are needed anywhere on the page.',
+          'The two fields that sit side by side are wrapped in a <code>.row</code> div so they can be their own small grid.'
+        ],
+        check: 'Outlines should show one outer panel containing three stacked regions, and four equal-ish card boxes in the middle one.',
         html: HTML_FULL,
         css: css(['reset', 'outline'])
       },
@@ -398,6 +411,12 @@
         why: 'Seven annotated codes, plus three of your own for the pale panel background, the ' +
              'input borders and the body text. The four card colours are named for what they ' +
              'are rather than which card they are on, because they are used by value.',
+        detail: [
+          'Seven annotated codes, plus three of your own for the pale panel, the input borders and the body text.',
+          'The four card colours are named for what they look like rather than which card they sit on, because they are consumed by value through <code>--c</code>.',
+          '<code>--navy</code> appears three times — the bar, the heading rules and the primary button — which is the clearest argument for naming it.'
+        ],
+        check: 'The page behind the panel should turn grey. Nothing else yet.',
         html: HTML_FULL,
         css: css(['reset', 'outline', 'palette'])
       },
@@ -407,6 +426,12 @@
         why: 'A max-width, centred, white, with the navy border and a radius. ' +
              '<code>overflow: hidden</code> so the header bar inside cannot poke square corners ' +
              'through the rounded ones.',
+        detail: [
+          'A max-width, centred, white, with a navy border and a radius.',
+          '<code>overflow: hidden</code> so the navy header bar inside cannot poke square corners through the rounded ones.',
+          'The inner padding goes on <code>.body</code>, not on the panel, because the header bar must reach the panel\'s edges.'
+        ],
+        check: 'One rounded white panel on a grey page, with everything else inside it.',
         html: HTML_FULL,
         css: css(['reset', 'outline', 'palette', 'panel'])
       },
@@ -417,6 +442,12 @@
              '<code>margin-left: auto</code> on the admin label. The active link’s underline is ' +
              'a <code>border-bottom</code> with a little <code>padding-bottom</code>, which ' +
              'gives you the gap that <code>text-decoration: underline</code> will not.',
+        detail: [
+          'Flex, with <code>margin-right: auto</code> on the brand and <code>margin-left: auto</code> on the admin label. The nav ends up in the middle without being centred by anything.',
+          'The active link gets a colour <em>and</em> a <code>border-bottom</code> with a little <code>padding-bottom</code>. That padding is what gives the gap between the text and the rule — <code>text-decoration: underline</code> sits too close.',
+          'Uppercase nav text comes from the markup, not from <code>text-transform</code>, because the design uses it as a label rather than as styling.'
+        ],
+        check: 'A navy bar with the brand left, four links, and the admin label hard right. OVERVIEW should be underlined.',
         html: HTML_FULL,
         css: css(['reset', 'outline', 'palette', 'panel', 'bar'])
       },
@@ -430,6 +461,13 @@
               'the element. With <code>opacity</code> the white text fades too and the label ' +
               'goes muddy — which is exactly what it looks like when someone has used the ' +
               'wrong one.',
+        detail: [
+          'This is the step that decides whether you finish. One <code>.stat</code> rule reads <code>background: var(--c)</code> and each card sets that variable inline.',
+          'Adding a fifth card would need no new CSS at all — which is the test of whether you have done it right.',
+          'The pill is <code>rgb(255 255 255 / .25)</code>: a translucent background layer, so the white text on top stays fully opaque.',
+          '<code>text-align: center</code> on the pill and <code>width</code> left alone, so it fills the card and centres its label.'
+        ],
+        check: 'Four equal coloured cards, each with a small label, a big number and a full-width translucent pill. The pill text should be crisp white, not grey.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'panel', 'bar', 'stats'])
       },
@@ -439,6 +477,12 @@
         why: 'A two-column grid, and a heading with a <code>border-bottom</code>. That rule ' +
              'under each title is a border on the <code>&lt;h2&gt;</code>, not a separate ' +
              'element — one declaration rather than a div you then have to space.',
+        detail: [
+          'A two-column grid for the panels, and a heading with a <code>border-bottom</code>.',
+          'That rule under each title is a border on the <code>&lt;h2&gt;</code> itself, not a separate div — one declaration rather than an element you then have to space.',
+          '<code>padding-bottom</code> on the heading creates the gap between the text and its rule.'
+        ],
+        check: 'Two equal panels, each with a navy heading and a navy rule beneath it.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'panel', 'bar', 'stats', 'boxes'])
       },
@@ -449,6 +493,14 @@
              'row is its own small grid; the checkbox boxes are a four-column grid of bordered ' +
              'labels; the buttons are a two-column grid with the first wider. ' +
              '<code>accent-color</code> gives you the blue ticks in one line.',
+        detail: [
+          'One rule covers <code>input</code>, <code>select</code> and <code>textarea</code> together — they are three different elements that should look identical.',
+          'The two-up field row is its own small grid inside the panel, so it does not affect the full-width textarea below it.',
+          'The checkbox boxes are a four-column grid of bordered labels, each one <code>display: flex</code> with <code>justify-content: center</code> so the tick and the word sit together in the middle.',
+          '<code>accent-color</code> gives you the blue ticks in one line — no custom checkbox markup.',
+          'The two buttons are a grid of <code>1.5fr 1fr</code>, because UPDATE SETTINGS is visibly wider than RESET in the target.'
+        ],
+        check: 'A text field beside a select, a full-width textarea below them, four bordered checkbox boxes, and two unequal buttons.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'panel', 'bar', 'stats', 'boxes', 'form'])
       },
@@ -459,6 +511,12 @@
              'buttons. Then <strong>Compare</strong>: check the four cards are equal width, ' +
              'the active nav underline is there, and the two buttons are unequal in the right ' +
              'direction.',
+        detail: [
+          'A drop shadow under the panel, focus rings on the fields, and a hover on the buttons.',
+          '<code>.perm:has(input:checked)</code> tints the border of a ticked permission — a parent reacting to its own child, with no JavaScript.',
+          'Press Compare: the four cards should be exactly equal, the active nav link underlined, and the two buttons unequal in the right direction.'
+        ],
+        check: 'Everything should line up. If the cards are unequal, one of them has content forcing it wider — check the pill text.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'panel', 'bar', 'stats', 'boxes', 'form', 'details'])
       }

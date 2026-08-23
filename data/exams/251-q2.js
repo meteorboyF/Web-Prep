@@ -376,6 +376,12 @@
         minutes: 3,
         why: 'Five lines. <code>font: inherit</code> on inputs and buttons matters — there are ' +
              'four buttons and two inputs on this page.',
+        detail: [
+          'Five lines. <code>font: inherit</code> on inputs and buttons — this page has two inputs and four buttons.',
+          '<code>a { color: inherit }</code> because the red links get their colour from a class, not from being links.',
+          '<code>box-sizing: border-box</code> for the full-width inputs inside a capped column.'
+        ],
+        check: 'A blank white page.',
         html: HTML_SKELETON,
         css: css(['reset'])
       },
@@ -387,6 +393,13 @@
              'OR line is one paragraph with a span inside it, because the rules will be ' +
              'pseudo-elements; and the two social buttons on the second row are wrapped so ' +
              'they can be their own grid.',
+        detail: [
+          'Three decisions in the markup that make the CSS short later.',
+          'The password field is wrapped in a <code>.pw</code> div, so the Show button has something to position itself against.',
+          'The OR line is one paragraph with a <code>&lt;span&gt;</code> inside it — the two rules will be pseudo-elements, so no extra markup is needed.',
+          'The two social buttons on the second row are wrapped in a <code>.social-row</code> div so they can be their own two-column grid while the Google button above stays full width.'
+        ],
+        check: 'Outlines should show a header, then two equal halves, with the right half containing a tall stack of controls.',
         html: HTML_FULL,
         css: css(['reset', 'outline'])
       },
@@ -395,6 +408,12 @@
         minutes: 2,
         why: 'Three codes, which is the shortest palette of the twelve. The red is worth ' +
              'naming even though it is one colour, because six separate links reach for it.',
+        detail: [
+          'Three codes only — the shortest palette of the twelve.',
+          'The red is worth naming even though it is a single colour, because six separate links reach for it.',
+          '<code>#eff1f3</code> is the input background, which is what makes the two fields read as filled rather than outlined.'
+        ],
+        check: 'No visible change yet.',
         html: HTML_FULL,
         css: css(['reset', 'outline', 'palette'])
       },
@@ -403,6 +422,12 @@
         minutes: 4,
         why: 'Flex, <code>margin-right: auto</code> on the title. The lion becomes a dark ' +
              'rounded square — thirty seconds, and it holds the space the real logo would.',
+        detail: [
+          'Flex, with <code>margin-right: auto</code> on the title so the nav and the button go right.',
+          'The lion becomes a dark rounded square — thirty seconds, and it holds exactly the space the real logo would.',
+          'A <code>border-bottom</code> separates the header from the split below it.'
+        ],
+        check: 'Logo and title left, four links and a blue button right.',
         html: HTML_FULL,
         css: css(['reset', 'outline', 'palette', 'head'])
       },
@@ -416,6 +441,13 @@
         trap: 'Skip the width cap and the form spreads across the full half. It will not look ' +
               'broken — it will just look wrong, and you will spend ten minutes adjusting font ' +
               'sizes trying to work out why.',
+        detail: [
+          'The most important step on this paper. Two equal halves with a <code>min-height</code> so the blue panel has real height even on a short page.',
+          'The left panel is <code>display: flex; flex-direction: column; justify-content: center</code>, which vertically centres the quote and its attribution as a group.',
+          'The right half contains a column capped at 430px and centred with <code>margin-inline: auto</code>. Every measurement in the form depends on that cap.',
+          '<code>width: min(100%, 430px)</code> rather than a plain <code>max-width</code>, so it also behaves on a narrow screen.'
+        ],
+        check: 'Two equal halves. The form column should be visibly narrower than its half, with white space either side of it.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'head', 'split'])
       },
@@ -425,6 +457,12 @@
         why: 'Large quoted text and a flex row for the attribution. The avatar is a circle from ' +
              '<code>aspect-ratio: 1</code> and <code>border-radius: 50%</code>, with ' +
              '<code>flex: none</code> so it never squashes.',
+        detail: [
+          'Large quoted text with a comfortable <code>line-height</code> — the quote is the visual weight of this half.',
+          'The attribution is a flex row: circle, then name and role stacked.',
+          'The avatar is <code>aspect-ratio: 1</code> plus <code>border-radius: 50%</code>, with <code>flex: none</code> so it never squashes when the name is long.'
+        ],
+        check: 'The quote block should sit in the vertical middle of the blue panel, not at the top.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'head', 'split', 'quote'])
       },
@@ -439,6 +477,14 @@
         trap: 'The <code>::before</code> and <code>::after</code> on the OR line need ' +
               '<code>content: ""</code> or they are never generated at all — and the divider ' +
               'silently becomes a lonely "OR".',
+        detail: [
+          'The longest step, and three of its parts are worth learning on their own.',
+          'The <strong>OR divider</strong>: a flex row whose <code>::before</code> and <code>::after</code> are two <code>flex: 1</code> lines with a 1px height. Six lines of CSS.',
+          'The <strong>Show button</strong>: <code>position: absolute</code> inside a <code>position: relative</code> wrapper, with <code>top: 50%</code> and <code>translateY(-50%)</code> to centre it vertically without knowing its height.',
+          'The <strong>social buttons</strong>: one shared rule, then a two-column grid for the pair. The brand marks are coloured letters — G, an apple glyph, an f.',
+          'The heading uses a serif stack, which is the one place on this page where the typeface is doing visible work.'
+        ],
+        check: 'The OR line should have a rule on each side of it. If you only see the word, the pseudo-elements have no content.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'head', 'split', 'quote', 'form'])
       },
@@ -448,6 +494,12 @@
         why: 'Focus rings and hovers. Then <strong>Compare</strong>: check the two halves are ' +
              'equal, the quote is vertically centred rather than top-aligned, and the form ' +
              'column is narrow and centred rather than filling its half.',
+        detail: [
+          'Focus rings and hovers.',
+          'Press Compare: the two halves equal, the quote vertically centred, and the form column narrow and centred rather than filling its half.',
+          'If the form looks too wide, the width cap from step 5 is missing or overridden.'
+        ],
+        check: 'The narrow centred form column is the thing most people get wrong here. Check it explicitly.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'head', 'split', 'quote', 'form', 'details'])
       }

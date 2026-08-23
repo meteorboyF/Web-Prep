@@ -321,6 +321,12 @@
         minutes: 3,
         why: 'Including <code>font: inherit</code> on the form controls, because five of them ' +
              'are about to appear.',
+        detail: [
+          'Five lines, including <code>font: inherit</code> for the five form controls that are coming.',
+          '<code>a { color: inherit }</code> for the four nav links, which are white on black in the design.',
+          'No <code>ul</code> reset needed — there are no lists on this page.'
+        ],
+        check: 'A blank white page.',
         html: HTML_SKELETON,
         css: css(['reset'])
       },
@@ -333,6 +339,13 @@
         trap: 'The header and footer are <em>outside</em> the orange frame, not inside it. ' +
               'Look at where the orange stops: there is a pale strip either side of it, but ' +
               'the black bars run the whole way across.',
+        detail: [
+          'Four stacked blocks: black bar, orange frame, footer bar. Everything else lives inside the frame.',
+          'Put the <code>&lt;br&gt;</code> in the Book Categories heading now. It is a deliberate break in the design, not wrapping, and forcing it later with a width wastes ten minutes.',
+          'The form is five controls and a button as direct children, so it can be a grid with a gap rather than each field carrying a margin.',
+          'The four category cards are siblings inside one <code>.cats</code> div — a 2x2 grid, not two rows of two.'
+        ],
+        check: 'Outlines should show the header and footer running the full width, and the orange region inset from both edges.',
         html: HTML_FULL,
         css: css(['reset', 'outline'])
       },
@@ -343,6 +356,12 @@
              'quite the same — <code>#c85a32</code> for the band and <code>#f97316</code> for ' +
              'the button — so naming them by role rather than by colour is what stops you ' +
              'reaching for the wrong one.',
+        detail: [
+          'Six annotated codes. Two of them are oranges that are nearly but not quite the same — <code>#c85a32</code> for the band and <code>#f97316</code> for the button.',
+          'Naming them by role rather than by colour is what stops you reaching for the wrong one when they look almost identical in a swatch list.',
+          '<code>#eb6623</code> is a third orange again, used only for the category headings.'
+        ],
+        check: 'The page should turn very pale blue behind everything.',
         html: HTML_FULL,
         css: css(['reset', 'outline', 'palette'])
       },
@@ -352,6 +371,12 @@
         why: 'Five minutes for the two things that make the page instantly recognisable. Flex ' +
              'row with <code>margin-right: auto</code> on the title for the header; a centred ' +
              'line for the footer.',
+        detail: [
+          'Five minutes for the two things that make this page instantly recognisable.',
+          'The header is a flex row with <code>margin-right: auto</code> on the title. The footer is a centred line.',
+          'Both are full-bleed: no max-width, no margin. That contrast with the inset orange band is the whole visual idea.'
+        ],
+        check: 'Black bars top and bottom, each running edge to edge.',
         html: HTML_FULL,
         css: css(['reset', 'outline', 'palette', 'bars'])
       },
@@ -362,6 +387,13 @@
              'so the cards sit inside the colour. Then a two-column grid below the hero. The ' +
              'white card rule is shared by the hero and both boards — three elements, one rule. ' +
              'Outlines come off.',
+        detail: [
+          'The orange is a <strong>section with a background and padding</strong> — not a border, and not an outline.',
+          '<code>margin-inline: 34px</code> leaves the pale page colour showing as a thin strip either side.',
+          '<code>padding: 26px</code> is what makes the white cards float inside the orange rather than touching its edges.',
+          'One <code>.hero, .board</code> rule gives all three white cards their background, radius and padding — three elements, one rule.'
+        ],
+        check: 'An orange band inset from both sides, with white cards inside it and a visible pale strip at each edge.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'bars', 'frame'])
       },
@@ -370,6 +402,12 @@
         minutes: 5,
         why: 'Type sizes and the navy heading colour. The two-line heading gets a tighter ' +
              '<code>line-height</code> so the deliberate break does not look like an accident.',
+        detail: [
+          'Type sizes and the navy heading colour.',
+          'The two-line heading gets a tighter <code>line-height: 1.25</code> so the deliberate break reads as intentional rather than as a wrapping accident.',
+          '<code>max-width: 80ch</code> on the hero paragraph caps its line length without a fixed pixel width.'
+        ],
+        check: 'Book and Categories should sit on two lines, close together.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'bars', 'frame', 'hero'])
       },
@@ -378,6 +416,12 @@
         minutes: 5,
         why: 'A 2×2 grid of cream cards with orange titles. One rule for all four — they differ ' +
              'only in their text.',
+        detail: [
+          'A 2x2 grid of cream cards with orange titles. One rule for all four — they differ only in their text.',
+          'The border is a slightly deeper cream than the background, which is what stops the cards dissolving into the white card behind them.',
+          '<code>gap: 18px</code> rather than margins, so the spacing is declared once.'
+        ],
+        check: 'Four equal cream cards in two rows of two, each with an orange heading.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'bars', 'frame', 'hero', 'cats'])
       },
@@ -387,6 +431,13 @@
         why: 'A grid with a gap rather than margins on each field, so the spacing is declared ' +
              'once. One rule styles the four inputs and the textarea together, then the button ' +
              'is full width because it is a grid child and grid items stretch by default.',
+        detail: [
+          'The form is a grid with a gap, so field spacing is declared once rather than as a margin on each control.',
+          'One rule styles the four inputs and the textarea together — they should be indistinguishable except for height.',
+          'The button is full width because it is a grid child and grid items stretch across their column by default. No <code>width: 100%</code> needed.',
+          '<code>::placeholder</code> gets its own grey, because the browser default is often too dark and reads as a filled-in value.'
+        ],
+        check: 'Five evenly spaced controls and a full-width orange Submit button.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'bars', 'frame', 'hero', 'cats', 'form'])
       },
@@ -396,6 +447,12 @@
         why: 'Card shadows, a nav hover, focus rings. <strong>Compare</strong> and check the ' +
              'pale strip really is visible either side of the orange, and that the black bars ' +
              'are not.',
+        detail: [
+          'Card shadows, a nav hover, focus rings on the form.',
+          'Press Compare and check the pale strip really is visible either side of the orange, and that the black bars are not inset.',
+          'This is the lightest of the twelve papers. If you are on time here, use the surplus on the other question.'
+        ],
+        check: 'The frame effect should be unmistakable: black, then pale, then orange, then white cards.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'bars', 'frame', 'hero', 'cats', 'form', 'details'])
       }

@@ -321,6 +321,12 @@
         minutes: 3,
         why: 'Four lines. <code>a { color: inherit }</code> earns its place here — there are ' +
              'seventeen links on this page and none of them should be browser blue.',
+        detail: [
+          'Four lines. <code>a { text-decoration: none; color: inherit }</code> earns its keep here more than anywhere: there are seventeen links on this page and none of them should be browser-blue.',
+          '<code>box-sizing: border-box</code> matters because five cards with padding sit in five equal grid tracks.',
+          'No <code>font: inherit</code> needed — there are no form controls on this page at all.'
+        ],
+        check: 'A blank white page.',
         html: HTML_SKELETON,
         css: css(['reset'])
       },
@@ -333,6 +339,13 @@
              'request you do not have time for and they are worth no marks either way.',
         trap: 'The two header rows are separate elements. Writing them as one flex row that ' +
               'wraps will look right at exactly one window width and wrong at every other.',
+        detail: [
+          'Type the first pricing card properly, then copy it four times and change only the text and the <code>--c</code>.',
+          'The icons are Unicode characters — a pencil, an envelope, a globe, a shopfront, scissors. They are worth no marks and cost seconds; an icon font would cost minutes and might not load.',
+          'The two header rows are separate elements. Writing them as one flex row that wraps will look right at exactly one window width.',
+          'Only the first card has the small print line beneath its button — do not add it to the others.'
+        ],
+        check: 'Outlines should show two header rows, a band containing five card boxes, and a closing section.',
         html: HTML_FULL,
         css: css(['reset', 'outline'])
       },
@@ -343,6 +356,13 @@
              'look like rather than which card they are on is deliberate: each card sets ' +
              '<code>--c</code> to one of them, so the card rule never mentions a specific ' +
              'colour at all.',
+        detail: [
+          'Eleven codes: one flame, five card titles, one button blue, plus a mint and an ink of your own.',
+          'The five title colours are named for what they look like, not which card they sit on, because each card consumes one through <code>--c</code>.',
+          '<code>--blue</code> is used six times — five buttons and the closing link — which alone justifies naming it.',
+          'This is the longest palette in the set. Five minutes here saves ten minutes of scrolling back to the question paper.'
+        ],
+        check: 'No visible change yet beyond the body text colour.',
         html: HTML_FULL,
         css: css(['reset', 'outline', 'palette'])
       },
@@ -352,6 +372,13 @@
         why: 'Two flex rows. <code>margin-right: auto</code> on the logo pushes the links and ' +
              'the SIGN UP button to the right. The orange word in the logo is a ' +
              '<code>&lt;span&gt;</code> — one element, one rule.',
+        detail: [
+          'Two flex rows, one after the other, not one row that wraps.',
+          '<code>margin-right: auto</code> on the logo pushes the links and the orange button to the right.',
+          'The orange word in the logo is a <code>&lt;span&gt;</code> — one element, one rule, no extra markup.',
+          'The second nav row has smaller text and wide letter-spacing, which is what makes it read as a menu rather than as a heading.'
+        ],
+        check: 'Two distinct header rows, with SIGN UP orange and hard right on the first.',
         html: HTML_FULL,
         css: css(['reset', 'outline', 'palette', 'header'])
       },
@@ -361,6 +388,13 @@
         why: '<code>text-align: center</code> on the band, then <code>text-align: left</code> ' +
              'back on the card grid — cheaper than centring three things individually. ' +
              '<code>repeat(5, 1fr)</code> gives the row. Outlines come off.',
+        detail: [
+          '<code>text-align: center</code> on the band, then <code>text-align: left</code> back on the card grid. Cheaper than centring three things individually.',
+          '<code>repeat(5, 1fr)</code> gives five exactly equal columns.',
+          'Generous vertical padding on the band — that mint area is what separates the pricing from the rest of the page, so it needs room.',
+          'The outline rule comes off here.'
+        ],
+        check: 'A pale mint band with a centred two-line heading and five equal card slots beneath it.',
         html: HTML_FULL,
         css: css(['reset', 'outline', 'palette', 'header', 'band'])
       },
@@ -375,6 +409,13 @@
         trap: '<code>box-shadow: 10px 10px 0 #000</code> — the fourth value is the blur and it ' +
               'must be <strong>0</strong>. Add blur and the flat graphic style collapses into ' +
               'something that looks like a mistake.',
+        detail: [
+          'One rule for all five cards. The title row is flex so the icon can take <code>margin-left: auto</code>.',
+          'The price is one large number with a small <code>&lt;span&gt;</code> beside it — the span resets both <code>font-size</code> and <code>font-weight</code>.',
+          'The button is <code>display: block</code>, which is what makes an <code>&lt;a&gt;</code> fill the card width. An inline anchor would only be as wide as its text.',
+          '<code>box-shadow: 10px 10px 0 #000</code> — the fourth value is the blur and it must be zero. This is the one case in the whole set where a flat hard shadow is correct.'
+        ],
+        check: 'Five equal cards, each with a coloured title, a large price and a full-width blue button, all casting a hard black shadow down and to the right.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'header', 'band', 'cards'])
       },
@@ -382,6 +423,12 @@
         title: 'The closing band',
         minutes: 3,
         why: 'The same centred shape as the mint band, without the background. Three elements.',
+        detail: [
+          'The same centred shape as the mint band, without the background colour.',
+          'Three elements: a heading, a paragraph and a link. Two minutes if the band above is already right.',
+          'The link takes the same <code>--blue</code> as the five buttons — one more reason it is a variable.'
+        ],
+        check: 'A white section below the mint band with centred text.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'header', 'band', 'cards', 'outro'])
       },
@@ -392,6 +439,12 @@
              'worth having on a design like this. Then <strong>Compare</strong>: the five ' +
              'cards should be exactly equal, and every shadow should sit down-and-right with ' +
              'hard edges.',
+        detail: [
+          'A hover that lifts the card and deepens the offset shadow — the only hover that suits a flat graphic style like this.',
+          'Press Compare and check the five cards are exactly equal, and every shadow sits down-and-right with hard edges.',
+          'If a shadow looks soft, the blur is not zero.'
+        ],
+        check: 'The hard shadows are the signature of this design. If they read as crisp rectangles, you have it.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'header', 'band', 'cards', 'outro', 'details'])
       }

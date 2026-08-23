@@ -363,6 +363,12 @@
         minutes: 3,
         why: 'Four lines. <code>a { color: inherit }</code> matters here because the nav links ' +
              'are not blue in the design and you do not want to override the browser twice.',
+        detail: [
+          'The usual four lines. <code>a { color: inherit }</code> matters here because the five nav links are dark in the design, not blue.',
+          'No <code>font: inherit</code> needed — this page has no form controls at all, which is unusual for the set.',
+          '<code>box-sizing: border-box</code> is doing the heaviest lifting: every card on this page has padding inside a grid track.'
+        ],
+        check: 'A blank white page.',
         html: HTML_SKELETON,
         css: css(['reset'])
       },
@@ -376,6 +382,13 @@
         trap: 'The middle column is <em>two</em> cards, not one card split in half. If you do ' +
               'not wrap them now you will end up fighting <code>grid-row</code> later for no ' +
               'reason.',
+        detail: [
+          'The longest step, and worth going slowly. Two decisions made here save the whole of steps 6 and 7.',
+          'The middle stats column is wrapped in a <code>&lt;div class="stack"&gt;</code>. Without that wrapper you will be fighting <code>grid-row</code> later for no reason.',
+          'Every bar carries <code>style="--w: 80%; --c: var(--blue)"</code> and every chip carries <code>style="--c: …"</code>. The CSS will then never mention a specific colour or width.',
+          'The avatar appears twice at two sizes — same class, plus a <code>--sm</code> modifier for the header one.'
+        ],
+        check: 'Count the boxes: three columns in the stats row, and the middle one containing two cards. Then three project cards below.',
         html: HTML_FULL,
         css: css(['reset', 'outline'])
       },
@@ -385,6 +398,12 @@
         why: 'Six annotated codes plus three of your own for the card white, the muted text ' +
              'and the empty part of a bar. Naming them now is what lets the bar and chip rules ' +
              'read as <code>var(--c)</code> rather than a hex you have to look up six times.',
+        detail: [
+          'Six annotated codes, plus three of your own for the card white, the muted text and the empty part of a bar.',
+          'Naming them lets the bar and chip rules read as <code>var(--c)</code> rather than a hex repeated in six places.',
+          '<code>--track</code> is the unfilled part of a progress bar. It is not annotated; any light grey reads correctly.'
+        ],
+        check: 'No visible change beyond the body colour. The variables exist but nothing uses them yet.',
         html: HTML_FULL,
         css: css(['reset', 'outline', 'palette'])
       },
@@ -396,6 +415,12 @@
              'no <code>justify-content</code> and no spacer elements. The avatar is a fixed ' +
              'width with <code>aspect-ratio: 1</code>, <code>border-radius: 50%</code> and ' +
              '<code>place-items: center</code> — three lines for a circle with centred initials.',
+        detail: [
+          'The nav appears centred, but nothing here centres it. <code>margin-right: auto</code> on the title and <code>margin-left: auto</code> on the user block push it into the middle from both sides.',
+          'That is more robust than <code>justify-content: center</code>, which would move as soon as the title or the user block changed length.',
+          'The avatar is a circle in three declarations: a width, <code>aspect-ratio: 1</code> and <code>border-radius: 50%</code>. <code>place-items: center</code> centres the initials without any line-height arithmetic.'
+        ],
+        check: 'Title left, links visually centred, name and avatar hard right, all on one line.',
         html: HTML_FULL,
         css: css(['reset', 'outline', 'palette', 'topbar'])
       },
@@ -406,6 +431,13 @@
              '<code>repeat(3, 1fr)</code> for the projects. The nested <code>.stack</code> ' +
              'grid gives the middle column its two cards. Outlines come off — the structure is ' +
              'right.',
+        detail: [
+          '<code>1.75fr 1fr 1fr</code> for the stats row — the profile card is visibly wider than the two beside it. Measure against the target rather than assuming equal thirds.',
+          '<code>.stack</code> is a nested grid with the same gap as its parent, so the two small cards line up with the top and bottom of the profile card.',
+          '<code>repeat(3, 1fr)</code> for the projects row — that one really is equal.',
+          'One <code>.card</code> rule gives every card its white background, radius and padding. Six cards, one rule.'
+        ],
+        check: 'The profile card should be wider than the others, and the two stacked cards should share their column.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'topbar', 'panel'])
       },
@@ -419,6 +451,13 @@
         trap: 'The track needs <code>overflow: hidden</code> or the square-cornered fill will ' +
               'poke out of the rounded ends. It is the same rule as a coloured header inside a ' +
               'rounded card.',
+        detail: [
+          'Twenty lines that serve eight elements — five bars and three chips.',
+          'The bar is a rounded track with <code>overflow: hidden</code>; the fill is a <code>::before</code> with <code>width: var(--w)</code>.',
+          'A pseudo-element with no <code>content</code> is never generated. If a bar renders as an empty track, that is why.',
+          'The chip is a pill: <code>border-radius: 999px</code> and a background from <code>var(--c)</code>. Any radius above half the height gives a perfect capsule.'
+        ],
+        check: 'Five bars at five different lengths and three coloured pills. Each bar should match its chip.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'topbar', 'panel', 'meter'])
       },
@@ -428,6 +467,13 @@
         why: 'The profile card is a flex row with the bars on <code>flex: 1</code>. The tall ' +
              'revenue card uses <code>margin-top: auto</code> on its "Last Week" line to push ' +
              'it to the bottom — the same trick as a sticky footer, at card scale.',
+        detail: [
+          'The profile card is a flex row of three parts, with the bars taking <code>flex: 1</code> so they fill whatever is left.',
+          '<code>min-width: 0</code> on the bars stops the flex item refusing to shrink — the single most common cause of a flex row overflowing.',
+          'The tall revenue card uses <code>margin-top: auto</code> on its Last Week line to push it to the bottom. Same trick as a sticky page footer, at card scale.',
+          'The second bar label needs spacing above it. That is a sibling selector on the value that precedes it, not <code>:nth-of-type</code>, which counts paragraphs and would land on a percentage.'
+        ],
+        check: 'Last Week should sit at the bottom of the revenue card, not directly under the number.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'topbar', 'panel', 'meter', 'cards'])
       },
@@ -438,6 +484,12 @@
              'check three things: the nav really is centred, the two middle cards line up with ' +
              'the top and bottom of the profile card, and every bar fill is the same colour as ' +
              'its chip.',
+        detail: [
+          'A faint shadow on every card, a hover on the nav, and a width transition on the bars.',
+          'Press Compare and check three things: the nav really is centred, the two middle cards align with the top and bottom of the profile card, and every bar fill matches its chip colour.',
+          'If anything is left over, spend it on the spacing inside the profile card rather than on more effects.'
+        ],
+        check: 'The grey panel should be the thing that makes this read as a dashboard. If it does, you are done.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'topbar', 'panel', 'meter', 'cards', 'details'])
       }

@@ -344,6 +344,13 @@
         why: 'The document skeleton and four rules. <code>box-sizing: border-box</code> means ' +
              'padding never changes a width; zeroing margins removes the default spacing on ' +
              'headings and paragraphs that you would otherwise spend the next hour fighting.',
+        detail: [
+          '<code>* { margin: 0; padding: 0; box-sizing: border-box }</code> — the three declarations that prevent the most trouble. Padding will never change a width again.',
+          '<code>body { font-family: system-ui, Arial, sans-serif }</code> — a system font stack, no network request, no reflow if it fails.',
+          '<code>img { max-width: 100%; display: block }</code> stops any image overflowing and kills the mysterious few pixels of space under an inline image.',
+          '<code>a { text-decoration: none; color: inherit }</code> — there are seven links on this page and none of them is browser-blue in the design.'
+        ],
+        check: 'A blank white page. Nothing should be visible yet.',
         html: HTML_SKELETON,
         css: css(['reset'])
       },
@@ -356,6 +363,13 @@
         trap: 'The heading breaks after the comma because the design says so, not because of ' +
               'the container width. That is a <code>&lt;br&gt;</code>, and it takes one second. ' +
               'Trying to force it with a width would take ten minutes and break at other sizes.',
+        detail: [
+          'Write the whole structure before styling any of it. Structural mistakes are cheap now and expensive in twenty minutes.',
+          '<code>&lt;header&gt;</code>, then one <code>&lt;main class="card"&gt;</code> containing exactly two <code>&lt;section&gt;</code> elements. That is the entire page shape.',
+          'The three feature rows each contain a <code>&lt;span class="dot"&gt;</code> — an empty span that will become the green square. The third gets an extra class so its square can be made transparent rather than removed, which keeps all three rows aligned.',
+          'Each form field is a <code>&lt;label&gt;</code> wrapping a <code>&lt;span&gt;</code> and an <code>&lt;input&gt;</code>. Wrapping means no <code>id</code> attributes at all, which is both correct and faster to type.'
+        ],
+        check: 'With outlines on you should see: a header box, one big card box, and two equal-ish boxes inside it. If the card is not wrapping both columns, fix that before going on.',
         html: HTML_FULL,
         css: css(['reset', 'outline'])
       },
@@ -366,6 +380,13 @@
              'Four of the seven appear more than once in the finished stylesheet, so this is ' +
              'faster as well as tidier — and a marker can see at a glance that you read the ' +
              'annotations. The page background and body colour go on at the same time.',
+        detail: [
+          'Seven codes, all printed on the paper with red arrows. These are marks — transcribe them exactly.',
+          'Name them by role (<code>--brand</code>, <code>--panel</code>) rather than by colour, so the rules below read as intent rather than as hex.',
+          'Four of the seven are used more than once, which is why this is faster than typing hex inline as well as tidier.',
+          'The two greys at the bottom are yours, not the paper\'s. The comment says so — never let a sampled value pass as a specified one.'
+        ],
+        check: 'The page background should turn pale grey. Nothing else changes yet, because the variables are declared but not used.',
         html: HTML_FULL,
         css: css(['reset', 'outline', 'palette'])
       },
@@ -376,6 +397,12 @@
              'after it to the far end — no spacer div, no <code>justify-content</code> ' +
              'juggling. The same <code>max-width: 1100px; margin: 0 auto</code> that the card ' +
              'will use, so the two line up.',
+        detail: [
+          'One flex row. <code>margin-right: auto</code> on the logo absorbs all the spare space and pushes the nav to the far end — no spacer element, no <code>justify-content</code>.',
+          'The header uses the same <code>max-width: 1100px; margin: 0 auto</code> that the card will use in the next step, so the two line up on the left and right edges.',
+          '<code>align-items: center</code> so the large logo and the small links share a centre line.'
+        ],
+        check: 'Logo hard left, three links hard right, and the whole row inset from the window edges.',
         html: HTML_FULL,
         css: css(['reset', 'outline', 'palette', 'header'])
       },
@@ -389,6 +416,13 @@
         trap: 'Without <code>overflow: hidden</code> on <code>.card</code>, the pale blue ' +
               'panel will sit square-cornered inside the rounded card. It is a small detail ' +
               'that reads as sloppy, and it costs one word.',
+        detail: [
+          '<code>grid-template-columns: 1fr 1fr</code> gives two exactly equal halves. This is the layout — everything else is decoration.',
+          '<code>overflow: hidden</code> on the card is what makes the coloured panels respect its rounded corners. Without it you get square corners poking through the radius.',
+          'Both halves get the same generous padding, so the two columns feel like one card rather than two boxes side by side.',
+          'The outline rule comes off here, commented rather than deleted — you will want it again the moment something moves unexpectedly.'
+        ],
+        check: 'A rounded white card with a pale blue left half and a white right half, both the same width, and no square corners anywhere.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'header', 'card'])
       },
@@ -400,6 +434,13 @@
              'width, a height and a background — not an image and not an icon font. The third ' +
              'feature has no square, so its span just gets a transparent background rather ' +
              'than being removed, which keeps all three rows aligned.',
+        detail: [
+          'Nothing in this column needs a layout system except the feature rows and the button row, and both are one line of flex.',
+          'The green squares are a span with a width, a height and a background — not an image, not an icon font.',
+          '<code>.dot--none { background: transparent }</code> for the third feature. Removing the span instead would lose the indent and break the alignment of all three rows.',
+          '<code>max-width: 46ch</code> on the paragraph caps the line length. <code>ch</code> is the width of a zero, so this is a readable measure without measuring anything.'
+        ],
+        check: 'The heading should break after the comma, the three features should have their text aligned with each other, and the third should have an invisible square holding its place.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'header', 'card', 'left'])
       },
@@ -413,6 +454,13 @@
         trap: '<code>font: inherit</code> on the input is not optional. Form controls do not ' +
               'inherit fonts, so without it your three fields will be in the browser’s default ' +
               'face while everything around them is not.',
+        detail: [
+          'One <code>.field</code> rule serves all three inputs. Write it once.',
+          'The label text is a <code>&lt;span&gt;</code> set to <code>display: block</code>, which stacks it above the input without needing a wrapper div.',
+          '<code>width: 100%</code> on the inputs plus <code>border-box</code> from step 1 means they fill the column exactly, padding included.',
+          '<code>font: inherit</code> is doing real work here — without it these three fields would be in the browser default face while everything around them is not.'
+        ],
+        check: 'Three identical fields with their labels above them, a checkbox row, and a full-width filled button.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'header', 'card', 'left', 'right'])
       },
@@ -423,6 +471,13 @@
              '<code>accent-color</code> on the checkbox. Press <strong>Compare</strong> above ' +
              'and put the two side by side — check the heading break, the gap between the ' +
              'buttons, and that the green squares line up with their text.',
+        detail: [
+          'The card shadow is two stacked shadows with an x-offset of zero: a tight one for the edge and a wide soft one for the lift.',
+          '<code>::placeholder</code> gets its own colour, because the browser default is often too dark and reads as filled-in text.',
+          'The focus ring replaces the outline with a border colour <em>and</em> a soft box-shadow. Replacing an outline with only a border colour fails contrast for anyone who cannot see that hue.',
+          '<code>accent-color</code> recolours the native checkbox in one line — no custom checkbox markup needed.'
+        ],
+        check: 'Press Compare. Look at the heading break, the gap between the two buttons, and whether the green squares line up with their text.',
         html: HTML_FULL,
         css: css(['reset', 'outlineOff', 'palette', 'header', 'card', 'left', 'right', 'details'])
       }
