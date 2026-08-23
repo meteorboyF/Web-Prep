@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam checklist — Web-Prep</title>
+<meta name="description" content="A one-page printable checklist: what to type first, the order of attack, and the traps.">
+<meta name="theme-color" content="#0f766e">
+<link rel="icon" href="./assets/img/mark.svg" type="image/svg+xml">
+
+<link rel="stylesheet" href="./assets/css/tokens.css">
+<link rel="stylesheet" href="./assets/css/base.css">
+<link rel="stylesheet" href="./assets/css/layout.css">
+<link rel="stylesheet" href="./assets/css/components.css">
+<link rel="stylesheet" href="./assets/css/playground.css">
+<link rel="stylesheet" href="./assets/css/lesson.css">
+<link rel="stylesheet" href="./assets/css/walkthrough.css">
+<link rel="stylesheet" href="./assets/css/print.css" media="print">
+<link rel="stylesheet" href="./assets/css/tools.css">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css"
+      integrity="sha384-zaeBlB/vwYsDRSlFajnDd7OydJ0cWk+c2OWybl3eSUf6hW2EbhlCsQPqKr3gkznT"
+      crossorigin="anonymous" referrerpolicy="no-referrer">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"
+        integrity="sha384-ZYmwuq4n2gOcNxMSiJ6jyTj+BbIrilr7p6dlq6q5nmSWKmsH9UU4K1qqjycMkfmR"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"
+        integrity="sha384-xPpkMo5nDgD98fIcuRVYhxkZV6/9Y4L8s3p0J5c4MxgJkyKJ8BJr+xfRkq7kn6Tw"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"
+        integrity="sha384-fpeIC2FZuPmw7mIsTvgB5BNc8QVxQC/nWg2W+CgPYOAiBiYVuHe2E8HiTWHBMIJQ"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"
+        integrity="sha384-g0o+WW9mdIxA7LaaCKTkRm0M5TVT+Bb4s9eocxPsI2G0Xm0POG9iD6G6qP1IIsfS"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"
+        integrity="sha384-xYIbc5F55vPi7pb/lUnFj3wu24HlpAMZdtBHkNrb2YhPzJV3pX7+eqXT2PXSNMrw"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>try{var t=localStorage.getItem('webprep:theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body data-base="./">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="app">
+
+  <header class="site-header">
+    <button class="btn btn--ghost btn--icon nav-toggle" data-nav-toggle
+            aria-expanded="false" aria-label="Toggle navigation">&#9776;</button>
+    <a class="brand" href="./index.html">
+      <img src="./assets/img/mark.svg" alt="" width="24" height="24">
+      Web<span>-Prep</span>
+    </a>
+    <div class="header-actions">
+      <a class="btn btn--ghost" href="./exam-mode.html">Exam mode</a>
+      <button class="btn btn--ghost btn--icon theme-toggle" data-theme-toggle
+              aria-label="Switch theme">
+        <span class="icon-light" aria-hidden="true">&#9686;</span>
+        <span class="icon-dark" aria-hidden="true">&#9687;</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="shell">
+
+    <nav class="sidebar" aria-label="Primary" data-open="false">
+      <div data-nav></div>
+    </nav>
+
+    <main class="content" id="main">
+      <div class="wrap ck">
+
+        <div class="lsn__intro">
+          <p class="eyebrow">CSE 4165 &middot; 90 minutes &middot; 2 &times; 15 marks</p>
+          <h1>Exam checklist</h1>
+          <p class="lede" data-no-print>
+            One page. Press <kbd>Ctrl</kbd>+<kbd>P</kbd> and put it beside the keyboard.
+          </p>
+        </div>
+
+        <div class="ck__grid">
+
+          <section class="ck__box">
+            <h2>1. Before you type anything</h2>
+            <ol>
+              <li>Read <strong>both</strong> prototypes. Decide which is easier and start with that one.</li>
+              <li>Find every red arrow. Count the hex codes &mdash; they are marks.</li>
+              <li>Name the regions out loud: header, hero, card row, sidebar, form, footer.</li>
+              <li>Decide grid or flex for the <em>outer</em> shape only. The inside can wait.</li>
+            </ol>
+          </section>
+
+          <section class="ck__box">
+            <h2>2. The reset, from memory</h2>
+            <pre><code>* { margin: 0; padding: 0;
+    box-sizing: border-box; }
+
+body { font-family: system-ui,
+       Arial, sans-serif; }
+
+img { max-width: 100%; display: block; }
+
+a { text-decoration: none;
+    color: inherit; }
+
+input, select, textarea, button {
+  font: inherit; color: inherit; }</code></pre>
+          </section>
+
+          <section class="ck__box">
+            <h2>3. The order of attack</h2>
+            <ol>
+              <li>Skeleton and reset.</li>
+              <li><strong>All</strong> the HTML, with <code>* { outline: 1px solid red }</code> on.</li>
+              <li>Palette into <code>:root</code>, straight off the paper.</li>
+              <li>Outer container: grid or flex, widths, gaps.</li>
+              <li>Section by section, top to bottom.</li>
+              <li>Details: radius, borders, shadows.</li>
+              <li>Compare against the image.</li>
+            </ol>
+          </section>
+
+          <section class="ck__box">
+            <h2>4. Time budget</h2>
+            <div class="ck__time">
+              <div><b>0&ndash;5</b><span>Read both papers, pick the order.</span></div>
+              <div><b>5&ndash;45</b><span>First prototype, all seven steps.</span></div>
+              <div><b>45&ndash;85</b><span>Second prototype.</span></div>
+              <div><b>85&ndash;90</b><span>Compare both. Fix nothing new.</span></div>
+            </div>
+            <ul style="margin-top:.6rem">
+              <li>At 45 minutes, <strong>move on</strong> whatever state the first one is in.</li>
+              <li>Two three-quarter answers beat one perfect one.</li>
+            </ul>
+          </section>
+
+          <section class="ck__box">
+            <h2>5. Patterns you will need</h2>
+            <ul>
+              <li><code>margin-right: auto</code> &mdash; logo left, links right.</li>
+              <li><code>display: grid; grid-template-columns: 240px 1fr</code> &mdash; sidebar shell.</li>
+              <li><code>flex: 1 1 260px</code> &mdash; card row that wraps itself.</li>
+              <li><code>justify-content: space-between</code> &mdash; label left, value right.</li>
+              <li><code>margin-top: auto</code> &mdash; pin something to the bottom of a flex column.</li>
+              <li><code>position: relative</code> parent + <code>absolute</code> child &mdash; badges, overlays.</li>
+              <li><code>aspect-ratio: 1; border-radius: 50%</code> &mdash; circular avatar.</li>
+              <li><code>border-left: 4px solid</code> &mdash; coloured stripe on a card.</li>
+              <li><code>border-radius: 999px</code> &mdash; pill or chip.</li>
+              <li><code>overflow: hidden</code> &mdash; make children respect a radius.</li>
+            </ul>
+          </section>
+
+          <section class="ck__box">
+            <h2>6. One component, one variable</h2>
+            <pre><code>&lt;article class="card" style="--c: #1975d1"&gt;
+
+.card { background: var(--c); }</code></pre>
+            <ul style="margin-top:.6rem">
+              <li>Four coloured cards is <em>one</em> rule block, not four.</li>
+              <li>Same for chips, tags and progress bars.</li>
+              <li>Six of the twelve past papers need this.</li>
+            </ul>
+          </section>
+
+          <section class="ck__box">
+            <h2>7. Do not waste time on</h2>
+            <ul>
+              <li><strong>Icons.</strong> A Unicode character or a coloured square.</li>
+              <li><strong>Images.</strong> <code>&lt;img src="a.jpg" alt=""&gt;</code>, or a div with <code>aspect-ratio</code>.</li>
+              <li><strong>Web fonts.</strong> A network request that may not resolve.</li>
+              <li><strong>Hover states.</strong> A screenshot has none.</li>
+              <li><strong>Responsive.</strong> One <code>max-width: 768px</code> query at the end, if there is time.</li>
+              <li><strong>Exact gradients</strong> on an unannotated paper.</li>
+            </ul>
+          </section>
+
+          <section class="ck__box">
+            <h2>8. When it looks wrong</h2>
+            <ul>
+              <li>Wider than you set &rarr; <code>box-sizing</code>.</li>
+              <li>Mystery gap &rarr; margin collapse, or default margins.</li>
+              <li>Flex row overflows &rarr; <code>min-width: 0</code> on the item.</li>
+              <li>Badge in the page corner &rarr; parent is missing <code>position: relative</code>.</li>
+              <li>Square corners through a radius &rarr; <code>overflow: hidden</code>.</li>
+              <li>Rule does nothing &rarr; missing semicolon on the line <em>above</em>.</li>
+              <li>Gradient invisible &rarr; it is in <code>background-color</code>.</li>
+              <li>Text greyed on a coloured card &rarr; <code>opacity</code> instead of an alpha background.</li>
+              <li>Sidebar panels stretched &rarr; <code>align-content: start</code>.</li>
+              <li>Everything broken &rarr; <code>* { outline: 1px solid red }</code>.</li>
+            </ul>
+          </section>
+
+          <section class="ck__box">
+            <h2>9. Last five minutes</h2>
+            <ul>
+              <li>Every annotated hex actually used?</li>
+              <li>Both prototypes on screen, even if rough?</li>
+              <li>Any element wider than its container?</li>
+              <li>Outline debug rule removed or commented?</li>
+              <li>Files saved with the names you were asked for?</li>
+            </ul>
+          </section>
+
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <footer class="site-footer" data-no-print>
+    <div class="wrap">
+      <span>Built for CSE 4165. No analytics, no tracking, no build step.</span>
+      <span class="spacer"></span>
+      <a href="https://github.com/meteorboyF/Web-Prep" target="_blank" rel="noopener noreferrer">Repository</a>
+    </div>
+  </footer>
+
+</div>
+
+<script src="./assets/js/core.js"></script>
+<script src="./data/site-index.js"></script>
+<script src="./assets/js/nav.js"></script>
+<script>
+  WP.ready(function () {
+    WP.renderNav();
+    WP.initNavToggle();
+    WP.initTheme();
+  });
+</script>
+
+</body>
+</html>

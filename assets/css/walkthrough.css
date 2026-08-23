@@ -396,3 +396,88 @@
 .wt__detail code { font-size: var(--t-xs); }
 
 .wt__check { margin-bottom: var(--s-3); }
+
+/* ---- Exam mode --------------------------------------------------------- */
+
+.ex__clockbox {
+  margin: var(--s-5) 0 var(--s-6);
+  padding: var(--s-5);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  text-align: center;
+}
+
+.ex__clock {
+  font-family: var(--font-mono);
+  font-size: clamp(3rem, 2rem + 8vw, 5.5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+.ex__clockbox[data-state="idle"] .ex__clock { color: var(--muted); }
+.ex__clockbox[data-warn="mid"]  .ex__clock { color: var(--trap); }
+.ex__clockbox[data-warn="high"] .ex__clock { color: #c0392b; }
+.ex__clockbox[data-warn="over"] .ex__clock { color: #c0392b; opacity: .6; }
+
+.ex__bar {
+  height: 6px;
+  margin: var(--s-4) 0;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.ex__bar span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--brand);
+  transition: width 1s linear;
+}
+.ex__clockbox[data-warn="mid"]  .ex__bar span { background: var(--trap); }
+.ex__clockbox[data-warn="high"] .ex__bar span,
+.ex__clockbox[data-warn="over"] .ex__bar span { background: #c0392b; }
+
+.ex__controls { display: flex; gap: var(--s-3); justify-content: center; }
+.ex__note { margin-top: var(--s-3); font-size: var(--t-sm); color: var(--muted); }
+
+.ex__target[data-hidden="true"] img { display: none; }
+
+/* ---- Printable checklist ------------------------------------------------ */
+
+.ck { max-width: 60rem; }
+.ck__grid {
+  display: grid;
+  gap: var(--s-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
+  margin-top: var(--s-4);
+}
+.ck__box {
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--s-4);
+  background: var(--surface);
+  break-inside: avoid;
+}
+.ck__box h2 {
+  font-size: var(--t-base);
+  margin-bottom: var(--s-3);
+  padding-bottom: var(--s-2);
+  border-bottom: 2px solid var(--brand);
+}
+.ck__box ol, .ck__box ul { padding-left: 1.15rem; margin: 0; display: grid; gap: var(--s-2); }
+.ck__box li { font-size: var(--t-sm); }
+.ck__box code { font-size: var(--t-xs); }
+.ck__box pre { font-size: var(--t-xs); padding: var(--s-3); margin-top: var(--s-2); }
+
+.ck__time { display: grid; gap: var(--s-2); }
+.ck__time div {
+  display: flex;
+  gap: var(--s-3);
+  font-size: var(--t-sm);
+  padding-bottom: var(--s-2);
+  border-bottom: 1px dashed var(--border);
+}
+.ck__time b { flex: none; width: 5.5rem; font-family: var(--font-mono); color: var(--brand); }

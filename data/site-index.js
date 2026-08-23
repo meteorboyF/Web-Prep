@@ -34,14 +34,14 @@ WP.site = {
       heading: 'Reference',
       items: [
         { label: 'Cheatsheet', href: 'cheatsheet.html', ready: true },
-        { label: 'Exam checklist', href: 'checklist.html', ready: false }
+        { label: 'Exam checklist', href: 'checklist.html', ready: true }
       ]
     },
     {
       heading: 'Solve',
       items: [
         { label: 'All 12 prototypes', href: 'exams/index.html', ready: true },
-        { label: 'Exam mode', href: 'exam-mode.html', ready: false }
+        { label: 'Exam mode', href: 'exam-mode.html', ready: true }
       ]
     }
   ],

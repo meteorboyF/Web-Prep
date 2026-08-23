@@ -28,6 +28,8 @@
 .lsn__anchor,
 .lsn__nav,
 .selfcheck,
+.ex__clockbox,
+.ex__target,
 [data-no-print] {
   display: none !important;
 }
@@ -135,3 +137,19 @@ tr { break-inside: avoid; page-break-inside: avoid; }
   background: none !important;
   color: #000 !important;
 }
+
+
+/* ---- Checklist ---------------------------------------------------------- */
+
+.ck__grid { grid-template-columns: 1fr 1fr !important; gap: .4cm !important; }
+.ck__box {
+  border: .5pt solid #999 !important;
+  background: none !important;
+  padding: .25cm !important;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.ck__box h2 { font-size: 10pt; border-bottom: 1pt solid #000 !important; }
+.ck__box li { font-size: 8.5pt; }
+.ck__box pre { font-size: 7.5pt; }
+.ck__time b { color: #000 !important; }
