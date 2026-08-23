@@ -21,7 +21,7 @@
   --on-brand: #ffffff;
 
   /* Callouts */
-  --trap: #b4541b;
+  --trap: #ad4f19;        /* 4.8:1 on --trap-soft; #b4541b was 4.45 */
   --trap-soft: #fdf0e7;
   --tip: #1f6d4a;
   --tip-soft: #e6f4ec;

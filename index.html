@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="./assets/css/base.css">
 <link rel="stylesheet" href="./assets/css/layout.css">
 <link rel="stylesheet" href="./assets/css/components.css">
+<link rel="stylesheet" href="./assets/css/lesson.css">
 <script>try{var t=localStorage.getItem('webprep:theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
 </head>
 <body data-base="./">
@@ -21,18 +22,17 @@
 
   <header class="site-header">
     <button class="btn btn--ghost btn--icon nav-toggle" data-nav-toggle
-            aria-expanded="false" aria-label="Toggle navigation">☰</button>
+            aria-expanded="false" aria-label="Toggle navigation">&#9776;</button>
     <a class="brand" href="./index.html">
       <img src="./assets/img/mark.svg" alt="" width="24" height="24">
       Web<span>-Prep</span>
     </a>
     <div class="header-actions">
-      <a class="btn btn--ghost" href="https://github.com/meteorboyF/Web-Prep"
-         target="_blank" rel="noopener noreferrer">Source</a>
+      <a class="btn btn--ghost" href="./exam-mode.html">Exam mode</a>
       <button class="btn btn--ghost btn--icon theme-toggle" data-theme-toggle
               aria-label="Switch theme">
-        <span class="icon-light" aria-hidden="true">◐</span>
-        <span class="icon-dark" aria-hidden="true">◑</span>
+        <span class="icon-light" aria-hidden="true">&#9686;</span>
+        <span class="icon-dark" aria-hidden="true">&#9687;</span>
       </button>
     </div>
   </header>
@@ -49,60 +49,60 @@
         <p class="eyebrow">CSE 4165 Web Programming</p>
         <h1>Two screenshots. Ninety minutes. Plain HTML and CSS.</h1>
         <p class="lede">
-          This site does two things: it teaches every HTML and CSS concept with a live
-          editor you can break, and it walks through the twelve past-paper prototypes one
-          build step at a time — structure first, code second.
+          Every concept has an editor you can break. Every past-paper prototype has a
+          walkthrough that builds it one step at a time &mdash; structure first, code second.
         </p>
 
-        <div class="card-grid" style="margin-top: var(--s-6)">
-          <a class="card" href="./lessons/part-1.html">
-            <h3>Learn</h3>
-            <p>Five parts, from the document skeleton to print stylesheets. Every concept
-               that can be demonstrated has a runnable example instead of a paragraph
-               describing it.</p>
-          </a>
-          <div class="card">
-            <h3>Solve <span class="badge">soon</span></h3>
-            <p>Twelve prototypes from six past papers, each broken into ordered build steps
-               with a cumulative preview, the annotated colour palette, and a note on what
-               to skip when the clock runs down.</p>
-          </div>
-          <div class="card">
-            <h3>Drill <span class="badge">soon</span></h3>
-            <p>A ninety-minute timer, a blank two-pane editor, a random prototype, and a
-               printable checklist of what to type first.</p>
-          </div>
+        <div class="srch" style="margin-top: var(--s-6)">
+          <label class="sr-only" for="site-search">Search lessons, cheatsheet and prototypes</label>
+          <input id="site-search" type="search" data-search autocomplete="off" spellcheck="false"
+                 placeholder="Search everything &mdash; try &ldquo;flex&rdquo;, &ldquo;shadow&rdquo;, &ldquo;sticky&rdquo;, or press /">
+          <div data-search-results data-open="false"></div>
         </div>
 
-        <h2>Where this is up to</h2>
+        <div class="card-grid">
+          <a class="card" href="./lessons/part-1.html">
+            <h3>Learn</h3>
+            <p>Five parts, 125 sections, 96 live examples and four interactive tools. From the
+               document skeleton to print stylesheets.</p>
+          </a>
+          <a class="card" href="./exams/index.html">
+            <h3>Solve</h3>
+            <p>All twelve past-paper prototypes, each broken into ordered build steps with the
+               annotated palette, a time budget and a diff of what changed.</p>
+          </a>
+          <a class="card" href="./exam-mode.html">
+            <h3>Drill</h3>
+            <p>A ninety-minute clock, a prototype drawn at random, and two empty files. Plus a
+               printable checklist of what to type first.</p>
+          </a>
+        </div>
+
+        <h2>Where you are</h2>
+        <div data-progress></div>
+
+        <h2>If you only read three things</h2>
+        <ol>
+          <li><a href="./lessons/part-1.html#exam-skeleton">The skeleton you type first</a> &mdash;
+              about three minutes of typing you should produce without thinking.</li>
+          <li><a href="./cheatsheet.html#exam">Exam tactics</a> on the cheatsheet &mdash; read the
+              paper, transcribe the palette, structure before styling.</li>
+          <li><a href="./exams/walkthrough.html?p=253-q1">ProConnect</a> &mdash; the cleanest of the
+              twelve, and the one where the method is easiest to see.</li>
+        </ol>
+
+        <h2>How this works</h2>
         <p>
-          Being built in phases. Phase 1 is the deployment skeleton — its whole job is to
-          prove that the relative paths work on GitHub Pages before any content is written
-          on top of them.
+          No build step and no framework. It runs from a web server or by opening
+          <code>index.html</code> from the filesystem, and it keeps working offline after the
+          first visit &mdash; the only external file is the code editor, which falls back to a
+          plain textarea if it cannot load.
         </p>
-
-        <table>
-          <caption class="sr-only">Build phases and their status</caption>
-          <thead>
-            <tr><th scope="col">Phase</th><th scope="col">Deliverable</th><th scope="col">State</th></tr>
-          </thead>
-          <tbody>
-            <tr><th scope="row">0</th><td>Sources read, plan written</td><td><span class="badge badge--ok">done</span></td></tr>
-            <tr><th scope="row">1</th><td>Deployment skeleton, design system, navigation</td><td><span class="badge badge--ok">done</span></td></tr>
-            <tr><th scope="row">2</th><td>Playground: editor, live preview, textarea fallback</td><td><span class="badge">next</span></td></tr>
-            <tr><th scope="row">3–7</th><td>Lesson content, parts 1 to 5, plus the cheatsheet</td><td><span class="badge">queued</span></td></tr>
-            <tr><th scope="row">8–9</th><td>Twelve prototype walkthroughs</td><td><span class="badge">queued</span></td></tr>
-            <tr><th scope="row">10–11</th><td>Exam mode and polish</td><td><span class="badge">queued</span></td></tr>
-          </tbody>
-        </table>
-
-        <h2>Deployment self-check</h2>
         <p>
-          The bug this site is most likely to hit is a path that starts with a slash. It
-          resolves correctly on a server root and fails under
-          <code>/Web-Prep/</code>, so it works locally and breaks live. Rather than trust a
-          grep, this panel reports what actually loaded on whatever host you are reading it
-          from.
+          Every path is relative, because GitHub Pages serves this from a
+          <code>/Web-Prep/</code> subfolder and a single leading slash would work locally and
+          404 live. The panel below reports what actually resolved on whatever host you are
+          reading this from.
         </p>
 
         <section class="card selfcheck" data-selfcheck aria-labelledby="sc-h">
@@ -139,13 +139,6 @@
                data-check-img style="position:absolute;opacity:0;pointer-events:none">
         </section>
 
-        <div class="callout callout--tip" style="margin-top: var(--s-5)">
-          <strong>Also worth checking</strong>
-          Open <a href="./lessons/part-1.html">Part 1</a>. It sits one folder deeper and
-          reaches its CSS with <code>../</code>. If both pages pass, the two path cases that
-          matter are covered.
-        </div>
-
       </div>
     </main>
 
@@ -164,12 +157,16 @@
 <script src="./assets/js/core.js"></script>
 <script src="./data/site-index.js"></script>
 <script src="./assets/js/nav.js"></script>
+<script src="./assets/js/progress.js"></script>
+<script src="./assets/js/search.js"></script>
 <script src="./assets/js/selfcheck.js"></script>
 <script>
   WP.ready(function () {
     WP.renderNav();
     WP.initNavToggle();
     WP.initTheme();
+    WP.initSearch();
+    WP.renderProgressSummary();
     WP.runSelfCheck();
   });
 </script>

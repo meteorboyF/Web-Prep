@@ -400,15 +400,64 @@ card stripes in blue, green, blue.
 
 Fixed one count error of my own: the CareerHub walkthrough said five tags where there are six.
 
-## Next
+### Phase 9 — all twelve walkthroughs, syntax colouring, richer steps
+All 12 written. `slot2-q1` (ten annotated colours, the `margin-top: auto` sidebar), the two
+**unannotated** papers `243-q1` and `243-q2` (colours pixel-sampled and labelled as such),
+and the `252` pair — the gradient exam, where every coloured surface is a `linear-gradient`
+stored in a custom property.
 
-**Phase 9c** — slot2-q1 (Cloud storage dashboard, ten annotated colours and the
-`margin-top: auto` sidebar), 243-q1 (Housing Society hero), 243-q2 (United Kitchen). The
-last two have **no annotated palette** and will need pixel sampling.
+**Syntax colouring.** `assets/js/highlight.js` is a small HTML and CSS tokeniser. CodeMirror
+highlights an *editor*; what was needed here is a token list that can be split at newlines
+and carry a diff state per line. The whole text is tokenised at once rather than per line, so
+multi-line comments cannot desynchronise it.
 
-## Remaining
+Unchanged lines force every token to one muted grey; new lines keep full token colours over a
+tinted background. The contrast is the point — the code you already wrote recedes, and this
+step's work is the only thing on screen with colour.
 
-`9d` 252-q1, 252-q2 (the gradient-heavy pair, last). Then phases 10–11 per `PLAN.md` §5.
+**Richer steps.** Every step of every walkthrough now carries a `detail` list and a `check`.
+The detail explains what each declaration is doing and why that choice rather than the
+obvious alternative; the check says what should be true on screen before moving on.
+
+### Phase 10 — exam mode and the checklist
+A 90-minute clock, a prototype drawn at random and kept for the run, and a blank two-pane
+editor seeded with the reset.
+
+The clock **stores when the segment started plus the accumulated elapsed time** and computes
+the remainder from those. It never counts down inside the interval: a backgrounded tab
+throttles timers to once a minute and the clock would silently run slow, which is precisely
+the wrong failure for a practice timer. A refresh, a crash or a closed tab loses nothing.
+
+`checklist.html` is nine boxes on one page, dropping to two columns of black on white in
+print.
+
+### Phase 11 — polish
+- **Site-wide search** on the home page over **456 items** — 125 lesson sections, 319
+  cheatsheet rows and 12 prototypes. No generated index: the data files are injected on first
+  focus and the index is built from what they registered, so it cannot drift. Script
+  injection rather than `fetch`, because `fetch` fails from `file://`.
+- **Home page rebuilt**: search, a per-part progress summary with a resume link, three route
+  cards, and the self-check panel.
+- **Contrast audited** programmatically in both themes across ten token pairs. One real
+  failure found and fixed: `--trap` on `--trap-soft` was **4.45** in light mode, just under
+  the 4.5 threshold. Darkened `#b4541b` → `#ad4f19`, now 4.81. Both themes pass everything.
+- **Keyboard and semantics**: one `<h1>` per page, `lang` set, every image has `alt`, every
+  button has an accessible name, no positive `tabindex`, a skip link first in the tab order.
+- **Narrow-width**: no page overflows horizontally at 320px or 375px. Wide tables, code
+  blocks and the walkthrough preview each scroll inside their own container.
+
+## Final state
+
+| | |
+|---|---|
+| Lessons | 5 parts · **125 sections** · **96 playgrounds** · **4 tools** |
+| Walkthroughs | **12 of 12**, 8–10 steps each, every step with detail and a check |
+| Cheatsheet | **319 rows** · 27 groups · searchable · printable |
+| Search | **456 items** indexed on demand |
+| Prototype images | 12, cropped from the papers, 1.4 MB total |
+
+Every phase was verified locally on a fresh port and then on the live site before being
+reported. Nothing outstanding.
 
 ## Decisions taken
 
@@ -428,9 +477,14 @@ last two have **no annotated palette** and will need pixel sampling.
 | D12 | **Copy** copies the pane you are looking at, not the assembled document | HTML and CSS stay separate, matching the two files an exam answer is written in. |
 | D13 | CodeMirror is pinned at 5.65.16 with SRI hashes | Version-pinned cdnjs URLs are immutable, so the hashes can never go stale, and a compromised CDN cannot inject script into the site. |
 
+| D14 | Syntax colouring is a bespoke 200-line tokeniser, not CodeMirror | CodeMirror highlights an editor. The walkthrough needs a token list splittable at newlines and taggable with a diff state per line, which is a different job. |
+| D15 | Unchanged lines are forced to one muted grey rather than dimmed with opacity | Opacity on a coloured token still reads as coloured. Overriding the colour outright is what makes the new lines the only thing with hue. |
+| D16 | The exam clock stores timestamps and computes the remainder | Counting down inside a `setInterval` runs slow in a backgrounded tab. A practice timer that quietly gives you extra time is worse than no timer. |
+| D17 | Site search builds its index from the data files at runtime | A generated index file would need regenerating whenever content changed, and would eventually be wrong. This cannot drift. |
+
 ## Known issues
 
-None outstanding.
+None outstanding. The project is complete.
 
 ## Environment notes
 
