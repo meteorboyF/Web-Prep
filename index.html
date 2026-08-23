@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web-Prep — CSE 4165 HTML &amp; CSS</title>
+<meta name="description" content="Interactive HTML and CSS lessons plus step-by-step walkthroughs of twelve past-paper prototypes for CSE 4165 Web Programming.">
+<meta name="theme-color" content="#0f766e">
+<link rel="icon" href="./assets/img/mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./assets/css/tokens.css">
+<link rel="stylesheet" href="./assets/css/base.css">
+<link rel="stylesheet" href="./assets/css/layout.css">
+<link rel="stylesheet" href="./assets/css/components.css">
+<script>try{var t=localStorage.getItem('webprep:theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body data-base="./">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="app">
+
+  <header class="site-header">
+    <button class="btn btn--ghost btn--icon nav-toggle" data-nav-toggle
+            aria-expanded="false" aria-label="Toggle navigation">☰</button>
+    <a class="brand" href="./index.html">
+      <img src="./assets/img/mark.svg" alt="" width="24" height="24">
+      Web<span>-Prep</span>
+    </a>
+    <div class="header-actions">
+      <a class="btn btn--ghost" href="https://github.com/meteorboyF/Web-Prep"
+         target="_blank" rel="noopener noreferrer">Source</a>
+      <button class="btn btn--ghost btn--icon theme-toggle" data-theme-toggle
+              aria-label="Switch theme">
+        <span class="icon-light" aria-hidden="true">◐</span>
+        <span class="icon-dark" aria-hidden="true">◑</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="shell">
+
+    <nav class="sidebar" aria-label="Primary" data-open="false">
+      <div data-nav></div>
+    </nav>
+
+    <main class="content" id="main">
+      <div class="wrap prose">
+
+        <p class="eyebrow">CSE 4165 Web Programming</p>
+        <h1>Two screenshots. Ninety minutes. Plain HTML and CSS.</h1>
+        <p class="lede">
+          This site does two things: it teaches every HTML and CSS concept with a live
+          editor you can break, and it walks through the twelve past-paper prototypes one
+          build step at a time — structure first, code second.
+        </p>
+
+        <div class="card-grid" style="margin-top: var(--s-6)">
+          <a class="card" href="./lessons/part-1.html">
+            <h3>Learn</h3>
+            <p>Five parts, from the document skeleton to print stylesheets. Every concept
+               that can be demonstrated has a runnable example instead of a paragraph
+               describing it.</p>
+          </a>
+          <div class="card">
+            <h3>Solve <span class="badge">soon</span></h3>
+            <p>Twelve prototypes from six past papers, each broken into ordered build steps
+               with a cumulative preview, the annotated colour palette, and a note on what
+               to skip when the clock runs down.</p>
+          </div>
+          <div class="card">
+            <h3>Drill <span class="badge">soon</span></h3>
+            <p>A ninety-minute timer, a blank two-pane editor, a random prototype, and a
+               printable checklist of what to type first.</p>
+          </div>
+        </div>
+
+        <h2>Where this is up to</h2>
+        <p>
+          Being built in phases. Phase 1 is the deployment skeleton — its whole job is to
+          prove that the relative paths work on GitHub Pages before any content is written
+          on top of them.
+        </p>
+
+        <table>
+          <caption class="sr-only">Build phases and their status</caption>
+          <thead>
+            <tr><th scope="col">Phase</th><th scope="col">Deliverable</th><th scope="col">State</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">0</th><td>Sources read, plan written</td><td><span class="badge badge--ok">done</span></td></tr>
+            <tr><th scope="row">1</th><td>Deployment skeleton, design system, navigation</td><td><span class="badge badge--ok">done</span></td></tr>
+            <tr><th scope="row">2</th><td>Playground: editor, live preview, textarea fallback</td><td><span class="badge">next</span></td></tr>
+            <tr><th scope="row">3–7</th><td>Lesson content, parts 1 to 5, plus the cheatsheet</td><td><span class="badge">queued</span></td></tr>
+            <tr><th scope="row">8–9</th><td>Twelve prototype walkthroughs</td><td><span class="badge">queued</span></td></tr>
+            <tr><th scope="row">10–11</th><td>Exam mode and polish</td><td><span class="badge">queued</span></td></tr>
+          </tbody>
+        </table>
+
+        <h2>Deployment self-check</h2>
+        <p>
+          The bug this site is most likely to hit is a path that starts with a slash. It
+          resolves correctly on a server root and fails under
+          <code>/Web-Prep/</code>, so it works locally and breaks live. Rather than trust a
+          grep, this panel reports what actually loaded on whatever host you are reading it
+          from.
+        </p>
+
+        <section class="card selfcheck" data-selfcheck aria-labelledby="sc-h">
+          <h2 id="sc-h">What resolved on this page</h2>
+          <ul>
+            <li data-check="css">
+              <span class="check-dot" data-state="pending"></span>
+              <span class="label">Stylesheets</span>
+              <code>./assets/css/</code>
+            </li>
+            <li data-check="js">
+              <span class="check-dot" data-state="pending"></span>
+              <span class="label">Scripts</span>
+              <code>./assets/js/</code>
+            </li>
+            <li data-check="data">
+              <span class="check-dot" data-state="pending"></span>
+              <span class="label">Data files</span>
+              <code>./data/</code>
+            </li>
+            <li data-check="img">
+              <span class="check-dot" data-state="pending"></span>
+              <span class="label">Images</span>
+              <code>./assets/img/</code>
+            </li>
+            <li data-check="storage">
+              <span class="check-dot" data-state="pending"></span>
+              <span class="label">Local storage</span>
+              <code class="detail">checking</code>
+            </li>
+          </ul>
+          <p class="env" data-env></p>
+          <img src="./assets/img/mark.svg" alt="" width="1" height="1"
+               data-check-img style="position:absolute;opacity:0;pointer-events:none">
+        </section>
+
+        <div class="callout callout--tip" style="margin-top: var(--s-5)">
+          <strong>Also worth checking</strong>
+          Open <a href="./lessons/part-1.html">Part 1</a>. It sits one folder deeper and
+          reaches its CSS with <code>../</code>. If both pages pass, the two path cases that
+          matter are covered.
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Built for CSE 4165. No analytics, no tracking, no build step.</span>
+      <span class="spacer"></span>
+      <a href="https://github.com/meteorboyF/Web-Prep" target="_blank" rel="noopener noreferrer">Repository</a>
+    </div>
+  </footer>
+
+</div>
+
+<script src="./assets/js/core.js"></script>
+<script src="./data/site-index.js"></script>
+<script src="./assets/js/nav.js"></script>
+<script src="./assets/js/selfcheck.js"></script>
+<script>
+  WP.ready(function () {
+    WP.renderNav();
+    WP.initNavToggle();
+    WP.initTheme();
+    WP.runSelfCheck();
+  });
+</script>
+
+</body>
+</html>

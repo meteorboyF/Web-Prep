@@ -1,0 +1,136 @@
+/* tokens.css — every design decision lives here as a custom property.
+   Dark mode changes only these values; not one component rule is duplicated.
+   Palette is the one from Part 5 §6 of the course notes, dogfooded. */
+
+:root {
+  color-scheme: light dark;
+
+  /* Surfaces and text */
+  --bg: #ffffff;
+  --surface: #f6f7f9;
+  --surface-2: #eceff3;
+  --text: #17202a;
+  --muted: #5b6672;
+  --border: #dfe3e8;
+  --border-strong: #7c8794;      /* 3.6:1 on --bg — safe for input borders */
+
+  /* Brand */
+  --brand: #0f766e;              /* 5.5:1 on --bg — safe for body-size text */
+  --brand-strong: #0b5b55;
+  --brand-soft: #e3f2f0;
+  --on-brand: #ffffff;
+
+  /* Callouts */
+  --trap: #b4541b;
+  --trap-soft: #fdf0e7;
+  --tip: #1f6d4a;
+  --tip-soft: #e6f4ec;
+  --note: #4a5a8a;
+  --note-soft: #eceff8;
+
+  /* Code */
+  --code-bg: #f4f6f8;
+  --code-text: #1f2933;
+  --code-border: #e2e7ec;
+
+  /* Space scale */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+
+  /* Type scale */
+  --t-xs: 0.78rem;
+  --t-sm: 0.875rem;
+  --t-base: 1rem;
+  --t-lg: 1.125rem;
+  --t-xl: 1.375rem;
+  --t-2xl: 1.75rem;
+  --t-3xl: clamp(1.9rem, 1.4rem + 2.2vw, 2.75rem);
+
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* Radii */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --r-pill: 999px;
+
+  /* Shadows — stacked, x-offset 0, as Part 2 §8.3 recommends */
+  --shadow-1: 0 1px 2px rgb(16 25 35 / .06), 0 2px 8px rgb(16 25 35 / .06);
+  --shadow-2: 0 2px 4px rgb(16 25 35 / .07), 0 12px 28px rgb(16 25 35 / .10);
+
+  /* Layout */
+  --sidebar-w: 16rem;
+  --header-h: 3.5rem;
+  --measure: 68rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #10151b;
+    --surface: #171e26;
+    --surface-2: #1e262f;
+    --text: #e8edf2;
+    --muted: #9aa7b4;
+    --border: #26303b;
+    --border-strong: #5d6b7a;    /* 3.4:1 on --bg */
+
+    --brand: #2dd4bf;            /* 9.9:1 on --bg */
+    --brand-strong: #5ce4d2;
+    --brand-soft: #14312e;
+    --on-brand: #06231f;
+
+    --trap: #f0a06a;
+    --trap-soft: #2c1d13;
+    --tip: #6fd39f;
+    --tip-soft: #12281e;
+    --note: #a3b3e0;
+    --note-soft: #1a1f2e;
+
+    --code-bg: #131a22;
+    --code-text: #dfe7ef;
+    --code-border: #253039;
+
+    --shadow-1: 0 1px 2px rgb(0 0 0 / .35), 0 2px 8px rgb(0 0 0 / .30);
+    --shadow-2: 0 2px 4px rgb(0 0 0 / .40), 0 12px 28px rgb(0 0 0 / .45);
+  }
+}
+
+/* Manual override always beats the media query, in both directions. */
+:root[data-theme="dark"] {
+  --bg: #10151b;
+  --surface: #171e26;
+  --surface-2: #1e262f;
+  --text: #e8edf2;
+  --muted: #9aa7b4;
+  --border: #26303b;
+  --border-strong: #5d6b7a;
+
+  --brand: #2dd4bf;
+  --brand-strong: #5ce4d2;
+  --brand-soft: #14312e;
+  --on-brand: #06231f;
+
+  --trap: #f0a06a;
+  --trap-soft: #2c1d13;
+  --tip: #6fd39f;
+  --tip-soft: #12281e;
+  --note: #a3b3e0;
+  --note-soft: #1a1f2e;
+
+  --code-bg: #131a22;
+  --code-text: #dfe7ef;
+  --code-border: #253039;
+
+  --shadow-1: 0 1px 2px rgb(0 0 0 / .35), 0 2px 8px rgb(0 0 0 / .30);
+  --shadow-2: 0 2px 4px rgb(0 0 0 / .40), 0 12px 28px rgb(0 0 0 / .45);
+}
+
+:root[data-theme="dark"] { color-scheme: dark; }
+:root[data-theme="light"] { color-scheme: light; }

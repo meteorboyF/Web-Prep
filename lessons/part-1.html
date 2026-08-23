@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Part 1 · HTML5 Foundations — Web-Prep</title>
+<meta name="description" content="Structure, semantics, forms, media and accessibility — the HTML half of CSE 4165.">
+<meta name="theme-color" content="#0f766e">
+<link rel="icon" href="../assets/img/mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/layout.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+<script>try{var t=localStorage.getItem('webprep:theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body data-base="../">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="app">
+
+  <header class="site-header">
+    <button class="btn btn--ghost btn--icon nav-toggle" data-nav-toggle
+            aria-expanded="false" aria-label="Toggle navigation">☰</button>
+    <a class="brand" href="../index.html">
+      <img src="../assets/img/mark.svg" alt="" width="24" height="24">
+      Web<span>-Prep</span>
+    </a>
+    <div class="header-actions">
+      <button class="btn btn--ghost btn--icon theme-toggle" data-theme-toggle
+              aria-label="Switch theme">
+        <span class="icon-light" aria-hidden="true">◐</span>
+        <span class="icon-dark" aria-hidden="true">◑</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="shell">
+
+    <nav class="sidebar" aria-label="Primary" data-open="false">
+      <div data-nav></div>
+    </nav>
+
+    <main class="content" id="main">
+      <div class="wrap prose">
+
+        <p class="eyebrow">Part 1 of 5</p>
+        <h1>HTML5 Foundations</h1>
+        <p class="lede">
+          Structure, semantics, forms, media and accessibility — the language of meaning,
+          before any of it is made to look like anything.
+        </p>
+
+        <div class="callout" style="margin-top: var(--s-5)">
+          <strong>Not written yet</strong>
+          This page is the Phase 1 path test. It sits one folder deep and reaches every
+          asset with <code>../</code> — the case that a leading slash would break. The
+          lesson content arrives in Phase 3, once the playground component exists.
+        </div>
+
+        <h2>What will be here</h2>
+        <p>
+          Eleven sections, each a short explanation followed by an editable example rather
+          than a description of what the example would do:
+        </p>
+        <ul>
+          <li>The document skeleton, and what each line of the head is actually for</li>
+          <li>Syntax rules: void elements, nesting, boolean attributes, entities</li>
+          <li>Text elements, and why <code>&lt;strong&gt;</code> and <code>&lt;b&gt;</code>
+              are not the same thing despite looking identical</li>
+          <li>Links and paths — including the relative-path bug this very site is built to avoid</li>
+          <li>Images, responsive images, and media</li>
+          <li>Tables, done properly</li>
+          <li>Forms in full: every input type, every validation attribute</li>
+          <li>Semantic structure and the page skeleton every exam answer starts from</li>
+          <li>Global attributes, ARIA, and the accessibility checklist</li>
+          <li>The traps table — the ten mistakes that cost hours</li>
+        </ul>
+
+        <section class="card selfcheck" data-selfcheck aria-labelledby="sc-h"
+                 style="margin-top: var(--s-6)">
+          <h2 id="sc-h">Path check from one folder deep</h2>
+          <ul>
+            <li data-check="css">
+              <span class="check-dot" data-state="pending"></span>
+              <span class="label">Stylesheets</span>
+              <code>../assets/css/</code>
+            </li>
+            <li data-check="js">
+              <span class="check-dot" data-state="pending"></span>
+              <span class="label">Scripts</span>
+              <code>../assets/js/</code>
+            </li>
+            <li data-check="data">
+              <span class="check-dot" data-state="pending"></span>
+              <span class="label">Data files</span>
+              <code>../data/</code>
+            </li>
+            <li data-check="img">
+              <span class="check-dot" data-state="pending"></span>
+              <span class="label">Images</span>
+              <code>../assets/img/</code>
+            </li>
+            <li data-check="storage">
+              <span class="check-dot" data-state="pending"></span>
+              <span class="label">Local storage</span>
+              <code class="detail">checking</code>
+            </li>
+          </ul>
+          <p class="env" data-env></p>
+          <img src="../assets/img/mark.svg" alt="" width="1" height="1"
+               data-check-img style="position:absolute;opacity:0;pointer-events:none">
+        </section>
+
+        <p style="margin-top: var(--s-6)">
+          <a class="btn" href="../index.html">Back to the home page</a>
+        </p>
+
+      </div>
+    </main>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Built for CSE 4165. No analytics, no tracking, no build step.</span>
+      <span class="spacer"></span>
+      <a href="https://github.com/meteorboyF/Web-Prep" target="_blank" rel="noopener noreferrer">Repository</a>
+    </div>
+  </footer>
+
+</div>
+
+<script src="../assets/js/core.js"></script>
+<script src="../data/site-index.js"></script>
+<script src="../assets/js/nav.js"></script>
+<script src="../assets/js/selfcheck.js"></script>
+<script>
+  WP.ready(function () {
+    WP.renderNav();
+    WP.initNavToggle();
+    WP.initTheme();
+    WP.runSelfCheck();
+  });
+</script>
+
+</body>
+</html>
