@@ -148,15 +148,42 @@ Also worth recording: two apparent failures during testing were **browser cache*
 the page was running a `lesson.js` from before the tool branch existed. Serving from a fresh
 port confirmed it. Worth remembering before debugging anything that "should" work.
 
+### Phase 4b — Part 2 complete
+Twenty more sections, taking Part 2 to **31 sections and 23 playgrounds**: the box model,
+margin and its shorthand, margin collapsing, borders and outline, units, value types,
+colour, opacity against alpha, a palette method, typography, the font shorthand,
+truncation, web fonts, backgrounds, gradients, shadows, overflow, list styling, table
+styling and the traps table.
+
+Several sections are anchored to specific past papers rather than left abstract:
+
+- **colour** opens with the point that eight of the twelve papers print hex codes on the
+  prototype, and the first two minutes of the exam belong to copying them into `:root`.
+  Its playground is the annotated Slot 2 Q1 palette, transcribed exactly.
+- **gradients** builds the real three-stop sidebar from 252 Q2, because that paper is
+  effectively a `linear-gradient` exam.
+- **shadows** contrasts the stacked soft recipe with the deliberate hard offset shadow on
+  the 251 Q1 pricing cards — the one case where no blur is correct.
+- **opacity against alpha** uses the CORE-TECH translucent stat pill, where picking the
+  wrong one visibly greys the label.
+- **web fonts** ends by advising against them in the exam: a Google Fonts link is a network
+  request that may not resolve, and no prototype is marked on its typeface.
+
+**Verified**: 31 sections all park at 72px with no scrollspy mismatch; 23 playgrounds
+mounted with nothing left unmounted; no `[unrecognised block]` fallbacks; the specificity
+tool still mounts; CSS unicode escapes (`\2713`, `\2197`) survive the data file intact; no
+console errors; no page overflow — locally on a fresh port and then live.
+
 ## Next
 
-**Phase 4b** — the rest of Part 2: the box model and margin collapsing, units, colour and
-opacity, typography, truncation, backgrounds, gradients, shadows, overflow, list and table
-styling, and the traps table. Around 20 sections.
+**Phase 5** — Part 3, layout: normal flow, positioning and stacking contexts, complete
+flexbox, complete grid, responsive design, container queries and every way to centre, plus
+the **flexbox and grid visual playgrounds**. Expected to split into 5a (flow, positioning,
+flexbox + flexbox playground) and 5b (grid, responsive, centring + grid playground).
 
 ## Remaining
 
-Phases 5–11 per `PLAN.md` §5. Expected splits: 5a/5b, 9a–9d.
+Phases 6–11 per `PLAN.md` §5. Expected splits: 5a/5b, 9a–9d.
 
 ## Decisions taken
 
