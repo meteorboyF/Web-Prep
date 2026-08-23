@@ -311,16 +311,54 @@ with nothing escaping a 320px container. The print stylesheet was verified by fl
 link's `media` to `all` and reading computed styles — chrome hidden, black on white, rows
 re-gridded — then restoring it.
 
+### Phase 8 — the walkthrough component, on 253 Q1 (ProConnect)
+
+**All twelve prototype images** cropped out of the exam PDFs and committed — 1.4 MB total,
+JPEG where it beat PNG by a clear margin. The crops **keep the red annotation arrows**:
+knowing which element a hex belongs to is most of what the annotation is worth. Bounds were
+tuned per page after inspecting the first pass; `251-q1` starts higher than the others on
+purpose, because its two `#ff4419` arrows sit level with the exam header and losing them
+would cost more than one stray line of boilerplate.
+
+**`exams/walkthrough.html`** — target image with a Pin toggle, click-to-copy palette strip
+with a **Copy all as `:root`** button, the structure analysis *before* a single line of
+code, the reasoning for the build order, the steps, then the finished answer with a marks
+note and a what-to-drop note.
+
+Each step stores the cumulative code and the renderer **line-diffs step N against N−1**, so
+what changed is highlighted rather than described; the file tabs carry the count of new
+lines. **Compare** puts the target beside the result. **Edit from here** dumps that step
+into a full playground.
+
+**`exams/index.html`** — all twelve as cards, linking to a walkthrough where one exists and
+saying so plainly where one does not.
+
+**253 Q1** is 8 steps and a 44-minute budget. The seven annotated colours were verified by
+reading computed styles off the finished render — all exact.
+
+Two fixes found while testing:
+
+1. **Step 1 left two lines unhighlighted.** `''.split('\n')` is `['']`, and the LCS matched
+   it against a blank line in the new file. Step one now short-circuits to all-new.
+2. **The preview took the pane's width**, so a two-column desktop card became two *unequal*
+   columns — the `min-width: auto` trap Part 3 teaches — and stopped resembling the target.
+   It now renders at a fixed 1180px and scales to fit, with a floor of 0.45 and sideways
+   scrolling below that, because 26% is legible to nobody.
+
+**Verified**: all 8 steps render with sensible per-step diff counts (19/61/21/17/16/27/40/12
+new lines); pin, compare, edit-from-here, prev/next, palette copy and the final-answer copy
+buttons all behave; the 141-line stylesheet and 70-line HTML match the last step exactly;
+12 of 12 images serve; no console errors; no overflow — locally and live.
+
 ## Next
 
-**Phase 8** — the walkthrough component, demonstrated on **253 Q1 (ProConnect)**: target
-image, click-to-copy palette strip, structure analysis before any code, ordered build steps
-with a cumulative preview and a line diff highlighting what changed, "edit from here", and
-the final solution. This also needs the prototype images cropped out of the exam PDFs.
+**Phase 9** — the remaining eleven walkthroughs, in batches, pushing after each:
+`9a` 253-q2, slot1-q1, slot2-q2 · `9b` 251-q1, 251-q2, slot1-q2 ·
+`9c` slot2-q1, 243-q1, 243-q2 · `9d` 252-q1, 252-q2 (the gradient-heavy pair, last).
 
 ## Remaining
 
-Phases 9–11 per `PLAN.md` §5. Expected split: 9a–9d.
+Phases 10–11 per `PLAN.md` §5.
 
 ## Decisions taken
 
