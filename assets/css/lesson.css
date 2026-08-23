@@ -1,0 +1,186 @@
+/* lesson.css — lesson page furniture: intro, progress bar, section headings,
+   the sidebar table of contents, code figures and wide-table scrolling. */
+
+/* ---- Intro --------------------------------------------------------- */
+
+.lsn__intro { margin-bottom: var(--s-5); }
+.lsn__intro h1 { margin-block: var(--s-2); }
+
+/* ---- Progress ------------------------------------------------------ */
+
+.prog {
+  margin-bottom: var(--s-7);
+  padding: var(--s-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+}
+
+.prog__bar {
+  height: 6px;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.prog__bar span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--brand);
+  border-radius: inherit;
+  transition: width .25s ease;
+}
+
+.prog__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-top: var(--s-3);
+  font-size: var(--t-sm);
+  color: var(--muted);
+}
+.prog__meta .spacer { margin-left: auto; }
+.prog__warn { margin-top: var(--s-2); font-size: var(--t-xs); color: var(--trap); }
+
+/* ---- Sections ------------------------------------------------------ */
+
+/* No scroll-margin-top here: base.css already sets scroll-padding-top on
+   <html> for the sticky header, and the two add up rather than overriding,
+   which parks every anchor jump twice as far down as intended. */
+.lsn { padding-top: var(--s-7); }
+.lsn + .lsn { border-top: 1px solid var(--border); }
+
+.lsn > * + * { margin-top: var(--s-4); }
+.lsn p, .lsn li { max-width: 68ch; }
+.lsn ul, .lsn ol { padding-left: 1.25rem; }
+.lsn li + li { margin-top: var(--s-2); }
+.lsn h3 { margin-top: var(--s-6); }
+
+.lsn__h {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  margin-top: 0;
+}
+
+.lsn__num {
+  flex: none;
+  font-size: var(--t-sm);
+  font-weight: 700;
+  color: var(--brand);
+  background: var(--brand-soft);
+  border-radius: var(--r-sm);
+  min-width: 1.75rem;
+  padding: 0.1em 0.4em;
+  text-align: center;
+  line-height: 1.4;
+  position: relative;
+  top: -0.15em;
+}
+
+.lsn__anchor {
+  font-size: var(--t-lg);
+  color: var(--muted);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity .15s;
+}
+.lsn__h:hover .lsn__anchor,
+.lsn__anchor:focus-visible { opacity: 1; }
+
+.lsn__foot {
+  margin-top: var(--s-5);
+  padding-top: var(--s-3);
+}
+
+.lsn__tick {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--t-sm);
+  color: var(--muted);
+  cursor: pointer;
+  padding: var(--s-1) var(--s-3);
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+}
+.lsn__tick:hover { border-color: var(--border-strong); color: var(--text); }
+.lsn__tick input { accent-color: var(--brand); margin: 0; }
+.lsn__tick:has(input:checked) {
+  color: var(--tip);
+  border-color: var(--tip);
+  background: var(--tip-soft);
+}
+
+.lsn__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-top: var(--s-7);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--border);
+}
+.lsn__nav .btn:last-child { margin-left: auto; }
+
+/* ---- Sidebar table of contents ------------------------------------- */
+
+.toc a {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  font-size: var(--t-xs);
+  line-height: 1.35;
+  padding-block: var(--s-1);
+}
+
+.toc a[aria-current="true"] {
+  background: var(--surface-2);
+  color: var(--brand);
+  font-weight: 600;
+}
+
+.toc__dot {
+  flex: none;
+  width: 0.5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-strong);
+  position: relative;
+  top: -0.1em;
+}
+.toc a[data-done="true"] .toc__dot {
+  background: var(--tip);
+  border-color: var(--tip);
+}
+.toc a[data-done="true"] { color: var(--muted); }
+
+/* ---- Code figures and wide tables ----------------------------------- */
+
+.codeblock { margin: 0; }
+.codeblock figcaption {
+  margin-top: var(--s-2);
+  font-size: var(--t-xs);
+  color: var(--muted);
+}
+
+/* A wide table scrolls inside its own box rather than breaking the page —
+   Part 1 §7 recommends exactly this. */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+}
+.table-wrap table { margin: 0; }
+.table-wrap th, .table-wrap td {
+  padding: var(--s-2) var(--s-3);
+  font-size: var(--t-sm);
+}
+.table-wrap thead th {
+  background: var(--surface);
+  white-space: nowrap;
+}
+.table-wrap tbody tr:last-child th,
+.table-wrap tbody tr:last-child td { border-bottom: 0; }
+.table-wrap th[scope="row"] { font-weight: 600; }
+.table-wrap code { white-space: nowrap; }

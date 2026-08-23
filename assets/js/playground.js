@@ -45,11 +45,36 @@
     'img, svg, video { display: block; max-width: 100%; }'
   ].join('\n');
 
-  function buildDoc(html, css) {
+  /* Two modes.
+
+     Default: the HTML pane holds body content, and it is wrapped in a
+     document with the small reset above. Right for teaching one idea.
+
+     doc: true — the HTML pane holds a *complete* document, doctype and all,
+     and is used verbatim with only the stylesheet injected into its head.
+     No reset is added: the author's document is the truth. This is the mode
+     the exam walkthroughs use, and it is the only way to demonstrate things
+     that depend on the document itself — a missing doctype throwing the
+     browser into quirks mode, for one. */
+
+  function buildDoc(html, css, full) {
+    var style = '<style>' + (css || '') + '</style>';
+
+    if (full) {
+      html = html || '';
+      if (/<\/head\s*>/i.test(html)) {
+        return html.replace(/<\/head\s*>/i, style + '</head>');
+      }
+      if (/<body[^>]*>/i.test(html)) {
+        return html.replace(/<body[^>]*>/i, '$&' + style);
+      }
+      return style + html;
+    }
+
     return '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">' +
       '<meta name="viewport" content="width=device-width, initial-scale=1">' +
       '<style>' + PREVIEW_RESET + '</style>' +
-      '<style>' + (css || '') + '</style>' +
+      style +
       '</head><body>' + (html || '') + '</body></html>';
   }
 
@@ -216,7 +241,7 @@
            Live off must not be undone a moment later by a timer that was
            already in flight. */
         cancel();
-        frame.srcdoc = buildDoc(api.value('html'), api.value('css'));
+        frame.srcdoc = buildDoc(api.value('html'), api.value('css'), config.doc === true);
       },
       schedule: function () {
         cancel();

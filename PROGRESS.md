@@ -59,17 +59,47 @@ Two bugs found and fixed during that testing:
    would have worked with the CDN present and silently failed without it — exactly the kind
    of bug that only shows up offline. The textarea editor now dispatches `input`.
 
+### Phase 3a — lesson renderer, and Part 1 sections 1–14
+- `assets/js/lesson.js` — builds a whole lesson page from its data file: intro, progress
+  bar, numbered sections with anchors, body blocks (paragraph, subheading, list, table,
+  code figure, callout, playground), completion ticks, sidebar contents and a scrollspy.
+- `assets/js/progress.js` — `localStorage` ticks and last-read position, with a visible
+  reset control on every lesson page.
+- `assets/css/lesson.css` — section furniture, progress bar, contents with tick dots, and
+  wide tables that scroll inside their own box rather than breaking the page.
+- `data/lessons/part-1.js` — 14 sections, 12 playgrounds: what HTML is, the document
+  skeleton, syntax rules, entities, headings, paragraphs, inline elements, lists, links and
+  paths, link attributes, images, responsive images, media and figures, SVG and icons.
+- `lessons/part-1.html` is now a thin shell.
+
+Added to the playground: a **`doc: true`** mode where the HTML pane holds a complete
+document, used verbatim with only the stylesheet injected, and no reset added. It is what
+makes the doctype-and-quirks-mode demonstration possible, and it is the mode the exam
+walkthroughs will need in phase 8, where the answer *is* a whole file.
+
+Three bugs found and fixed:
+
+1. **`scroll-padding-top` and `scroll-margin-top` were both applying.** `base.css` sets the
+   first on `<html>` for the sticky header and `lesson.css` set the second on every section.
+   They add rather than override, so every anchor jump landed 144px down instead of 72px,
+   and the contents highlighted the section *above* the one clicked.
+2. **The scrollspy used an IntersectionObserver, which is the wrong tool.** It reports which
+   elements *changed* state, so when the band spans a section boundary the answer depends on
+   entry order. Replaced with a deterministic check: the last section whose top has passed
+   under the header, rAF-throttled.
+3. **The renderer overwrote `document.title`**, dropping the "Part 1 ·" prefix the shell page
+   declares. It no longer touches it — a unique, descriptive title per page is a Part 5
+   requirement, and this site should meet the ones it teaches.
+
 ## Next
 
-**Phase 3** — Part 1 lesson content (HTML5 Foundations), roughly 30 sections per
-`CONTENT-MAP.md`. Needs the lesson renderer (`assets/js/lesson.js`) building a page from
-`data/lessons/part-1.js`, plus section anchors, completion ticks and a table of contents.
-Likely to split into 3a (sections 1–6: structure, syntax, text, links, media) and 3b
-(sections 7–11: tables, forms, semantics, global attributes, traps).
+**Phase 3b** — the rest of Part 1: tables, forms in full (four playgrounds on their own),
+semantic structure, global attributes and ARIA, and the traps table. Roughly 8 more
+sections.
 
 ## Remaining
 
-Phases 4–11 per `PLAN.md` §5. Expected splits: 3a/3b, 5a/5b, 9a–9d.
+Phases 4–11 per `PLAN.md` §5. Expected splits: 5a/5b, 9a–9d.
 
 ## Decisions taken
 
