@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playground demo — Web-Prep</title>
+<meta name="description" content="The two-pane editor and live preview component, with five worked examples.">
+<meta name="theme-color" content="#0f766e">
+<link rel="icon" href="../assets/img/mark.svg" type="image/svg+xml">
+
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/layout.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+<link rel="stylesheet" href="../assets/css/playground.css">
+
+<!-- CodeMirror 5 from cdnjs. Version-pinned URLs are immutable, so the
+     integrity hashes below can never go stale. If any of this fails to load
+     the playgrounds fall back to plain textareas and keep working. -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css"
+      integrity="sha384-zaeBlB/vwYsDRSlFajnDd7OydJ0cWk+c2OWybl3eSUf6hW2EbhlCsQPqKr3gkznT"
+      crossorigin="anonymous" referrerpolicy="no-referrer">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"
+        integrity="sha384-ZYmwuq4n2gOcNxMSiJ6jyTj+BbIrilr7p6dlq6q5nmSWKmsH9UU4K1qqjycMkfmR"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"
+        integrity="sha384-xPpkMo5nDgD98fIcuRVYhxkZV6/9Y4L8s3p0J5c4MxgJkyKJ8BJr+xfRkq7kn6Tw"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"
+        integrity="sha384-fpeIC2FZuPmw7mIsTvgB5BNc8QVxQC/nWg2W+CgPYOAiBiYVuHe2E8HiTWHBMIJQ"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"
+        integrity="sha384-g0o+WW9mdIxA7LaaCKTkRm0M5TVT+Bb4s9eocxPsI2G0Xm0POG9iD6G6qP1IIsfS"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"
+        integrity="sha384-xYIbc5F55vPi7pb/lUnFj3wu24HlpAMZdtBHkNrb2YhPzJV3pX7+eqXT2PXSNMrw"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>try{var t=localStorage.getItem('webprep:theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body data-base="../">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="app">
+
+  <header class="site-header">
+    <button class="btn btn--ghost btn--icon nav-toggle" data-nav-toggle
+            aria-expanded="false" aria-label="Toggle navigation">☰</button>
+    <a class="brand" href="../index.html">
+      <img src="../assets/img/mark.svg" alt="" width="24" height="24">
+      Web<span>-Prep</span>
+    </a>
+    <div class="header-actions">
+      <button class="btn btn--ghost btn--icon theme-toggle" data-theme-toggle
+              aria-label="Switch theme">
+        <span class="icon-light" aria-hidden="true">◐</span>
+        <span class="icon-dark" aria-hidden="true">◑</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="shell">
+
+    <nav class="sidebar" aria-label="Primary" data-open="false">
+      <div data-nav></div>
+    </nav>
+
+    <main class="content" id="main">
+      <div class="wrap prose">
+
+        <p class="eyebrow">Component demo</p>
+        <h1>The playground</h1>
+        <p class="lede">
+          Code on the left, result on the right, updating as you type. Every lesson from
+          Part 1 onward is built out of this. Break the examples — that is what they are for.
+        </p>
+
+        <div class="callout">
+          <strong>What this page is</strong>
+          The playground component's own test page. It exercises every path: two panes,
+          one pane, live update on and off, the fallback editor, and the copy button on
+          both a secure origin and <code>file://</code>. Real lesson content starts in
+          Part 1.
+        </div>
+
+        <h2>The controls</h2>
+        <ul>
+          <li><strong>Live</strong> — updates the preview 300&nbsp;ms after you stop typing.
+              It starts switched off below 768px, because a preview that reflows on every
+              keystroke is unpleasant on a phone.</li>
+          <li><strong>Run</strong> — updates the preview now. This is the button to use on
+              mobile.</li>
+          <li><strong>Reset</strong> — puts the original example back, both panes.</li>
+          <li><strong>Copy</strong> — copies the pane you are looking at, so HTML and CSS
+              stay separate the way they will be in the exam.</li>
+          <li><strong>Preview only</strong> — hides the editor and gives the result the full
+              width, taller. Useful once an example gets bigger than a phone screen.</li>
+        </ul>
+
+        <h2>Start here</h2>
+        <p>
+          One button, two rules. Change something and watch the right-hand pane catch up.
+        </p>
+        <div data-playground="hello"></div>
+
+        <h2>Two panes, one document</h2>
+        <p>
+          The tabs are HTML and CSS because that is how the exam is answered: one markup
+          file and one stylesheet. They are assembled into a single document for the
+          preview, so what you see is what a browser would do with those two files.
+        </p>
+        <p>
+          This example is the reason <code>box-sizing: border-box</code> goes at the top of
+          every stylesheet. Both boxes ask for the same width. Only one of them gets it.
+        </p>
+        <div data-playground="box-model"></div>
+
+        <h2>Break it deliberately</h2>
+        <p>
+          Most flexbox confusion comes from one fact: <code>justify-content</code> follows
+          the main axis and <code>align-items</code> follows the cross axis, and
+          <code>flex-direction</code> decides which is which. Reading that sentence does
+          nothing. Changing one word and watching the boxes move does.
+        </p>
+        <div data-playground="flex-axes"></div>
+
+        <h2>Closer to the exam</h2>
+        <p>
+          Four coloured cards is the single most common thing in these past papers — it
+          appears in six of the twelve prototypes. Written badly it is four near-identical
+          rule blocks. Written properly it is one block and one custom property.
+        </p>
+        <div data-playground="stat-card"></div>
+
+        <h2>One pane, when that is all there is</h2>
+        <p>
+          A playground does not have to have both. This one has no CSS at all, because
+          character entities are about what the browser renders, not how it is styled.
+        </p>
+        <div data-playground="entities"></div>
+
+        <h2>Component self-check</h2>
+        <section class="card selfcheck" data-selfcheck aria-labelledby="pgc-h">
+          <h2 id="pgc-h">What is running on this page</h2>
+          <ul>
+            <li data-check="pg-count">
+              <span class="check-dot" data-state="pending"></span>
+              <span class="label">Playgrounds mounted</span>
+              <code class="detail">…</code>
+            </li>
+            <li data-check="pg-editor">
+              <span class="check-dot" data-state="pending"></span>
+              <span class="label">Editor</span>
+              <code class="detail">…</code>
+            </li>
+            <li data-check="pg-sandbox">
+              <span class="check-dot" data-state="pending"></span>
+              <span class="label">Preview sandbox</span>
+              <code class="detail">…</code>
+            </li>
+            <li data-check="pg-render">
+              <span class="check-dot" data-state="pending"></span>
+              <span class="label">Previews rendered</span>
+              <code class="detail">…</code>
+            </li>
+          </ul>
+          <p class="env" data-env></p>
+        </section>
+
+        <div class="callout callout--tip">
+          <strong>Testing the fallback</strong>
+          Block <code>cdnjs.cloudflare.com</code> in DevTools' network request blocking and
+          reload. Every playground still works, as plain monospace textareas. That path is
+          not a courtesy — it is the one that runs first on every load, and CodeMirror is
+          an upgrade applied on top of it.
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Built for CSE 4165. No analytics, no tracking, no build step.</span>
+      <span class="spacer"></span>
+      <a href="https://github.com/meteorboyF/Web-Prep" target="_blank" rel="noopener noreferrer">Repository</a>
+    </div>
+  </footer>
+
+</div>
+
+<script src="../assets/js/core.js"></script>
+<script src="../data/site-index.js"></script>
+<script src="../assets/js/nav.js"></script>
+<script src="../assets/js/playground.js"></script>
+<script src="../data/playgrounds/demo.js"></script>
+<script src="../assets/js/selfcheck.js"></script>
+<script>
+  WP.ready(function () {
+    WP.renderNav();
+    WP.initNavToggle();
+    WP.initTheme();
+    WP.playground.mountAll();
+    WP.runSelfCheck();
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,229 @@
+/* playground.css — the two-pane editor and live preview.
+
+   Layout: editor left, preview right on wide screens; stacked under 768px.
+   Every colour comes from tokens.css so the chrome follows the site theme.
+   The preview itself is deliberately always light — it is a page preview,
+   and every prototype in the exam is a light-background design. */
+
+.pg {
+  --pg-h: 16rem;
+
+  margin-block: var(--s-5);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+/* ---- Toolbar ------------------------------------------------------- */
+
+.pg__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2);
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.pg__tabs {
+  display: flex;
+  gap: var(--s-1);
+  margin-right: auto;
+}
+
+.pg__tab {
+  appearance: none;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  font-size: var(--t-xs);
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: var(--s-1) var(--s-3);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+}
+.pg__tab:hover { color: var(--text); background: var(--bg); }
+.pg__tab[aria-selected="true"] {
+  background: var(--bg);
+  color: var(--brand);
+  border-color: var(--border);
+}
+
+.pg__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1);
+  flex-wrap: wrap;
+}
+
+.pg__btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
+  min-height: 1.9rem;
+  padding: var(--s-1) var(--s-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  background: var(--bg);
+  color: var(--text);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.pg__btn:hover { background: var(--surface-2); }
+.pg__btn--go { background: var(--brand); color: var(--on-brand); border-color: transparent; }
+.pg__btn--go:hover { background: var(--brand-strong); }
+.pg__btn[data-done="true"] { border-color: var(--tip); color: var(--tip); }
+
+.pg__live {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
+  font-size: var(--t-xs);
+  color: var(--muted);
+  cursor: pointer;
+  padding-inline: var(--s-1);
+}
+.pg__live input { accent-color: var(--brand); margin: 0; }
+
+/* ---- Body ---------------------------------------------------------- */
+
+.pg__body {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 48rem) {
+  .pg__body { grid-template-columns: 1fr 1fr; }
+  .pg__editors { border-right: 1px solid var(--border); }
+}
+
+.pg__editors { position: relative; background: var(--code-bg); }
+
+.pg__pane { display: none; }
+.pg__pane[data-active="true"] { display: block; }
+
+/* Fallback editor. Also the base the CodeMirror instance replaces. */
+.pg__ta {
+  display: block;
+  width: 100%;
+  height: var(--pg-h);
+  padding: var(--s-3);
+  border: 0;
+  resize: vertical;
+  background: var(--code-bg);
+  color: var(--code-text);
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  line-height: 1.55;
+  tab-size: 2;
+  white-space: pre;
+  overflow: auto;
+}
+.pg__ta:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
+
+/* ---- Preview ------------------------------------------------------- */
+
+.pg__preview {
+  position: relative;
+  background:
+    repeating-conic-gradient(var(--surface-2) 0% 25%, var(--surface) 0% 50%)
+    0 0 / 16px 16px;
+  min-height: var(--pg-h);
+}
+
+.pg__preview iframe {
+  display: block;
+  width: 100%;
+  height: var(--pg-h);
+  border: 0;
+  background: #fff;
+}
+
+/* Preview-only: the editors collapse and the preview takes the full width. */
+.pg[data-expanded="true"] .pg__editors { display: none; }
+.pg[data-expanded="true"] .pg__body { grid-template-columns: 1fr; }
+.pg[data-expanded="true"] .pg__preview iframe { height: calc(var(--pg-h) * 1.6); }
+.pg[data-expanded="true"] .pg__tabs { opacity: .4; pointer-events: none; }
+
+/* ---- Try this ------------------------------------------------------ */
+
+.pg__try {
+  margin: 0;
+  padding: var(--s-3) var(--s-4);
+  border-top: 1px solid var(--border);
+  background: var(--brand-soft);
+  color: var(--text);
+  font-size: var(--t-sm);
+}
+.pg__try strong {
+  color: var(--brand);
+  font-size: var(--t-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-right: var(--s-2);
+}
+
+.pg__status {
+  padding: var(--s-2) var(--s-4);
+  border-top: 1px solid var(--border);
+  font-size: var(--t-xs);
+  color: var(--muted);
+}
+
+/* ---- CodeMirror 5 theming -----------------------------------------
+   The CDN stylesheet ships a light theme only. Rather than pull a second
+   theme file, the tokens drive it — so the editor follows the site. */
+
+.pg .CodeMirror {
+  height: var(--pg-h);
+  background: var(--code-bg);
+  color: var(--code-text);
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  line-height: 1.55;
+}
+.pg .CodeMirror-gutters {
+  background: var(--code-bg);
+  border-right: 1px solid var(--code-border);
+}
+.pg .CodeMirror-linenumber { color: var(--muted); opacity: .7; }
+.pg .CodeMirror-cursor { border-left-color: var(--brand); }
+.pg .CodeMirror-selected { background: var(--brand-soft); }
+.pg .CodeMirror-focused .CodeMirror-selected { background: var(--brand-soft); }
+.pg .CodeMirror-activeline-background { background: rgb(128 128 128 / .06); }
+
+.pg .cm-tag       { color: #b02a5b; }
+.pg .cm-attribute { color: #8a5a00; }
+.pg .cm-string    { color: #1f6d4a; }
+.pg .cm-property  { color: #2c5aa0; }
+.pg .cm-keyword   { color: #7a3fb5; }
+.pg .cm-atom,
+.pg .cm-number    { color: #b4541b; }
+.pg .cm-comment   { color: var(--muted); font-style: italic; }
+.pg .cm-bracket,
+.pg .cm-meta      { color: var(--muted); }
+
+:root[data-theme="dark"] .pg .cm-tag       { color: #ff9ec0; }
+:root[data-theme="dark"] .pg .cm-attribute { color: #e8c07d; }
+:root[data-theme="dark"] .pg .cm-string    { color: #8fe0b4; }
+:root[data-theme="dark"] .pg .cm-property  { color: #9ec5ff; }
+:root[data-theme="dark"] .pg .cm-keyword   { color: #d3a6ff; }
+:root[data-theme="dark"] .pg .cm-atom,
+:root[data-theme="dark"] .pg .cm-number    { color: #f0a06a; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .pg .cm-tag       { color: #ff9ec0; }
+  :root:not([data-theme="light"]) .pg .cm-attribute { color: #e8c07d; }
+  :root:not([data-theme="light"]) .pg .cm-string    { color: #8fe0b4; }
+  :root:not([data-theme="light"]) .pg .cm-property  { color: #9ec5ff; }
+  :root:not([data-theme="light"]) .pg .cm-keyword   { color: #d3a6ff; }
+  :root:not([data-theme="light"]) .pg .cm-atom,
+  :root:not([data-theme="light"]) .pg .cm-number    { color: #f0a06a; }
+}

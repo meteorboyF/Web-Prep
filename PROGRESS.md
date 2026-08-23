@@ -32,16 +32,44 @@
 every asset 200, no horizontal overflow at 320px, mobile drawer toggles, `404.html` renders
 styled at arbitrary depth and computes the correct home link.
 
+### Phase 2 — playground component
+- `assets/js/playground.js` — tabbed HTML/CSS editors, sandboxed `srcdoc` preview debounced
+  at 300 ms, Live / Run / Reset / Copy / Preview-only.
+- `assets/css/playground.css` — two-pane layout, stacking under 48rem, CodeMirror themed
+  from the site tokens rather than a second CDN theme file.
+- CodeMirror 5.65.16 from cdnjs, version-pinned with SRI hashes and
+  `crossorigin="anonymous"`. Pinned URLs are immutable, so the hashes cannot go stale.
+- `data/playgrounds/demo.js` — five seeds: a button, content-box vs border-box, the flexbox
+  axes, a three-card stat row driven by one custom property, and an HTML-only entities
+  example that exercises the single-pane path.
+- `lessons/demo.html` — the component's own demo and test page.
+
+**Verified**: CodeMirror path, textarea-fallback path (a copy of the page with the CDN host
+rewritten to an unreachable domain), `file://`, 375px and 320px, and the live site. Copy was
+confirmed with a real mouse click — a scripted `.click()` has no user activation, so the
+clipboard API correctly refuses it and the button falls back to "Select and copy".
+
+Two bugs found and fixed during that testing:
+
+1. **Stale debounce timer.** Switching Live off, or pressing Run or Reset, did not cancel a
+   timer already in flight, so the preview updated once more a moment later — undoing what
+   the user had just asked for. All three paths now cancel first.
+2. **`set()` was silently inconsistent between editor kinds.** CodeMirror's `setValue` fires
+   a change event; assigning to `textarea.value` does not. Any future code calling `set()`
+   would have worked with the CDN present and silently failed without it — exactly the kind
+   of bug that only shows up offline. The textarea editor now dispatches `input`.
+
 ## Next
 
-**Phase 2** — the playground component: tabbed HTML/CSS editors, sandboxed `srcdoc` preview
-debounced at 300 ms, Run / Reset / Copy / Full-width, CodeMirror 5 from cdnjs with a
-`<textarea>` fallback, panes stacking under 768px with live-update defaulting off. Plus one
-demo lesson page using it.
+**Phase 3** — Part 1 lesson content (HTML5 Foundations), roughly 30 sections per
+`CONTENT-MAP.md`. Needs the lesson renderer (`assets/js/lesson.js`) building a page from
+`data/lessons/part-1.js`, plus section anchors, completion ticks and a table of contents.
+Likely to split into 3a (sections 1–6: structure, syntax, text, links, media) and 3b
+(sections 7–11: tables, forms, semantics, global attributes, traps).
 
 ## Remaining
 
-Phases 3–11 per `PLAN.md` §5. Expected splits: 3a/3b, 5a/5b, 9a–9d.
+Phases 4–11 per `PLAN.md` §5. Expected splits: 3a/3b, 5a/5b, 9a–9d.
 
 ## Decisions taken
 
@@ -56,6 +84,10 @@ Phases 3–11 per `PLAN.md` §5. Expected splits: 3a/3b, 5a/5b, 9a–9d.
 | D7 | `404.html` is self-contained: styles inline, no external assets | Pages serves it for missing URLs at any depth, where a relative asset path resolves against the wrong folder. Its home link is computed at runtime, not hardcoded. |
 | D8 | Nav shows unbuilt pages as greyed text rather than links | The shape of the site is visible from Phase 1, and nothing ever links to a 404. |
 | D9 | Theme palette is the one from Part 5 §6 of the course notes | Dogfoods the source material, and every pair was contrast-checked: brand 5.5:1 light and 9.9:1 dark, muted text 5.9:1, `--border-strong` 3.6:1 for input borders. |
+| D10 | The playground builds a `<textarea>` first, then upgrades to CodeMirror | The fallback is the path that always runs, so it cannot rot. A slow or blocked CDN degrades rather than breaking, and no page load waits on cdnjs. |
+| D11 | The preview iframe is always light, never themed | It is a page preview, and every exam prototype is a light-background design. Theming it would show you something you are not building. |
+| D12 | **Copy** copies the pane you are looking at, not the assembled document | HTML and CSS stay separate, matching the two files an exam answer is written in. |
+| D13 | CodeMirror is pinned at 5.65.16 with SRI hashes | Version-pinned cdnjs URLs are immutable, so the hashes can never go stale, and a compromised CDN cannot inject script into the site. |
 
 ## Known issues
 

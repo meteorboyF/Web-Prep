@@ -3,3 +3,6 @@ Thumbs.db
 *.swp
 .venv/
 node_modules/
+
+# temporary test pages (see PROGRESS.md, phase 2)
+lessons/_*.html

@@ -55,6 +55,33 @@
       } else if (kind === 'storage') {
         var ok = WP.store.set('selfcheck', Date.now()) !== false;
         set(row, ok, ok ? 'available' : 'denied — progress will not persist');
+      } else if (kind === 'pg-count') {
+        var mounted = document.querySelectorAll('.pg').length;
+        var asked = document.querySelectorAll('[data-playground]').length;
+        set(row, mounted > 0 && asked === 0, mounted + ' mounted');
+      } else if (kind === 'pg-editor') {
+        var cm = WP.playground && WP.playground.hasEditor();
+        /* Both outcomes are a pass. The textarea path is the designed
+           fallback, not a failure — it only fails if neither exists. */
+        var kinds = (WP.playground ? WP.playground.instances : []).map(function (i) {
+          return i.editors[Object.keys(i.editors)[0]].kind;
+        });
+        set(row, kinds.length > 0,
+          cm ? 'CodeMirror 5' : 'textarea fallback (CDN unavailable)');
+      } else if (kind === 'pg-sandbox') {
+        var frames = document.querySelectorAll('.pg__preview iframe');
+        var sandboxed = Array.prototype.every.call(frames, function (f) {
+          return f.getAttribute('sandbox') === '';
+        });
+        set(row, frames.length > 0 && sandboxed,
+          sandboxed ? 'sandbox="" on all ' + frames.length : 'not fully sandboxed');
+      } else if (kind === 'pg-render') {
+        var all = document.querySelectorAll('.pg__preview iframe');
+        var withDoc = Array.prototype.filter.call(all, function (f) {
+          return !!f.getAttribute('srcdoc');
+        }).length;
+        set(row, all.length > 0 && withDoc === all.length,
+          withDoc + ' of ' + all.length);
       }
     });
 

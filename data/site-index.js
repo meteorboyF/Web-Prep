@@ -22,6 +22,7 @@ WP.site = {
     {
       heading: 'Learn',
       items: [
+        { label: 'Playground demo', href: 'lessons/demo.html', ready: true },
         { label: 'Part 1 · HTML5 foundations', href: 'lessons/part-1.html', ready: true },
         { label: 'Part 2 · CSS fundamentals', href: 'lessons/part-2.html', ready: false },
         { label: 'Part 3 · Layout mastery', href: 'lessons/part-3.html', ready: false },
