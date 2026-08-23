@@ -378,6 +378,17 @@
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
+
+    /* requestAnimationFrame does not run while the tab is hidden. Scroll
+       there and `queued` would stay true with nothing to clear it, leaving
+       the contents highlight frozen for the rest of the page's life. Clearing
+       it on the way back is two lines and removes the possibility. */
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) return;
+      queued = false;
+      update();
+    });
+
     update();
   }
 
