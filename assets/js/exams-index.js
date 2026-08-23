@@ -11,7 +11,7 @@
 
   /* Which walkthroughs exist. Kept here rather than inferred, because the
      data files are only loaded on the walkthrough page itself. */
-  var READY = ['253-q1'];
+  var READY = ['253-q1', '253-q2', 'slot1-q1', 'slot2-q2'];
 
   WP.renderPrototypeIndex = function () {
     var host = document.querySelector('[data-prototypes]');

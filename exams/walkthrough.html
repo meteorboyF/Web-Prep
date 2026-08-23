@@ -96,13 +96,25 @@
 <script src="../assets/js/progress.js"></script>
 <script src="../assets/js/playground.js"></script>
 <script src="../assets/js/walkthrough.js"></script>
-<script src="../data/exams/253-q1.js"></script>
 <script>
   WP.ready(function () {
     WP.renderNav();
     WP.initNavToggle();
     WP.initTheme();
-    WP.renderWalkthrough();
+
+    // Load only the prototype the URL asks for. Loading all twelve data
+    // files on every visit would be a few hundred kilobytes to show one.
+    // The id is whitelisted before it becomes a path: it comes from the
+    // query string, and "../" in a script src is not something to hand out.
+    var id = '253-q1';
+    try {
+      var q = new URLSearchParams(location.search).get('p');
+      if (q && /^[a-z0-9-]+$/.test(q)) id = q;
+    } catch (e) { /* keep the default */ }
+
+    WP.loadScript('../data/exams/' + id + '.js')
+      .then(function () { WP.renderWalkthrough(); })
+      .catch(function () { WP.renderWalkthrough(); });   // renders the not-found notice
   });
 </script>
 
