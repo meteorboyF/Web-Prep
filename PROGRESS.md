@@ -226,16 +226,42 @@ track presets, free-typed `repeat(auto-fit, …)`, alignment, span cycling, the 
 valid / ragged / empty-cell paths all behave; nothing escapes a 320px column; no console
 errors — locally on a fresh port and then live.
 
+### Phase 6 — Part 4 complete
+**25 sections, 28 playgrounds**: custom properties and component theming, `@property`, CSS
+functions, transitions and their limits, timing curves, transforms in 2D and 3D, keyframes,
+staggering, animation performance, reduced motion, filters, blend modes, `clip-path`,
+nesting, `:has()`, `@layer`, `@supports`, scroll behaviour, the recipe library and traps.
+
+The recipe library is split into **three** sections rather than one, so the completion ticks
+stay meaningful: surfaces, interaction, and progress-and-loading. A **progress bar** recipe
+is added to the original eleven, because three of the twelve prototypes have one and every
+one is two nested divs.
+
+Two honest notes rather than silent omissions:
+
+- The previews on this page deliberately omit the `prefers-reduced-motion` block, because a
+  lesson about animation in which nothing animates teaches nothing. The section says so and
+  tells you to ship it in your own work — as `base.css` does.
+- The part closes by saying that **almost none of Part 4 earns marks in this exam**. The
+  prototypes are static screenshots: no hover state to reproduce, no animation to see. The
+  exceptions are custom properties and gradients.
+
+**Verified**: 25 sections, no scrollspy mismatch, 28 playgrounds mounted and rendered, CSS
+at-rules and `&` nesting survive the data file intact, no console errors, no overflow —
+locally on a fresh port and then live. The final section parks at 107px rather than 72
+because the page is already at maximum scroll; the at-bottom case in the scrollspy handles
+it and it still reports correctly.
+
 ## Next
 
-**Phase 6** — Part 4, Advanced CSS: custom properties and component theming, `@property`,
-CSS functions, transitions, transforms, keyframes and staggering, animation performance,
-reduced motion, filters, blend modes, `clip-path`, nesting, `:has()`, `@layer`,
-`@supports`, scroll behaviour, and the eleven-recipe library.
+**Phase 7** — Part 5, Professional practice: architecture, BEM, the modern reset,
+debugging, accessibility, performance, dark mode, form styling, print styles, metadata,
+deployment and the pre-launch checklist — plus the **searchable cheatsheet** built from the
+reference PDF and a print stylesheet.
 
 ## Remaining
 
-Phases 7–11 per `PLAN.md` §5. Expected split: 9a–9d.
+Phases 8–11 per `PLAN.md` §5. Expected split: 9a–9d.
 
 ## Decisions taken
 
